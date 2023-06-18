@@ -45,12 +45,8 @@ input{
   padding: 10px;
   border-radius: 5px;
   border-style: none;
-  width: 250px;
 }
 
-.submit{
-  width: 25%;
-}
 .submit:hover{
   background-color: #252a7f6b;
   transition: 0.5s;
@@ -61,9 +57,16 @@ input{
       <div class="caixa">
         <form action="gabiru.php" method="post">
           <h2>Sign in</h2>
-          <input type="name" placeholder="name">
-          <input type="email" placeholder="email">
-          <input type="password" placeholder="password">
+
+          <label for="name"></label>
+          <input type="name" id="name" name="name" placeholder="name">
+
+          <label for="email"></label>
+          <input type="email" id="email" name="email" placeholder="email">
+          
+          <label for="password"></label>
+          <input type="password" id="password" name="password" placeholder="password">
+          
           <input class="submit" type="submit">
         </form>
       </div>
