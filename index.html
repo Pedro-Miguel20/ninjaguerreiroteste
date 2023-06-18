@@ -1,16 +1,68 @@
 <html>
-  <head>
-    <title>Crie sua conta</title>
-  </head>
+<head>
+  <title>Crie sua conta</title>
+</head>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Alata&display=swap');
+
+body, html{
+   background: rgb(32,36,104);
+background: linear-gradient(315deg, rgba(32,36,104,1) 0%, rgba(46,55,172,1) 100%);
+ height: 100%;
+ margin: 0;
+}
+
+.tudo{
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.caixa{
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h2, input{
+  font-family: 'Alata', sans-serif;
+  margin: 5px;
+}
+
+input{
+  background-color: #e6e9eb;
+  margin: 8px;
+  padding: 10px;
+  border-radius: 5px;
+  border-style: none;
+}
+
+.submit:hover{
+  background-color: #252a7f6b;
+  transition: 0.5s;
+}
+</style>  
   <body>
-    <form action="gabiru.php" method="post">
-      <label for="name">nome</label>
-        <input name="type" id="name" placeholder="name">
-      <label for="email">email</label>
-        <input email="type" id="email" placeholder="email">
-      <label for="password">senha</label>
-      <input type="password" id="password" placeholder="password">
-      <button>Enviar</button>
-    </form>
+    <div class="tudo">
+      <div class="caixa">
+        <form action="gabiru.php" method="post">
+          <h2>Sign in</h2>
+          <input type="name" placeholder="name">
+          <input type="email" placeholder="email">
+          <input type="password" placeholder="password">
+          <input class="submit" type="submit">
+        </form>
+      </div>
+    </div>
   </body>
-</html>
+</htm>
