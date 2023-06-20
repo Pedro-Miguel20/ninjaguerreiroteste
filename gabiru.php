@@ -27,10 +27,14 @@ mysqli_close($conexao);
 
 <?php 
 
-$servidor = "XXXXXX";
-$usuario = "XXXXXXX";
-$senha = "XXXXXX";
-$dbname = "XXXXXXXX";
+$name = $_POST["name"]; 
+$email = $_POST;["email"];
+$password = $_POST["password"];
+
+$servidor = "XXXXXXXX";
+$usuario = "XXXXXXXX";
+$senha = "XXXXXXXX";
+$dbname = "XXXXXXXXX";
 
 $conexao = mysqli_connect($servidor, $usuario, $senha, $dbname);
 
@@ -38,12 +42,8 @@ if(!$conexao){
 die("Falha na conexão: " .mysqli_connect_error());
 }
 
-mysqli_close($conexao);
-
-/*
-
-$sql = "INSERT INTO ninjinha(Name, E-mail, Senha)
-        VALUES (?, ?, ?, ?)";
+$sql = "INSERT INTO ninjinha(Nome, Email, Senha)
+        VALUES (?, ?, ?)";
 
 $stmt = mysqli_stmt_init($conexao);
 
@@ -52,15 +52,12 @@ if ( ! mysqli_stmt_prepare($stmt, $sql)) {
     die(mysqli_error($conexao));
 }
 
-mysqli_stmt_bind_param($stmt, "ssii",
-                       $name,
-                       $message,
-                       $priority,
-                       $type);
+mysqli_stmt_bind_param($stmt, "ssi", $name, $email, $password);
 
 mysqli_stmt_execute($stmt);
 
-echo "Record saved.";
-*/
+mysqli_close($conexao);
+
+echo "Cadastro Salvo!";
 
 ?>
