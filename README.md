@@ -8,7 +8,7 @@ Nesta versão se encontra o gabiru.PHP que apenas armazena as informações dent
 
 ### Versão 2.0 ✔️
 
-Versão apenas para se conectar ao Banco de Dados, não insere informações.
+Versão apenas para se conectar ao Banco de Dados, não insere informações dentro do Banco de Dados. Após se conectar, printa a mensagem "Conexão Estabelecida". 
 
 ### Versão 3.0 ⌛
 
