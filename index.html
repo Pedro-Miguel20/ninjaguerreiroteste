@@ -1,23 +1,155 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <title>Crie sua conta</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Alata&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Wix+Madefor+Display&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;1,100&display=swap');
 
-body, html{
-   background: rgb(32,36,104);
+html{
+ background: rgb(32,36,104);
 background: linear-gradient(315deg, rgba(32,36,104,1) 0%, rgba(46,55,172,1) 100%);
- height: 100%;
- margin: 0;
 }
 
-.tudo{
-  height: 100%;
+body{
+    margin: 0;
+}
+
+.mytabs {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100svh;
+    align-content: flex-start;
+}
+.mytabs input[type="radio"] {
+    display: none;
+}
+.mytabs label {
+    padding: 25px;
+    font-weight: bold;
+}
+
+.mytabs .tab{
+    width: 100%;
+    order: 1;
+    display: none;
+}
+.mytabs .tab h2 {
+    font-size: 3em;
+}
+
+.mytabs input[type='radio']:checked + label + .tab {
+  display: block;
+}
+
+.mytabs input[type="radio"]:checked + label {
+}
+.menu{
   display: flex;
-  flex-direction: row;
+  justify-content: space-between;
+  margin: 20px;
+}
+
+.icone{
+  filter: invert(90%);
+  font-size: 22px;
+  position: absolute;
+}
+
+.icon1:hover::before {
+  content: "about";
+  animation: animatedContent 1s;
+  color: #cfcfcfc;
+  font-family: 'Wix Madefor Display', sans-serif;
+}
+
+.icon2:hover::before {
+  content: "home";
+  animation: animatedContent 1s;
+  color: #cfcfcfc;
+  font-family: 'Wix Madefor Display', sans-serif;
+}
+
+.icon3:hover::before {
+  content: "profile";
+  animation: animatedContent 1s;
+  color: #cfcfcfc;
+  font-family: 'Wix Madefor Display', sans-serif;
+}
+
+.icon2{
+  left: 8%;  
+}
+
+.icon3{
+  right: 0%;  
+}
+
+.main{
+  width: 100%;
+  display: flex;
   align-items: center;
   justify-content: center;
+  position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+h1, p{
+  font-family: 'Wix Madefor Display', sans-serif;
+  color: #cfcfcf;
+  margin: 0;
+}
+
+img{
+  width: 370px;
+  height: 400px;
+}
+
+blink{
+  font-size: 25px;
+  animation: blink 1.2s infinite;
+}
+
+@keyframes blink {
+  0% {opacity: 0}
+	49%{opacity: 0}
+	50% {opacity: 1}
+}
+
+.cat { 
+    animation-name: cat;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    margin-left: 30px;
+    margin-top: 5px;
+}
+
+@keyframes cat {
+    0% { transform: translate(0,  0px); 
+  }
+    50%  { transform: translate(0, 15px); 
+  }
+    100%   { transform: translate(0, -0px); 
+  }
+}
+
+
+.tudo{
+height: auto;
+    display: flex;
+    left: 50%;
+    position: relative;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    justify-content: center;
 }
 
 .caixa{
@@ -25,56 +157,194 @@ background: linear-gradient(315deg, rgba(32,36,104,1) 0%, rgba(46,55,172,1) 100%
   flex-direction: column;
   background-color: white;
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 10px 0px 0px 10px;
 }
 
 form{
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 50%;
 }
 
-h2, input{
-  font-family: 'Alata', sans-serif;
+h3{
+  font-family: 'Wix Madefor Display', sans-serif;
   margin: 5px;
+  margin-bottom: 15px;
+  font-size: 30px;
 }
 
 input{
   background-color: #e6e9eb;
-  margin: 8px;
+    font-family: 'Wix Madefor Display', sans-serif;
+  margin: 5px;
   padding: 10px;
   border-radius: 5px;
-  border-style: none;
-  width:250px;
+  width: 250px;
+  border-style:none;
 }
 
-.submit{
-  width:25%;
+input:focus{
+  outline-style: none;
+  box-shadow: none;
 }
 
-.submit:hover{
-  background-color: #252a7f6b;
+#submit{
+  width: 25%;
+  height:35px;
+  border-radius: 5px;
+  border-style:none;
+  margin-top: 15px;
+}
+
+#submit:hover{
+  background-color: #34319c;
+  color: white;
   transition: 0.5s;
 }
-</style>  
-  <body>
-    <div class="tudo">
-      <div class="caixa">
-        <form action="gabiru.php" method="post">
-          <h2>Sign in</h2>
 
-          <label for="name"></label>
-          <input type="name" id="name" name="name" placeholder="name">
+.tab{
+  height: 100%;
+}
 
-          <label for="email"></label>
-          <input type="email" id="email" name="email" placeholder="email">
-          
-          <label for="password"></label>
-          <input type="password" id="password" name="password" placeholder="password">
-          
-          <input class="submit" type="submit">
-        </form>
+form .li{
+  padding: 0;
+}
+
+a{
+  padding: 15px;
+  background-color: white;
+  border-radius: 50%;
+}
+
+a:hover{
+  background-color: #3633a3;
+  transition: 0.5s;
+}
+
+.face{
+  padding-left: 19px;
+  padding-right: 19px;
+}
+
+.login{
+  background-color:white;
+}
+
+.enter{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  background-color: #e6e9eb;
+  padding: 20px;
+  border-radius: 0px 10px 10px 0px;
+}
+
+form .la{
+  padding: 0;
+}
+@media (max-width: 880px){
+  .main{
+    flex-direction: column;
+    justify-content: center;
+    font-size: clamp(0.2rem, 3vw, 1rem);
+  }
+  span{
+    font-size: clamp(0.8rem, 4vw, 1.5rem);
+  }
+  .cat{
+    width: clamp(180px, 50%, 370px);
+    height: clamp(180px, 50vw, 370px);
+    margin: 0;
+  }
+  .icon2{
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  input{
+    width:clamp(100px, 50vw, 250px)
+  }
+  .submit{
+    width: 64px;
+  }
+}
+</style>
+<body>
+  <script>
+    var check = function() {
+      if (document.getElementById('password').value ==
+        document.getElementById('confirm_password').value) {
+        document.getElementById('confirm_password').style.color = 'green';
+  
+         document.getElementById("submit").disabled = false;
+    
+      } else {    document.getElementById('confirm_password').style.color = "red";
+ 
+        document.getElementById("submit").disabled = true;
+    }}
+  </script>
+  <div class="mytabs">
+    <input type="radio" id="tabfree" name="mytabs" checked="checked">
+    <label for="tabfree" class="fas fa-info icon1 icone"></label>
+    <div class="tab">
+      <div class="main">
+        <div class="text">
+          <h1>Search knowledge..<blink>│</blink></h1><br>
+          <span style="color:#cfcfcf;"><i>E.T. Bilu</i></span>
+        </div>
+      <img class="cat" src="https://cdn1.iconfinder.com/data/icons/education-941/512/Smart.png">
       </div>
     </div>
-  </body>
-</htm>
+    <input type="radio" id="tabsilver" name="mytabs">
+    <label for="tabsilver" class="fa fa-home icon2 icone"></label>
+    <div class="tab">
+      <img class="bilu" src="https://cdn1.iconfinder.com/data/icons/education-941/512/Smart.png">
+    </div>
+
+    <input type="radio" id="tabgold" name="mytabs">
+    <label for="tabgold" class="fas fa-user-circle icon3 icone"></label>
+    <div class="tab">
+      <div class="tudo">
+        <div class="caixa">
+          <form action="gabiru.php" method="post">
+            
+            <h3>Sign Up</h3>
+
+            <label class="li" for="name"></label>
+            <input type="name" id="name" name="name" placeholder="name">
+
+            <label class="li" for="email" required></label>
+            <input type="email" id="email" name="email" placeholder="email" required>
+          
+             <label class="li" for="password"></label>
+              <input type="password" id="password" name="password" placeholder="password" onkeyup='check();' required>
+             <label class="li"></label>
+              <input type="password" id="confirm_password" name="confirm_password" placeholder="confirm password" onkeyup='check();'>
+            <span id='message'></span>
+          
+            <button id="submit" type="submit">enviar</button>
+          </form>
+         </div>
+        
+        <div class="enter">
+          <p style="color:black; margin: 8px;">or enter with</p>
+          <div class="logos">
+            <a class="fab fa-google"></a>
+            <a class="	fab fa-facebook-f face"></a>
+          </div>
+          
+          <form action="gabiru.php" method="post">
+            <h3>login In</h3>
+            <label class="la"></label>
+              <input class="login" type="name" id="name_login" name="name_login" placeholder="name">
+              <input class="login" type="email" id="email_login" name="email_login" placeholder="email">
+            <button id="submit" type="submit">enter</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
