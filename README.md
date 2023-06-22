@@ -13,7 +13,7 @@ OBS: Talvez seja necessário fazer algumas alterações em alguns nomes de ID's,
 
 ### Versão 3.0 (PHP) ✔️
 
-Nesta versão é possível se conectar com o Banco de Dados, inserir as informações dentro dele como Nome, e-email e a senha do usuário porém com está com este erro: "Warning: Array to string conversion in C:\XXXX\gabiru.php on line 30", quando você for olhar o Banco de Dados, o E-mail não é convertido corretamente.
+Nesta versão é possível se conectar com o Banco de Dados, inserir as informações dentro dele como Nome, e-email e a senha do usuário. A senha vai codificada para o Banco de Dados.(HASH_PASSWORD)
 OBS: Talvez seja necessário fazer algumas alterações em alguns nomes de ID's, name's, dentro do HTML.
 
 ### Versão 4.0 (PHP) ⌛
