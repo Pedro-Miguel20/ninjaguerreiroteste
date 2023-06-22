@@ -45,6 +45,6 @@ echo "Cadastro Salvo!";
 
 <?php
 
-
+echo "[PENDENTE DE ATUALIZAÇÃO]"
 
 ?>
