@@ -4,7 +4,6 @@
   $email =  $_POST["email"];
   $password = $_POST["password"];
   var_dump($name, $email, $password); 
-        /[VERSÃO 1.0] 
 
         [VERSÃO 2.0]
 $servidor = "XXXXXXX"; // Servidor do PhpMyAdM;
@@ -17,7 +16,6 @@ if(!$conexao){
 die("Falha na conexão: " .mysqli_connect_error()); // Caso haja erro no servidor, retornar o nome do erro;
 }
 mysqli_close($conexao);
-        /[VERSÃO 2.0]
 
         [VERSÃO 3.0]
 <?php 
@@ -44,3 +42,9 @@ mysqli_close($conexao);
 echo "Cadastro Salvo!";
 ?>
 */
+
+<?php
+
+
+
+?>
