@@ -16,6 +16,7 @@ OBS: Talvez seja necessário fazer algumas alterações em alguns nomes de ID's,
 Nesta versão é possível se conectar com o Banco de Dados, inserir as informações dentro dele como Nome, e-email e a senha do usuário. A senha vai codificada para o Banco de Dados.(HASH_PASSWORD)
 OBS: Talvez seja necessário fazer algumas alterações em alguns nomes de ID's, name's, dentro do HTML.
 
+
 ### Versão 4.0 (PHP) ⌛
 
 [PENDENTE]
