@@ -1,4 +1,4 @@
-    ## VERSÃO 1.0
+    ## [VERSÃO 1.0]
 
   $name = $_POST["name"];
   $email =  $_POST["email"];
@@ -6,7 +6,7 @@
 
   var_dump($name, $email, $password); 
 
-    ## VERSÃO 2.0
+    ## [VERSÃO 2.0]
 
 $servidor = "XXXXXXX"; // Servidor do PhpMyAdM;
 $usuario = "XXXXXX"; // Usuário do seu PhpMyAdm;
