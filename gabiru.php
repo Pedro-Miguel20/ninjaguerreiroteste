@@ -20,6 +20,7 @@ die("Falha na conexão: " .mysqli_connect_error()); // Caso haja erro no servido
 mysqli_close($conexao);
         /[VERSÃO 2.0]
 */
+/*
         [VERSÃO 3.0]
 <?php 
 $name = $_POST["name"]; 
@@ -45,3 +46,4 @@ mysqli_close($conexao);
 echo "Cadastro Salvo!";
 ?>
         /[VERSÃO 3.0]
+*/
