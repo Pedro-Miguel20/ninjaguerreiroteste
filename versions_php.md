@@ -1,4 +1,4 @@
-    ## [VERSÃO 1.0] ##
+     [VERSÃO 1.0] 
 
   $name = $_POST["name"];
   $email =  $_POST["email"];
