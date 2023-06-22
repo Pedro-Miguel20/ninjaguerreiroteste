@@ -1,5 +1,5 @@
  ~~~php
-      // - [VERSÃO 1.0]
+  // - [VERSÃO 1.0]
   $name = $_POST["name"];
   $email =  $_POST["email"];
   $password = $_POST["password"];
@@ -7,7 +7,7 @@
   var_dump($name, $email, $password); 
 
 ~~~
-     - [VERSÃO 2.0]
+// - [VERSÃO 2.0]
 ~~~php
 $servidor = "XXXXXXX"; // Servidor do PhpMyAdM;
 $usuario = "XXXXXX"; // Usuário do seu PhpMyAdm;
@@ -24,7 +24,7 @@ die("Falha na conexão: " .mysqli_connect_error()); // Caso haja erro no servido
 
 mysqli_close($conexao);
 ~~~
-     - [VERSÃO 3.0]
+// - [VERSÃO 3.0]
 ~~~php
 <?php 
 
