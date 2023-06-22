@@ -23,7 +23,7 @@ die("Falha na conexão: " .mysqli_connect_error()); // Caso haja erro no servido
 
 mysqli_close($conexao);
 
-    ## [VERSÃO 3.0]
+     - [VERSÃO 3.0]
 
 <?php 
 
