@@ -1,11 +1,11 @@
      - [VERSÃO 1.0] 
-
+~~~php
   $name = $_POST["name"];
   $email =  $_POST["email"];
   $password = $_POST["password"];
 
   var_dump($name, $email, $password); 
-
+~~~
      - [VERSÃO 2.0]
 
 $servidor = "XXXXXXX"; // Servidor do PhpMyAdM;
