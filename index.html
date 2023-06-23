@@ -4,6 +4,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+const todos = document.querySelector(".tudo");
+const logon = document.querySelector(".loglink");
+const register = document.querySelector(".signlink");
+
+register.addEventListener("click", ()=>{todos.classList.add('active');
+});
+
+logon.addEventListener("click", ()=>{todos.classList.remove('active');
+});
+
+
+var check = function() {
+  if (document.getElementById('password').value ==
+  document.getElementById('confirm_password').value) {
+    document.getElementById('confirm_password').style.color = 'green';
+  
+ document.getElementById("submit").disabled = false;
+    
+  } else {    document.getElementById('confirm_password').style.color = "red";
+ 
+  document.getElementById("submit").disabled = true;
+}}
+</script>
 </head>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Wix+Madefor+Display&display=swap');
@@ -278,30 +302,6 @@ a{
   }
 }
 </style>
-<script>
-const todos = document.querySelector(".tudo");
-const logon = document.querySelector(".loglink");
-const register = document.querySelector(".signlink");
-
-register.addEventListener("click", ()=>{todos.classList.add('active');
-});
-
-logon.addEventListener("click", ()=>{todos.classList.remove('active');
-});
-
-
-var check = function() {
-  if (document.getElementById('password').value ==
-  document.getElementById('confirm_password').value) {
-    document.getElementById('confirm_password').style.color = 'green';
-  
- document.getElementById("submit").disabled = false;
-    
-  } else {    document.getElementById('confirm_password').style.color = "red";
- 
-  document.getElementById("submit").disabled = true;
-}}
-</script>
 <body>
   <div class="mytabs">
     <input type="radio" id="tabfree" name="mytabs" checked="checked">
