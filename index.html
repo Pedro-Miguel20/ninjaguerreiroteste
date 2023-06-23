@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -126,6 +127,11 @@ blink{
     margin-top: 5px;
 }
 
+.cat{
+  width: 300px;
+  height: 300px;
+}
+
 @keyframes cat {
     0% { transform: translate(0,  0px); 
   }
@@ -147,7 +153,7 @@ input:focus{
   box-shadow: none;
 }
 
-#submit{
+#submit, #submit2{
   width: 25%;
   height:35px;
   border-radius: 5px;
@@ -156,7 +162,7 @@ input:focus{
   line-height: 12px;
 }
 
-#submit:hover{
+#submit:hover, #submit2:hover{
   background-color: #34319c;
   color: white;
   transition: 0.5s;
@@ -183,11 +189,13 @@ input:focus{
 
 .box{
   position: relative;
+}
+
+form{
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-
 
 .tudo .forms{
   width: 100%;
@@ -263,76 +271,71 @@ a{
     font-size: clamp(0.8rem, 4vw, 1.5rem);
   }
   .cat{
-    width: clamp(180px, 50%, 370px);
-    height: clamp(180px, 50vw, 370px);
+    width: clamp(180px, 50%, 300px);
+    height: clamp(180px, 50vw, 300px);
     margin: 0;
   }
   .icon2{
     left: 50%;
     transform: translateX(-50%);
   }
-  input{
+  .tudo.forms{
+    padding-top:30px;
   }
   .submit{
     width: 64px;
   }
-}
+}	
 </style>
 <body>
-  <div class="mytabs">
-    <input type="radio" id="tabfree" name="mytabs" checked="checked">
-    <label for="tabfree" class="fas fa-info icon1 icone"></label>
-    <div class="tab">
-      <div class="main">
-        <div class="text">
-          <h1>Search knowledge..<blink>│</blink></h1><br>
-          <span style="color:#cfcfcf;"><i>E.T. Bilu</i></span>
-        </div>
-      <img class="cat" src="https://cdn1.iconfinder.com/data/icons/education-941/512/Smart.png">
-      </div>
-    </div>
-    <input type="radio" id="tabsilver" name="mytabs">
-    <label for="tabsilver" class="fa fa-home icon2 icone"></label>
-    <div class="tab">
-    </div>
+<div class="mytabs">
+	<input type="radio" id="tabfree" name="mytabs" checked="checked">
+	<label for="tabfree" class="fas fa-info icon1 icone"></label>
+	<div class="tab">
+		<div class="main">
+			<div class="text">
+				<h1>Search knowledge..<blink>│</blink></h1><br>
+				<span style="color:#cfcfcf;"><i>E.T. Bilu</i></span>
+			</div>
+			<img class="cat" src="https://cdn1.iconfinder.com/data/icons/education-941/512/Smart.png">
+		</div>
+	</div>
+    	<input type="radio" id="tabsilver" name="mytabs">
+    	<label for="tabsilver" class="fa fa-home icon2 icone"></label>
+    	<div class="tab">
+</div>
 
-    <input type="radio" id="tabgold" name="mytabs">
-    <label for="tabgold" class="fas fa-user-circle icon3 icone"></label>
-    <div class="tab">
-     <div class="body">
-      <div class="tudo">
-      
-        <div class="forms log">
-         <h3>Log in</h3>
-          <div class="box">
-           <input id="email2" type="email" placeholder="email">
-           <input type="password" id="password2" name="password" placeholder="password" required>
+<input type="radio" id="tabgold" name="mytabs">
+<label for="tabgold" class="fas fa-user-circle icon3 icone"></label>
+<div class="tab">
+	<div class="body">
+        	<div class="tudo">
+      			<div class="forms log">
+            			<h3>Log in</h3>
+            			<div class="box">
+            				<form action="gabiru.php" method="post" autocomplete="off"><!--"aqui entra na conta"-->
+              					<input id="email2" type="email2" placeholder="email">
+              					<input type="password2" id="password2" name="password2" placeholder="password" required>
             
-           <input id="submit2" type="submit">
-          <p class="text">don't you have an account?<a href="#" class="signlink"> register</a></p>
-         </div>
-        </div>
-      
-       
-        <div class="forms sign">
-         <h3>Sign up</h3>
-         <form action="gabiru.php" method="post">
-	 <input id="name" type="name" placeholder="name">
-	
-         <input id="email" type="email" placeholder="email">
-		
-         <input type="password" id="password" name="password" placeholder="password" onkeyup='check();' required>
-            
-         <input type="password" id="confirm_password" name="confirm_password" placeholder="confirm password" onkeyup='check();'>
+              					<input id="submit2" type="submit">
+              					<p class="text">don't you have an account?<a href="#" class="signlink"> register</a></p>
+             			</div>
+           		</div>
+     
+        		<div class="forms sign">
+          			<h3>Sign up</h3>
+          			<form action="gabiru.php" method="post"><!--"dados que vão para o cadastro, aqui se registra"-->
+          				<input id="name" type="name" placeholder="name">
+          				<input id="email2" type="email" placeholder="email">
+          				<input type="password" id="password" name="password" placeholder="password" onkeyup='check();' required>            
+          				<input type="password" id="confirm_password" name="confirm_password" placeholder="confirm password" onkeyup='check();'>   
+          				<input id="submit" type="submit">
         
-         <input id="submit" type="submit">
-	 </form>
-         <p class="text">do already have?<a href="#" class="loglink"> log in</a></p>
-        </div>
-       </div>
-      </div>
-    </div>
-  </div>
+          				<p class="text">do already have?<a href="#" class="loglink"> log in</a></p>
+          		</div>
+        	</div>
+	</div>
+</div>
 <script>
 const todos = document.querySelector(".tudo");
 const logon = document.querySelector(".loglink");
@@ -341,21 +344,14 @@ const register = document.querySelector(".signlink");
 register.addEventListener("click", ()=>{todos.classList.add('active');
 });
 
-logon.addEventListener("click", ()=>{todos.classList.remove('active');
+logon.addEventListener("click", ()=>{ todos.classList.remove('active');
 });
 
 
 var check = function() {
   if (document.getElementById('password').value ==
   document.getElementById('confirm_password').value) {
-    document.getElementById('confirm_password').style.color = 'green';
-  
- document.getElementById("submit").disabled = false;
-    
-  } else {    document.getElementById('confirm_password').style.color = "red";
- 
-  document.getElementById("submit").disabled = true;
-}}
+    document.getElementById('confirm_password').style.color = 'green';	
 </script>
 </body>
 </html>
