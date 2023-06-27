@@ -343,10 +343,11 @@
             <h3>Log in</h3>
             <div class="box">
               <!--"aqui entra na conta"-->
-              <input id="email2" type="email2" name="email2" placeholder="email">
-              <input type="password2" id="password2" name="password2" placeholder="password">
-              <input id="submit2" type="submit">
-
+              <form action="gabiru.php" method="POST">
+                <input id="email2" type="email" name="email2" placeholder="email" required>
+                <input type="password" id="password2" name="password2" placeholder="password" minlenght="7" required>
+                <input id="submit2" type="submit">
+              </form>
               <p class="text">don't you have an account?<a href="#" class="signlink"> register</a></p>
             </div>
           </div>
@@ -357,7 +358,7 @@
               <!--"dados que vão para o cadastro, aqui se registra"-->
               <input id="name" name="name" type="name" placeholder="name">
               <input id="email" name="email" type="email" placeholder="email" required>
-              <input type="password" id="password" name="password" placeholder="password" onkeyup='check();' required>
+              <input type="password" id="password" name="password" placeholder="password" minlength="7" onkeyup='check();' required>
               <input type="password" id="confirm_password" name="confirm_password" placeholder="confirm password" onkeyup='check();'>
               <input id="submit" type="submit">
             </form>
