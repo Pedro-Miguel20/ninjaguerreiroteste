@@ -8,10 +8,10 @@ print_r($_POST);
 
 $hash_pass = password_hash(($hash_pass), PASSWORD_DEFAULT);
 
-$servidor = "localhost";
-$usuario = "id20950902_ninjaguerreirocomdb";
-$senha = "Ninja01!";
-$dbname = "id20950902_ninjaguerreirosemdb";
+$servidor = "XXXXXX";
+$usuario = "XXXXXXX";
+$senha = "XXXXXXX";
+$dbname = "XXXXXXXX";
 
 $conexao = mysqli_connect($servidor, $usuario, $senha, $dbname);
 
