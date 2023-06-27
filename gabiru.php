@@ -1,5 +1,7 @@
 <?php 
 
+require __DIR__ 
+
 $sql = "INSERT INTO ninjinha(Nome, Email, Hashi) 
         VALUES ('$name', '$email', '$hash_pass')";
 
