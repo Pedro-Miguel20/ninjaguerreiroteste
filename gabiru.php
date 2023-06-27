@@ -1,6 +1,6 @@
 <?php 
 
-require __DIR__ 
+require __DIR__ . "/datatabase.php";
 
 $sql = "INSERT INTO ninjinha(Nome, Email, Hashi) 
         VALUES ('$name', '$email', '$hash_pass')";
