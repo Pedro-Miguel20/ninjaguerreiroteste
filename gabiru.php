@@ -6,10 +6,10 @@ $hash_pass = $_POST["password"];
 
 $hash = password_hash(($hash_pass), PASSWORD_DEFAULT);
 
-$servidor = "localhost"; // 127.0.0.1
-$usuario = "root";
-$senha = "Test@123";
-$dbname = "ninjaguerreirodb";
+$servidor = "XXXXX";
+$usuario = "XXXXX";
+$senha = "XXXXXX";
+$dbname = "XXXXXXXXXX";
 
 $conexao = mysqli_connect($servidor, $usuario, $senha, $dbname);
 
