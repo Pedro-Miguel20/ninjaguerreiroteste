@@ -18,6 +18,22 @@ if(!$conexao){
 die("Falha na conexão: " .mysqli_connect_error());
 }
 
+$sql = sprintf("SELECT * FROM user
+                    WHERE email = '%s'",
+                   $mysqli->real_escape_string($_POST["email"]));
+    
+    $result = $mysqli->query($sql);
+    
+    $user = $result->fetch_assoc();
+    
+    if ($user) {
+        
+        if (password_verify($_POST["password"], $user["password_hash"])) {
+            
+            session_start();
+            
+            session_regenerate_id();
+
 $sql = "INSERT INTO ninjinha(Nome, Email, Hashi) 
         VALUES ('$name', '$email', '$hash_pass')";
 
