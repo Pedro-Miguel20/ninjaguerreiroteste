@@ -5,6 +5,8 @@ $hash_pass = $_POST["confirm_password"];
 
 print_r($_POST);
 
+$hash_pass = password_hash(($hash_pass), PASSWORD_DEFAULT);
+
 $servidor = "XXXXX";
 $usuario = "XXXXXX";
 $senha = "XXXXXX";
