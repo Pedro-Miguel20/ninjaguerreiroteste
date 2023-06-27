@@ -1,364 +1,393 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Wix+Madefor+Display&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;1,100&display=swap');
+
+    html {
+      background: rgb(32, 36, 104);
+      background: linear-gradient(315deg, rgba(32, 36, 104, 1) 0%, rgba(46, 55, 172, 1) 100%);
+    }
+
+    body {
+      margin: 0;
+    }
+
+    .mytabs {
+      display: flex;
+      flex-wrap: wrap;
+      height: 100svh;
+      align-content: flex-start;
+    }
+
+    .mytabs input[type="radio"] {
+      display: none;
+    }
+
+    .mytabs label {
+      padding: 25px;
+      font-weight: bold;
+    }
+
+    .mytabs .tab {
+      width: 100%;
+      order: 1;
+      display: none;
+    }
+
+    .mytabs .tab h2 {
+      font-size: 3em;
+    }
+
+    .mytabs input[type='radio']:checked+label+.tab {
+      display: block;
+    }
+
+    .mytabs input[type="radio"]:checked+label {}
+
+    .menu {
+      display: flex;
+      justify-content: space-between;
+      margin: 20px;
+    }
+
+    .icone {
+      filter: invert(90%);
+      font-size: 22px;
+      position: absolute;
+    }
+
+    .icon1:hover::before {
+      content: "about";
+      animation: animatedContent 1s;
+      color: #cfcfcfc;
+      font-family: 'Wix Madefor Display', sans-serif;
+    }
+
+    .icon2:hover::before {
+      content: "home";
+      animation: animatedContent 1s;
+      color: #cfcfcfc;
+      font-family: 'Wix Madefor Display', sans-serif;
+    }
+
+    .icon3:hover::before {
+      content: "profile";
+      animation: animatedContent 1s;
+      color: #cfcfcfc;
+      font-family: 'Wix Madefor Display', sans-serif;
+    }
+
+    .icon2 {
+      left: 8%;
+    }
+
+    .icon3 {
+      right: 0%;
+    }
+
+    .main {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    h1,
+    p {
+      font-family: 'Wix Madefor Display', sans-serif;
+      color: #cfcfcf;
+      margin: 0;
+    }
+
+    blink {
+      font-size: 25px;
+      animation: blink 1.2s infinite;
+    }
+
+    @keyframes blink {
+      0% {
+        opacity: 0
+      }
+
+      49% {
+        opacity: 0
+      }
+
+      50% {
+        opacity: 1
+      }
+    }
+
+    .cat {
+      animation-name: cat;
+      animation-duration: 3s;
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;
+      margin-left: 30px;
+      margin-top: 5px;
+    }
+
+    .cat {
+      width: 300px;
+      height: 300px;
+    }
+
+    @keyframes cat {
+      0% {
+        transform: translate(0, 0px);
+      }
+
+      50% {
+        transform: translate(0, 15px);
+      }
+
+      100% {
+        transform: translate(0, -0px);
+      }
+    }
+
+    h3 {
+      font-family: 'Wix Madefor Display', sans-serif;
+      margin: 5px;
+      margin-bottom: 15px;
+      font-size: 30px;
+    }
+
+    input:focus {
+      outline-style: none;
+      box-shadow: none;
+    }
+
+    #submit,
+    #submit2 {
+      width: 25%;
+      height: 35px;
+      border-radius: 5px;
+      border-style: none;
+      margin-top: 15px;
+      line-height: 12px;
+    }
+
+    #submit:hover,
+    #submit2:hover {
+      background-color: #34319c;
+      color: white;
+      transition: 0.5s;
+    }
+
+    .tab {
+      height: 100%;
+    }
+
+    .tudo {
+      position: relative;
+      width: 300px;
+      height: 400px;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .sign {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .box {
+      position: relative;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .tudo .forms {
+      width: 100%;
+      border-radius: 10px;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 10px;
+    }
+
+    .tudo .forms.log {
+      /*display: none;*/
+    }
+
+    .tudo.active .forms.log {
+      transition: none;
+      transform: translateX(0px)
+    }
+
+    .tudo .forms.sign {
+      position: absolute;
+      transform: translateX(400px);
+      border-radius: 10px;
+    }
+
+    .tudo.active .forms.log {
+      transition: none;
+      transform: translateX(-400px)
+    }
+
+    .tudo.active .forms.sign {
+      transition: none;
+      transform: translateX(0px)
+    }
+
+    input {
+      margin: 5px 20px;
+      padding: 12px;
+      font-size: 15px;
+      width: 80%;
+      border: none;
+      border-radius: 8px;
+      background: #cecece61;
+    }
+
+    h3,
+    p {
+      margin: 15px;
+    }
+
+    .body {
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .text {
+      color: black;
+      font-size: 15px;
+    }
+
+    a {
+      text-decoration: none;
+      color: #2d36a6;
+    }
+
+    @media (max-width: 880px) {
+      .main {
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      span {
+        font-size: clamp(0.8rem, 4vw, 1.5rem);
+      }
+
+      .cat {
+        width: clamp(180px, 50%, 300px);
+        height: clamp(180px, 50vw, 300px);
+        margin: 0;
+      }
+
+      .icon2 {
+        left: 50%;
+        transform: translateX(-50%);
+      }
+
+      .tudo.forms {
+        padding-top: 30px;
+      }
+
+      .submit {
+        width: 64px;
+      }
+    }
+  </style>
 </head>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Wix+Madefor+Display&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;1,100&display=swap');
 
-html{
- background: rgb(32,36,104);
-background: linear-gradient(315deg, rgba(32,36,104,1) 0%, rgba(46,55,172,1) 100%);
-}
-
-body{
-    margin: 0;
-}
-
-.mytabs {
-    display: flex;
-    flex-wrap: wrap;
-    height: 100svh;
-    align-content: flex-start;
-}
-.mytabs input[type="radio"] {
-    display: none;
-}
-.mytabs label {
-    padding: 25px;
-    font-weight: bold;
-}
-
-.mytabs .tab{
-    width: 100%;
-    order: 1;
-    display: none;
-}
-.mytabs .tab h2 {
-    font-size: 3em;
-}
-
-.mytabs input[type='radio']:checked + label + .tab {
-  display: block;
-}
-
-.mytabs input[type="radio"]:checked + label {
-}
-.menu{
-  display: flex;
-  justify-content: space-between;
-  margin: 20px;
-}
-
-.icone{
-  filter: invert(90%);
-  font-size: 22px;
-  position: absolute;
-}
-
-.icon1:hover::before {
-  content: "about";
-  animation: animatedContent 1s;
-  color: #cfcfcfc;
-  font-family: 'Wix Madefor Display', sans-serif;
-}
-
-.icon2:hover::before {
-  content: "home";
-  animation: animatedContent 1s;
-  color: #cfcfcfc;
-  font-family: 'Wix Madefor Display', sans-serif;
-}
-
-.icon3:hover::before {
-  content: "profile";
-  animation: animatedContent 1s;
-  color: #cfcfcfc;
-  font-family: 'Wix Madefor Display', sans-serif;
-}
-
-.icon2{
-  left: 8%;  
-}
-
-.icon3{
-  right: 0%;  
-}
-
-.main{
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-h1, p{
-  font-family: 'Wix Madefor Display', sans-serif;
-  color: #cfcfcf;
-  margin: 0;
-}
-
-blink{
-  font-size: 25px;
-  animation: blink 1.2s infinite;
-}
-
-@keyframes blink {
-  0% {opacity: 0}
-	49%{opacity: 0}
-	50% {opacity: 1}
-}
-
-.cat { 
-    animation-name: cat;
-    animation-duration: 3s;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease-in-out;
-    margin-left: 30px;
-    margin-top: 5px;
-}
-
-.cat{
-  width: 300px;
-  height: 300px;
-}
-
-@keyframes cat {
-    0% { transform: translate(0,  0px); 
-  }
-    50%  { transform: translate(0, 15px); 
-  }
-    100%   { transform: translate(0, -0px); 
-  }
-}
-
-h3{
-  font-family: 'Wix Madefor Display', sans-serif;
-  margin: 5px;
-  margin-bottom: 15px;
-  font-size: 30px;
-}
-
-input:focus{
-  outline-style: none;
-  box-shadow: none;
-}
-
-#submit, #submit2{
-  width: 25%;
-  height:35px;
-  border-radius: 5px;
-  border-style:none;
-  margin-top: 15px;
-  line-height: 12px;
-}
-
-#submit:hover, #submit2:hover{
-  background-color: #34319c;
-  color: white;
-  transition: 0.5s;
-}
-
-.tab{
-  height: 100%;
-}
-
-.tudo{
-  position: relative;
-  width:300px;
-  height:400px; 
-  overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.sign{
-  display: flex;
-  flex-direction: column;
-}
-
-.box{
-  position: relative;
-}
-
-form{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.tudo .forms{
-  width: 100%;
-  border-radius: 10px;
-  background-color: white;
-  display: flex;
-  flex-direction:column;
-  align-items: center;
-  margin: 10px;
-}
-
-.tudo .forms.log{
-  /*display: none;*/
-}
-
-.tudo.active .forms.log{
-  transition: none;
-  transform: translateX(0px)
-}
-
-.tudo .forms.sign{
-  position: absolute;
-  transform: translateX(400px);
-  border-radius: 10px;
-}
-
-.tudo.active .forms.log{
-  transition: none;
-  transform: translateX(-400px)
-}
-
-.tudo.active .forms.sign{
-  transition: none;
-  transform: translateX(0px)
-}
-
-input{
-  margin: 5px 20px;
-  padding: 12px;
-  font-size: 15px;
-  width:80%;
-  border: none;
-  border-radius: 8px;
-  background: #cecece61;
-}
-
-h3, p{
-  margin: 15px;
-}
-
-.body{
-  height:100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.text{
-  color: black;
-  font-size: 15px;
-}
-
-a{
-  text-decoration:none;
-  color: #2d36a6;
-}
-@media (max-width: 880px){
-  .main{
-    flex-direction: column;
-    justify-content: center;
-  }
-  span{
-    font-size: clamp(0.8rem, 4vw, 1.5rem);
-  }
-  .cat{
-    width: clamp(180px, 50%, 300px);
-    height: clamp(180px, 50vw, 300px);
-    margin: 0;
-  }
-  .icon2{
-    left: 50%;
-    transform: translateX(-50%);
-  }
-  .tudo.forms{
-    padding-top:30px;
-  }
-  .submit{
-    width: 64px;
-  }
-}	
-</style>
 <body>
-<div class="mytabs">
-	<input type="radio" id="tabfree" name="mytabs" checked="checked">
-	<label for="tabfree" class="fas fa-info icon1 icone"></label>
-	<div class="tab">
-		<div class="main">
-			<div class="text">
-				<h1>Search knowledge..<blink>│</blink></h1><br>
-				<span style="color:#cfcfcf;"><i>E.T. Bilu</i></span>
-			</div>
-			<img class="cat" src="https://cdn1.iconfinder.com/data/icons/education-941/512/Smart.png">
-		</div>
-	</div>
-    	<input type="radio" id="tabsilver" name="mytabs">
-    	<label for="tabsilver" class="fa fa-home icon2 icone"></label>
-    	<div class="tab">
-</div>
+  <div class="mytabs">
+    <input type="radio" id="tabfree" name="mytabs" checked="checked">
+    <label for="tabfree" class="fas fa-info icon1 icone"></label>
+    <div class="tab">
+      <div class="main">
+        <div class="text">
+          <h1>Search knowledge..<blink>│</blink>
+          </h1><br>
+          <span style="color:#cfcfcf;"><i>E.T. Bilu</i></span>
+        </div>
+        <img class="cat" src="https://cdn1.iconfinder.com/data/icons/education-941/512/Smart.png">
+      </div>
+    </div>
+    <input type="radio" id="tabsilver" name="mytabs">
+    <label for="tabsilver" class="fa fa-home icon2 icone"></label>
+    <div class="tab">
+    </div>
 
-<input type="radio" id="tabgold" name="mytabs">
-<label for="tabgold" class="fas fa-user-circle icon3 icone"></label>
-<div class="tab">
-	<div class="body">
-        	<div class="tudo">
-      			<div class="forms log">
-            			<h3>Log in</h3>
-            			<div class="box">
-            				<form action="" method="post" autocomplete="off"><!--"aqui entra na conta"-->
-              					<input id="email2" type="email2" placeholder="email">
-              					<input type="password2" id="password2" name="password2" placeholder="password">
-              					<input id="submit2" type="submit">
-					</form>
-              					<p class="text">don't you have an account?<a href="#" class="signlink"> register</a></p>
-             			</div>
-           		</div>
-     
-        		<div class="forms sign">
-          			<h3>Sign up</h3>
-          			<form action="gabiru.php" method="post"><!--"dados que vão para o cadastro, aqui se registra"-->
-          				<input id="name" type="name" placeholder="name">
-          				<input id="email" type="email" placeholder="email">
-          				<input type="password" id="password" name="password" placeholder="password" onkeyup='check();' required>            
-          				<input type="password" id="confirm_password" name="confirm_password" placeholder="confirm password" onkeyup='check();'>   
-          				<input id="submit" type="submit">
-				</form>
-          				<p class="text">do already have?<a href="#" class="loglink"> log in</a></p>
-          		</div>
-        	</div>
-	</div>
-</div>
-<script>
-const todos = document.querySelector(".tudo");
-const logon = document.querySelector(".loglink");
-const register = document.querySelector(".signlink");
+    <input type="radio" id="tabgold" name="mytabs">
+    <label for="tabgold" class="fas fa-user-circle icon3 icone"></label>
+    <div class="tab">
+      <div class="body">
+        <div class="tudo">
+          <div class="forms log">
+            <h3>Log in</h3>
+            <div class="box">
+              <!--"aqui entra na conta"-->
+              <input id="email2" type="email2" name="email2" placeholder="email">
+              <input type="password2" id="password2" name="password2" placeholder="password">
+              <input id="submit2" type="submit">
 
-register.addEventListener("click", ()=>{todos.classList.add('active');
-});
+              <p class="text">don't you have an account?<a href="#" class="signlink"> register</a></p>
+            </div>
+          </div>
 
-logon.addEventListener("click", ()=>{ todos.classList.remove('active');
-});
-
-
-var check = function() {
-  if (document.getElementById('password').value ==
-  document.getElementById('confirm_password').value) {
-    document.getElementById('confirm_password').style.color = 'green';
-  
- document.getElementById("submit").disabled = false;
-    
-  } else {    document.getElementById('confirm_password').style.color = "red";
- 
-  document.getElementById("submit").disabled = true;
-}}
-</script>
+          <div class="forms sign">
+            <h3>Sign up</h3>
+            <form action="gabiru.php" method="POST">
+              <!--"dados que vão para o cadastro, aqui se registra"-->
+              <input id="name" name="name" type="name" placeholder="name">
+              <input id="email" name="email" type="email" placeholder="email" required>
+              <input type="password" id="password" name="password" placeholder="password" onkeyup='check();' required>
+              <input type="password" id="confirm_password" name="confirm_password" placeholder="confirm password" onkeyup='check();'>
+              <input id="submit" type="submit">
+            </form>
+            <p class="text">do already have?<a href="#" class="loglink"> log in</a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    const todos = document.querySelector(".tudo");
+    const logon = document.querySelector(".loglink");
+    const register = document.querySelector(".signlink");
+    register.addEventListener("click", () => {
+      todos.classList.add('active');
+    });
+    logon.addEventListener("click", () => {
+      todos.classList.remove('active');
+    });
+    var check = function() {
+      if (document.getElementById('password').value ==
+        document.getElementById('confirm_password').value) {
+        document.getElementById('confirm_password').style.color = 'green';
+        document.getElementById("submit").disabled = false;
+      } else {
+        document.getElementById('confirm_password').style.color = "red";
+        document.getElementById("submit").disabled = true;
+      }
+    }
+  </script>
 </body>
+
 </html>
