@@ -18,7 +18,7 @@ $sql01 = sprintf("SELECT * FROM ninjinha WHERE Email = '%s'", $conexao->real_esc
             
             $_SESSION["user_id"] = $ninjinha["id"];
             
-            header("Location: home.php");
+            header("Location: index.html");
             exit;
         }
     }
