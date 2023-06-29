@@ -371,11 +371,11 @@
       </div>
     </div>
   </div>
-  <script>
+ <script>
     const todos = document.querySelector(".tudo");
     const logon = document.querySelector(".loglink");
     const register = document.querySelector(".signlink");
-    var aval = <?= $is_available ?>
+    var aval = '<?= $is_available ?>';
       
     register.addEventListener("click", () => {
       todos.classList.add('active');
@@ -393,14 +393,10 @@
         document.getElementById("submit").disabled = true;
       }
     }
-    var test = function() {
-      if (aval === true){
-        document.getElementById('body').style.display = "none";
-        document.getElementById('profile').style.display = "block";
-      }
+    if aval == "available" {
+        document.getElementById("body").style.display: 'none';
+        document.getElementById("profile").style.display: 'block';
     }
-          
-  </script>
 </body>
 
 </html>
