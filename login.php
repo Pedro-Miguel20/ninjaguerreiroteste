@@ -1,8 +1,5 @@
 <?php
 
-$email2 = $_POST["email2"];
-$password2 = $_POST["password2"];
-
 require __DIR__ . "/database.php";
     
 $sql01 = sprintf("SELECT * FROM ninjinha WHERE Email = '%s'", $conexao->real_escape_string($_POST["email2"]));
