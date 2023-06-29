@@ -283,6 +283,10 @@
       color: #2d36a6;
     }
 
+    .profile{
+      display: none;
+    }
+
     @media (max-width: 880px) {
       .main {
         flex-direction: column;
@@ -342,7 +346,7 @@
               <form action="gabiru.php" method="POST">
                 <input id="email2" type="email" name="email2" placeholder="email" required>
                 <input type="password" id="password2" name="password2" placeholder="password" minlenght="7" required>
-                <input id="submit2" type="submit">
+                <input id="submit2" type="submit" onkeyup='test();'>
               </form>
               <p class="text">don't you have an account?<a href="#" class="signlink"> register</a></p>
             </div>
@@ -362,12 +366,17 @@
           </div>
         </div>
       </div>
+      <div class="profile">
+        <h1>TESTE</h1>
+      </div>
     </div>
   </div>
   <script>
     const todos = document.querySelector(".tudo");
     const logon = document.querySelector(".loglink");
     const register = document.querySelector(".signlink");
+    var aval = <?= $is_available ?>
+      
     register.addEventListener("click", () => {
       todos.classList.add('active');
     });
@@ -384,6 +393,13 @@
         document.getElementById("submit").disabled = true;
       }
     }
+    var test = function() {
+      if (aval === true){
+        document.getElementById('body').style.display = "none";
+        document.getElementById('profile').style.display = "block";
+      }
+    }
+          
   </script>
 </body>
 
