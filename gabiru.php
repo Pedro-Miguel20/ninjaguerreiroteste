@@ -8,8 +8,7 @@ $hash_pass = $_POST["confirm_password"];
 
 $hash_pass = password_hash(($hash_pass), PASSWORD_DEFAULT);
 
-$sql = "INSERT INTO ninjinha(Nome, Email, Hashi) 
-        VALUES ('$name', '$email', '$hash_pass')";
+$sql = "INSERT INTO ninjinha(Nome, Email, Hashi) VALUES (?,?,?)";
 
 $stmt = mysqli_stmt_init($conexao);
 
@@ -27,5 +26,7 @@ mysqli_close($conexao);
 print_r($_POST);
 
 echo "Cadastro Salvo!";
+
+
 
 ?>
