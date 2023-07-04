@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -266,7 +268,7 @@
       margin: 15px;
     }
 
-    .body {
+    #body {
       height: 100%;
       display: flex;
       justify-content: center;
@@ -283,8 +285,39 @@
       color: #2d36a6;
     }
 
-    .profile{
+    .b {
       display: none;
+    }
+
+    #profile {
+      height: 100%;
+      display: none;
+    }
+
+    .conta {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .perfil {
+      background: white;
+      width: 80%;
+      height: 400px;
+      border-radius: 25px;
+    }
+
+    .pic {
+      width: 30%;
+      border-radius: 50%;
+      margin: 10px;
+    }
+
+    .inferior {
+      height: 50%;
+      width: 100%;
+      display: flex;
     }
 
     @media (max-width: 880px) {
@@ -333,20 +366,25 @@
         <img class="cat" src="https://cdn1.iconfinder.com/data/icons/education-941/512/Smart.png">
       </div>
     </div>
+    <input type="radio" id="tabsilver" name="mytabs">
+    <label for="tabsilver" class="fa fa-home icon2 icone"></label>
+    <div class="tab">
+    </div>
 
     <input type="radio" id="tabgold" name="mytabs">
     <label for="tabgold" class="fas fa-user-circle icon3 icone"></label>
     <div class="tab">
-      <div class="body">
+      <div id="body">
         <div class="tudo">
           <div class="forms log">
             <h3>Log in</h3>
             <div class="box">
+
               <!--"aqui entra na conta"-->
-              <form action="gabiru.php" method="POST">
+              <form action="login.php" method="POST">
                 <input id="email2" type="email" name="email2" placeholder="email" required>
-                <input type="password" id="password2" name="password2" placeholder="password" minlenght="7" required>
-                <input id="submit2" type="submit" onkeyup='test();'>
+                <input type="password" id="password2" name="password2" placeholder="password" minlenght="8" required>
+                <input id="submit2" type="submit">
               </form>
               <p class="text">don't you have an account?<a href="#" class="signlink"> register</a></p>
             </div>
@@ -358,46 +396,80 @@
               <!--"dados que vão para o cadastro, aqui se registra"-->
               <input id="name" name="name" type="name" placeholder="name">
               <input id="email" name="email" type="email" placeholder="email" required>
-              <input type="password" id="password" name="password" placeholder="password" minlength="7" onkeyup='check();' required>
+              <input type="password" id="password" name="password" placeholder="password" minlength="8" onkeyup='check();' required>
               <input type="password" id="confirm_password" name="confirm_password" placeholder="confirm password" onkeyup='check();'>
-              <input id="submit" type="submit">
+              <input id="submit" type="submit" name="submit">
             </form>
             <p class="text">do already have?<a href="#" class="loglink"> log in</a></p>
           </div>
         </div>
       </div>
-      <div class="profile">
-        <h1>TESTE</h1>
+      <div id="profile">
+        <div class="conta">
+          <div class="perfil">
+            <div class="pictures">
+              <img src="https://scontent.fpvh3-1.fna.fbcdn.net/v/t39.30808-6/350143838_178268054907815_4360025859828229905_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeFuNp9LdIkRCnDx454cMzS1ALlzltNJt-0AuXOW00m37YRUr_8HaVVxX63aRSu0_jqlqmr1UrBwWbKbHH9_ykv1&_nc_ohc=ef-s1McrQZUAX-uGSdf&_nc_ht=scontent.fpvh3-1.fna&oh=00_AfBRwuG47S_R1_f7plRe33q8pdJi3TL5uxyUrhzE88UdSA&oe=64A48D4C" class="pic">
+              <div class="inferior">
+                <div class="desc">
+                  <input type="text" id="teste">
+                  <button type="submit" id="submit3" onclick="myFunction()">enviar</button>
+                </div>
+                <div class="timeline">
+                  <div class="bios">
+                  </div>
+                  <div class="pub">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
- <script>
-    const todos = document.querySelector(".tudo");
-    const logon = document.querySelector(".loglink");
-    const register = document.querySelector(".signlink");
-    var aval = '<?= $is_available ?>';
-      
-    register.addEventListener("click", () => {
-      todos.classList.add('active');
-    });
-    logon.addEventListener("click", () => {
-      todos.classList.remove('active');
-    });
-    var check = function() {
-      if (document.getElementById('password').value ==
-        document.getElementById('confirm_password').value) {
-        document.getElementById('confirm_password').style.color = 'green';
-        document.getElementById("submit").disabled = false;
-      } else {
-        document.getElementById('confirm_password').style.color = "red";
-        document.getElementById("submit").disabled = true;
+    
+    <script>
+    
+<?php
+
+require __DIR__ .  "/database.php";
+
+$sql0 = sprintf("SELECT * FROM ninjinha
+                WHERE Email = '%s'",
+                $conexao->real_escape_string($_POST["email2"]));
+                
+$result = $conexao->query($sql0);
+
+$is_available = $result->num_rows === 0;
+
+?>    
+    
+      const todos = document.querySelector(".tudo");
+      const logon = document.querySelector(".loglink");
+      const register = document.querySelector(".signlink");
+      var aval = '<?= $is_available?>';
+      register.addEventListener("click", () => {
+        todos.classList.add('active');
+      });
+      logon.addEventListener("click", () => {
+        todos.classList.remove('active');
+      });
+      var check = function() {
+        if (document.getElementById('password').value ==
+          document.getElementById('confirm_password').value) {
+          document.getElementById('confirm_password').style.color = 'green';
+          document.getElementById("submit").disabled = false;
+        } else {
+          document.getElementById('confirm_password').style.color = "red";
+          document.getElementById("submit").disabled = true;
+        }
       }
-    }
-    if aval == "available" {
-        document.getElementById("body").style.display: 'none';
-        document.getElementById("profile").style.display: 'block';
-    }
- </script>
+      if (aval == false) {
+        document.getElementById("body").style.display = "none";
+        document.getElementById("profile").style.display = "block";
+      }
+    </script>
+    
+    
 </body>
 
 </html>
