@@ -1,5 +1,10 @@
 <?php
 
+//        
+            $_SESSION["user_id"] = $ninjinha["id"];
+            
+            $is_available = false;
+
 require __DIR__ . "/database.php";
 include __DIR__ . "/index.php";
 
