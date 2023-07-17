@@ -16,9 +16,23 @@ OBS: Talvez seja necessário fazer algumas alterações em alguns nomes de ID's,
 Nesta versão é possível se conectar com o Banco de Dados, inserir as informações dentro dele como Nome, e-email e a senha do usuário. A senha vai codificada para o Banco de Dados.(HASH_PASSWORD)
 OBS: Talvez seja necessário fazer algumas alterações em alguns nomes de ID's, name's, dentro do HTML.
 
----
+--- 
+
+# Versão Alpha
+
 ### Versão 4.0 (PHP) ⌛
 
+Nesta versão foram resolvidos problemas de renderizações, SESSIONS e etc.
+[PENDENTE]
+
+### Versão 5.0 (PHP) ⌛
+
+Nesta versão na sessão do "Profile", pode-se mudar seu nome e adicionar um biografia, tanto o nome e a bio serão armazenadas no Banco de Dados.
+[PENDENTE]
+
+### Versão 6.0 (PHP) ⌛
+
+Nesta versão pode-se adicionar uma imagem na sessão do "Profile" sendo armazenado diretamente no Banco de Dados.
 [PENDENTE]
 
 
