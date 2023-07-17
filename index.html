@@ -1,358 +1,586 @@
+<?php
+if ( ! isset($_SESSION["user_id"])) {
+    session_set_cookie_params(['httponly' => true]);
+    session_id("sessprim");
+    session_start();
+}
+?>
 
+<?php
+require __DIR__. "/database.php";
+  if (isset($_SESSION["user_id"])) {
+        $sql03 = "SELECT * FROM ninjinha WHERE id = {$_SESSION["user_id"]}";
+        $result = $conexao-> query($sql03);
+        $ninjinha = $result-> fetch_assoc();
+        $_SESSION["user_id"] = $ninjinha["id"];
+  } 
+?>
+
+<script>
+<?php
+require __DIR__ . "/database.php";
+  $sql01 = sprintf("SELECT * FROM ninjinha WHERE Email = '%s'", $conexao-> real_escape_string($_POST["email2"]));
+  $result = $conexao-> query($sql01);
+  $is_available = ($result-> num_rows === 0);
+?>
+</script>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="viewport" content="initial-scale=1">
   <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Wix+Madefor+Display&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap');
-    @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;1,100&display=swap');
+</head>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Wix+Madefor+Display&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;1,100&display=swap');
 
-    html {
-      background: rgb(32, 36, 104);
-      background: linear-gradient(315deg, rgba(32, 36, 104, 1) 0%, rgba(46, 55, 172, 1) 100%);
+  html {
+    background: rgb(32, 36, 104);
+    background: linear-gradient(315deg, rgba(32, 36, 104, 1) 0%, rgba(46, 55, 172, 1) 100%);
+  }
+
+  body {
+    margin: 0;
+  }
+
+  .mytabs {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100svh;
+    align-content: flex-start;
+  }
+
+  .mytabs input[type="radio"] {
+    display: none;
+  }
+
+  .mytabs .icone {
+    padding: 25px;
+    font-weight: bold;
+  }
+
+  .mytabs .tab {
+    width: 100%;
+    order: 1;
+    display: none;
+  }
+
+  .mytabs .tab h2 {
+    font-size: 3em;
+  }
+
+  .mytabs input[type='radio']:checked+label+.tab {
+    display: block;
+  }
+
+  .mytabs input[type="radio"]:checked+label {}
+
+  .menu {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+  }
+
+  .icone {
+    filter: invert(90%);
+    font-size: 22px;
+    position: absolute;
+  }
+
+  .icon1:hover::before {
+    content: "about";
+    animation: animatedContent 1s;
+    color: #cfcfcfc;
+    font-family: 'Wix Madefor Display', sans-serif;
+  }
+
+  .icon2:hover::before {
+    content: "home";
+    animation: animatedContent 1s;
+    color: #cfcfcfc;
+    font-family: 'Wix Madefor Display', sans-serif;
+  }
+
+  .icon3:hover::before {
+    content: "profile";
+    animation: animatedContent 1s;
+    color: #cfcfcfc;
+    font-family: 'Wix Madefor Display', sans-serif;
+  }
+
+  .icon2 {
+    left: 8%;
+  }
+
+  .icon3 {
+    right: 0%;
+    display: flex;
+    flex-direction: row-reverse;
+  }
+  
+  .icon5{
+    padding: 10px;
+    background: #cecece;
+    border-radius: 50%;
+    /* filter: invert(1); */
+    position: absolute;
+    /* right: 0; */
+    /* top: 0; */
+    margin: -15px;
+  }
+
+  .main {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  h1,
+  p {
+    font-family: 'Wix Madefor Display', sans-serif;
+    color: #cfcfcf;
+    margin: 0;
+  }
+
+  blink {
+    font-size: 25px;
+    animation: blink 1.2s infinite;
+  }
+
+  @keyframes blink {
+    0% {
+      opacity: 0
     }
 
-    body {
+    49% {
+      opacity: 0
+    }
+
+    50% {
+      opacity: 1
+    }
+  }
+
+  .cat {
+    animation-name: cat;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    margin-left: 30px;
+    margin-top: 5px;
+  }
+
+  .cat {
+    width: 300px;
+    height: 300px;
+  }
+
+  @keyframes cat {
+    0% {
+      transform: translate(0, 0px);
+    }
+
+    50% {
+      transform: translate(0, 15px);
+    }
+
+    100% {
+      transform: translate(0, -0px);
+    }
+  }
+
+  h3 {
+    font-family: 'Wix Madefor Display', sans-serif;
+    margin: 5px;
+    margin-bottom: 15px;
+    font-size: 30px;
+  }
+
+  #submit,
+  #submit2 {
+    width: 25%;
+    height: 35px;
+    border-radius: 5px;
+    border-style: none;
+    line-height: 12px;
+  }
+
+  #submit:hover,
+  #submit2:hover {
+    background-color: #34319c;
+    color: white;
+    transition: 0.5s;
+  }
+
+  .tab {
+    height: 100%;
+  }
+
+  #nickname {
+    font-family: 'Wix Madefor Display', sans-serif;
+    color: #181818;
+    margin-right: 10px;
+    line-height: 1.2;
+    font-size: 20px;
+  }
+
+  #nickname2 {
+    text-align: center;
+    margin: 15px 0px 0px;
+    font-family: 'Wix Madefor Display', sans-serif;
+    font-size: large;
+    margin: 0px;
+    white-space: nowrap;
+    border-bottom: 1px solid #cecece;
+    margin: 20px 0px 0px;
+  }
+
+  .tudo {
+    position: relative;
+    width: 300px;
+    height: 274px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: height .2s ease;
+    border-radius: 10px;
+  }
+  
+  
+  .sign {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .box {
+    position: relative;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px;
+  }
+
+  .tudo .forms {
+    width: 100%;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+  }
+
+  .tudo .forms.log {
+    /*display: none;*/
+  }
+
+  .tudo.active .forms.log {
+    transition: none;
+    transform: translateX(0px)
+  }
+
+  .tudo .forms.sign {
+    position: absolute;
+    transform: translateX(400px);
+    border-radius: 10px;
+  }
+
+  .tudo.active .forms.log {
+    transition: none;
+    transform: translateX(-400px)
+  }
+
+  .tudo.active .forms.sign {
+    transition: none;
+    transform: translateX(0px)
+  }
+
+  input {
+    margin: 5px 20px;
+    padding: 12px;
+    font-size: 15px;
+    border: none;
+    border-radius: 8px;
+    background: #cecece61;
+  }
+
+  input:focus {
+    outline-style: none;
+    box-shadow: 0 0 2px 2px #3091d7;
+    transition: 0.2s ease-in-out;
+  }
+
+  h3,
+  p {
+    margin: 15px;
+  }
+
+  #body {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .text {
+    color: black;
+    font-size: 15px;
+  }
+
+  a {
+    text-decoration: none;
+  }
+  
+  .out{
+    color: #202124;
+    display: none;
+    font-size: 24px;
+    margin: 8px;
+    line-height: 0;
+}
+  }
+
+  #profile {
+    height: 100%;
+    display: none;
+  }
+
+  .conta {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .perfil {
+    background: white;
+    width: 80%;
+    height: 400px;
+    border-radius: 25px;
+    display: flex;
+  }
+  
+  .pictur{
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+
+    
+  .pic {
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    box-shadow: 0px 0px 0px 3px #cecece;
+  }
+
+  .inferior {
+    height: 50%;
+    width: 100%;
+    display: flex;
+  }
+
+  .desc {
+    height: 100%;
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .timeline {
+    height: 100%;
+    width: 100%;
+  }
+  .fa-sign-out-alt:before{
+    position: absolute;
+    line-height: 0.4;
+  }
+  
+  #bios,
+  #bios2 {
+    margin: 15px 15px 0px;
+  }
+
+  #teste,
+  #teste1 {
+    resize: none;
+    white-space: ;
+    outline: none;
+    margin: 0px;
+    border: none;
+    box-shadow: none;
+    padding: 0px;
+    font-size: 16px;
+    width: 100%;
+    background: white;
+    text-align: center;
+    border-bottom: 1px solid #cecece;
+    border-radius: 0px;
+  }
+
+  #submit3,
+  #submit35,
+  #submit4,
+  #submit5 {
+    float: right;
+    background: none;
+    border: none;
+    font-family: 'Wix Madefor Display', sans-serif;
+    font-size: 16px;
+    padding: 0;
+    color: #222771;
+    -webkit-transition: all 0.3s ease-in-out 0s;
+    transition: all 0.3s ease-in-out 0s;
+  }
+
+  #submit4 {
+    right: 0;
+  }
+  
+  #submit35{
+      width: fit-content;
+  }
+
+  #submit3:hover,
+  #submit4:hover,
+  #submit5:hover,
+  #submit35:hover{
+    color: #0396ff;
+  }
+
+  #nomeprof {
+    color: black;
+    text-align: center;
+    font-size: 18px;
+    margin: 10px 0px 0px;
+    font-family: 'Wix Madefor Display', sans-serif;
+  }
+
+  #submit5 {
+    display: block;
+  }
+  
+  #input-file{
+      display: none;
+  }
+
+  @media (max-width: 880px) {
+    .main {
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    span {
+      font-size: clamp(0.8rem, 4vw, 1.5rem);
+    }
+
+    .cat {
+      width: clamp(180px, 50%, 300px);
+      height: clamp(180px, 50vw, 300px);
       margin: 0;
-    }
-
-    .mytabs {
-      display: flex;
-      flex-wrap: wrap;
-      height: 100svh;
-      align-content: flex-start;
-    }
-
-    .mytabs input[type="radio"] {
-      display: none;
-    }
-
-    .mytabs label {
-      padding: 25px;
-      font-weight: bold;
-    }
-
-    .mytabs .tab {
-      width: 100%;
-      order: 1;
-      display: none;
-    }
-
-    .mytabs .tab h2 {
-      font-size: 3em;
-    }
-
-    .mytabs input[type='radio']:checked+label+.tab {
-      display: block;
-    }
-
-    .mytabs input[type="radio"]:checked+label {}
-
-    .menu {
-      display: flex;
-      justify-content: space-between;
-      margin: 20px;
-    }
-
-    .icone {
-      filter: invert(90%);
-      font-size: 22px;
-      position: absolute;
-    }
-
-    .icon1:hover::before {
-      content: "about";
-      animation: animatedContent 1s;
-      color: #cfcfcfc;
-      font-family: 'Wix Madefor Display', sans-serif;
-    }
-
-    .icon2:hover::before {
-      content: "home";
-      animation: animatedContent 1s;
-      color: #cfcfcfc;
-      font-family: 'Wix Madefor Display', sans-serif;
-    }
-
-    .icon3:hover::before {
-      content: "profile";
-      animation: animatedContent 1s;
-      color: #cfcfcfc;
-      font-family: 'Wix Madefor Display', sans-serif;
     }
 
     .icon2 {
-      left: 8%;
-    }
-
-    .icon3 {
-      right: 0%;
-    }
-
-    .main {
-      width: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: absolute;
-      top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
+      transform: translateX(-50%);
     }
 
-    h1,
-    p {
-      font-family: 'Wix Madefor Display', sans-serif;
-      color: #cfcfcf;
-      margin: 0;
+    .tudo.forms {
+      padding-top: 30px;
     }
 
-    blink {
-      font-size: 25px;
-      animation: blink 1.2s infinite;
+    .submit {
+      width: 64px;
     }
+  }
+  
+  #biog{
+    border-bottom: 1px solid #cecece;
+    font-size: 18px;
+    font-family: 'Wix Madefor Display', sans-serif;
+  }
+  
+  .timeline{
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+  }
 
-    @keyframes blink {
-      0% {
-        opacity: 0
-      }
+  #nomeprof2 {
+    display: none;
+  }
 
-      49% {
-        opacity: 0
-      }
+#message {
+    transform: scale(0);
+    transition: transform .3s ease;
+    color: #000;
+    bottom: 10px;
+    width: 290px;
+    font-size: 15px;
+    position: absolute;
+    text-align: center;
+    margin-top: 15px;
+}
 
-      50% {
-        opacity: 1
-      }
-    }
+.valid {
+  color: green;
+  margin: 0px;
+}
 
-    .cat {
-      animation-name: cat;
-      animation-duration: 3s;
-      animation-iteration-count: infinite;
-      animation-timing-function: ease-in-out;
-      margin-left: 30px;
-      margin-top: 5px;
-    }
+.valid:before {
+  position: relative;
+  left: -35px;
+}
 
-    .cat {
-      width: 300px;
-      height: 300px;
-    }
+/* Add a red text color and an "x" when the requirements are wrong */
+.invalid {
+  color: red;
+  margin: 0px;
+}
 
-    @keyframes cat {
-      0% {
-        transform: translate(0, 0px);
-      }
+.invalid:before {
+  position: relative;
+  left: -35px;
+}
 
-      50% {
-        transform: translate(0, 15px);
-      }
-
-      100% {
-        transform: translate(0, -0px);
-      }
-    }
-
-    h3 {
-      font-family: 'Wix Madefor Display', sans-serif;
-      margin: 5px;
-      margin-bottom: 15px;
-      font-size: 30px;
-    }
-
-    input:focus {
-      outline-style: none;
-      box-shadow: none;
-    }
-
-    #submit,
-    #submit2 {
-      width: 25%;
-      height: 35px;
-      border-radius: 5px;
-      border-style: none;
-      margin-top: 15px;
-      line-height: 12px;
-    }
-
-    #submit:hover,
-    #submit2:hover {
-      background-color: #34319c;
-      color: white;
-      transition: 0.5s;
-    }
-
-    .tab {
-      height: 100%;
-    }
-
-    .tudo {
-      position: relative;
-      width: 300px;
-      height: 400px;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .sign {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .box {
-      position: relative;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .tudo .forms {
-      width: 100%;
-      border-radius: 10px;
-      background-color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin: 10px;
-    }
-
-    .tudo .forms.log {
-      /*display: none;*/
-    }
-
-    .tudo.active .forms.log {
-      transition: none;
-      transform: translateX(0px)
-    }
-
-    .tudo .forms.sign {
-      position: absolute;
-      transform: translateX(400px);
-      border-radius: 10px;
-    }
-
-    .tudo.active .forms.log {
-      transition: none;
-      transform: translateX(-400px)
-    }
-
-    .tudo.active .forms.sign {
-      transition: none;
-      transform: translateX(0px)
-    }
-
-    input {
-      margin: 5px 20px;
-      padding: 12px;
-      font-size: 15px;
-      width: 80%;
-      border: none;
-      border-radius: 8px;
-      background: #cecece61;
-    }
-
-    h3,
-    p {
-      margin: 15px;
-    }
-
-    #body {
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .text {
-      color: black;
-      font-size: 15px;
-    }
-
-    a {
-      text-decoration: none;
-      color: #2d36a6;
-    }
-
-    .b {
-      display: none;
-    }
-
-    #profile {
-      height: 100%;
-      display: none;
-    }
-
-    .conta {
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
+h4{
+    margin: 5px;
+}
+  @media (max-width: 600px) {
     .perfil {
-      background: white;
-      width: 80%;
-      height: 400px;
-      border-radius: 25px;
+      flex-direction: column;
+      align-items: center;
     }
-
-    .pic {
-      width: 30%;
-      border-radius: 50%;
-      margin: 10px;
+    .pic{
+        object-fit: fill;
+        width: 120px;
+        height: 120px;
+        margin-right: 20px;
+        margin-left: 20px;
     }
-
-    .inferior {
-      height: 50%;
-      width: 100%;
-      display: flex;
-    }
-
-    @media (max-width: 880px) {
-      .main {
-        flex-direction: column;
-        justify-content: center;
-      }
-
-      span {
-        font-size: clamp(0.8rem, 4vw, 1.5rem);
-      }
-
-      .cat {
-        width: clamp(180px, 50%, 300px);
-        height: clamp(180px, 50vw, 300px);
-        margin: 0;
-      }
-
-      .icon2 {
-        left: 50%;
-        transform: translateX(-50%);
-      }
-
-      .tudo.forms {
-        padding-top: 30px;
-      }
-
-      .submit {
-        width: 64px;
-      }
-    }
-  </style>
-</head>
+}
+  minlenght {
+    background: black;
+  }
+</style>
 
 <body>
+
   <div class="mytabs">
     <input type="radio" id="tabfree" name="mytabs" checked="checked">
     <label for="tabfree" class="fas fa-info icon1 icone"></label>
@@ -366,110 +594,313 @@
         <img class="cat" src="https://cdn1.iconfinder.com/data/icons/education-941/512/Smart.png">
       </div>
     </div>
-    <input type="radio" id="tabsilver" name="mytabs">
-    <label for="tabsilver" class="fa fa-home icon2 icone"></label>
     <div class="tab">
     </div>
-
     <input type="radio" id="tabgold" name="mytabs">
-    <label for="tabgold" class="fas fa-user-circle icon3 icone"></label>
+    <label for="tabgold" class="fas fa-user-circle icon3 icone"><span id="nickname"></span><a href="logout.php" class="out fas fa-sign-out-alt fa-rotate-180"></a></label>
     <div class="tab">
       <div id="body">
         <div class="tudo">
-          <div class="forms log">
-            <h3>Log in</h3>
-            <div class="box">
 
-              <!--"aqui entra na conta"-->
-              <form action="login.php" method="POST">
-                <input id="email2" type="email" name="email2" placeholder="email" required>
-                <input type="password" id="password2" name="password2" placeholder="password" minlenght="8" required>
-                <input id="submit2" type="submit">
+          <div class="forms log">
+
+            <h3>Log in</h3>
+            
+            <div class="box">
+              <form action="login.php" method="POST" autocomplete="off">
+                <input id="email2" type="email2" name="email2" placeholder="email">
+                <div class="view">
+                  <input type="password" id="password2" name="password2" placeholder="password">
+                  <i class="fas fa-eye" id="togglePassword" style="margin-left: -50px; cursor: pointer; position: absolute; line-height: 3em; color: #202124b8;"></i>
+                </div>
+
+                <input id="submit2" type="submit"onclick="myfunction13()">
+                <p class="text">don't you have an account?<a href="#" class="signlink" onclick="myFunction10()"> register</a></p>
               </form>
-              <p class="text">don't you have an account?<a href="#" class="signlink"> register</a></p>
             </div>
           </div>
 
           <div class="forms sign">
             <h3>Sign up</h3>
             <form action="gabiru.php" method="POST">
-              <!--"dados que vão para o cadastro, aqui se registra"-->
-              <input id="name" name="name" type="name" placeholder="name">
-              <input id="email" name="email" type="email" placeholder="email" required>
-              <input type="password" id="password" name="password" placeholder="password" minlength="8" onkeyup='check();' required>
+                
+              <input id="name" type="name" name="name" placeholder="name" required>
+              
+              <input id="email" type="email" placeholder="email" name="email" required>
+              
+              <input type="password" id="password" for="password" class="password" name="password" placeholder="password" minlength="8" onkeyup='check();' pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" onfocus="myFunction11()" required>
+
               <input type="password" id="confirm_password" name="confirm_password" placeholder="confirm password" onkeyup='check();'>
-              <input id="submit" type="submit" name="submit">
+              
+              <div id="message">
+                    <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+                    <p id="capital" class="invalid">A <b>uppercase</b> letter</p>
+                    <p id="number" class="invalid">A <b>number</b></p>
+                    <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+              </div>
+
+              <input id="submit" type="submit">
+              
             </form>
-            <p class="text">do already have?<a href="#" class="loglink"> log in</a></p>
+            <p class="text">do already have?<a href="#" class="loglink" onclick="myFunction12()"> log in</a></p>
+              
           </div>
         </div>
       </div>
-      <div id="profile">
-        <div class="conta">
-          <div class="perfil">
-            <div class="pictures">
-              <img src="https://scontent.fpvh3-1.fna.fbcdn.net/v/t39.30808-6/350143838_178268054907815_4360025859828229905_n.jpg?_nc_cat=111&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeFuNp9LdIkRCnDx454cMzS1ALlzltNJt-0AuXOW00m37YRUr_8HaVVxX63aRSu0_jqlqmr1UrBwWbKbHH9_ykv1&_nc_ohc=ef-s1McrQZUAX-uGSdf&_nc_ht=scontent.fpvh3-1.fna&oh=00_AfBRwuG47S_R1_f7plRe33q8pdJi3TL5uxyUrhzE88UdSA&oe=64A48D4C" class="pic">
-              <div class="inferior">
-                <div class="desc">
-                  <input type="text" id="teste">
-                  <button type="submit" id="submit3" onclick="myFunction()">enviar</button>
+      
+      <div id="profile" style="
+    display: none;">
+
+      <div class="conta">
+        <div class="perfil">
+          <div class="pictures">
+            <div class="desc">
+              <div class="pictur">
+                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" class="pic" id="profile-pic">
+                <label for="input-file" class="fas fa-edit icon5"></label>
+              </div>
+              <input type="file" accept="image/jpeg, image/png" id="input-file">
+              <div id="bios2">
+                <form action="edit-name.php" method="POST">
+                    <input type="text" id="teste1" name="textt" required></input>
+                    <input id="submit4" type="submit" onclick="myFunction3()"></input>
+                </form>
+              </div>
+              
+              <span id="nickname2"></span>
+              
+              <button id="submit5" type="submit" onclick="myFunction4()">editar</button>
+                
+<?php $biogame="Olá você está na sua conta"?>
+<?php if (isset($ninjinha)): ?>
+    <?php $gabgame=htmlspecialchars($ninjinha['Nome'])?>
+    <?php $biogame=htmlspecialchars($ninjinha['bio'])?>
+
+<?php else: ?>
+<?php $gabgame=NULL?>
+
+<?php endif; ?>
+
+                <p id="nomeprof"></p>
+
+              </div>
+
+            </div>
+
+            <div class="inferior">
+              <div class="timeline">
+                <div id="bios">
+                    <form action="edit-bio.php" method="POST">
+                        <span style="font-family:'Wix Madefor Display', sans-serif;">bio</span>
+                        <input id="submit3" type="submit" onclick="myFunction1()">
+                        <textarea rows="1" type="text" id="teste" name="bio" placeholder="Write about you" onclick="myFunction()"></textarea>
+                    </form>
                 </div>
-                <div class="timeline">
-                  <div class="bios">
-                  </div>
-                  <div class="pub">
-                  </div>
-                </div>
+                <button id="submit35" onclick="myFunction8()">editar</button>
+                <span id="biog"></span>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    
-    <script>
-    
-<?php
+  </div>
 
-require __DIR__ .  "/database.php";
+<script>
+      
+  const todos = document.querySelector(".tudo");
+  const logon = document.querySelector(".loglink");
+  const register = document.querySelector(".signlink");
+  var aval = '<?=$is_available?>';
 
-$sql0 = sprintf("SELECT * FROM ninjinha
-                WHERE Email = '%s'",
-                $conexao->real_escape_string($_POST["email2"]));
-                
-$result = $conexao->query($sql0);
+  register.addEventListener("click", () => {
+    todos.classList.add('active');
+  });
+  logon.addEventListener("click", () => {
+    todos.classList.remove('active');
+  });
 
-$is_available = $result->num_rows === 0;
+  document.getElementById("submit").disabled = true;
+  var check = function() {
+    if (document.getElementById('password').value ==
+      document.getElementById('confirm_password').value) {
+      document.getElementById('confirm_password').style.color = 'green';
+      document.getElementById("submit").disabled = false;
+    } else {
+      document.getElementById('confirm_password').style.color = "red";
+      document.getElementById("submit").disabled = true;
+    }
+  }
+  
+  const print = document.querySelector("#print2");
+  const biogra = '<?=$biogame?>';
+  const nome2 = '<?=$gabgame?>';
+  
+  if (aval == false) {
+        document.getElementById('body').style.display = 'none';
+        document.getElementById('profile').style.display = 'block';
+        document.getElementById('nickname').innerHTML = nome2;
+        document.getElementById('nickname2').innerHTML = nome2;
+        document.getElementById('biog').innerHTML = biogra;
+        document.querySelector(".out").style.display="block";
+  }
+  
+  document.getElementById("submit3").style.display = "none";
+  document.getElementById("submit4").style.display = "none";
 
-?>    
+  function myFunction() {
+    document.getElementById("submit3").style.display = "block";
+    document.getElementById("bios").style.transition = "1s";
+    document.getElementById("bios").style.borderColor = "blue";
+  }
+
+  function myFunction2() {
+    document.getElementById("submit4").disabled = false;
+    document.getElementById("bios2").style.transition = "1s";
+    document.getElementById("bios2").style.borderColor = "blue";
+  }
+
+  function myFunction3() {
+    document.getElementById("teste1").required;
+  }
+  
+  document.getElementById("bios").style.display = "none";
+  
+  function myFunction8(){
+    document.getElementById("bios").style.display = "block";
+    document.getElementById("bios").style.borderColor = "#cecece";
+    document.getElementById("submit35").style.display= "none";
+  }
+
+  function myFunction1() {
+    document.getElementById("bios").style.display = "none";
+  }
+  var textarea = document.querySelector('#teste');
+  textarea.addEventListener('keydown', autosize);
+
+  function autosize() {
+    var el = this;
+    setTimeout(function() {
+      el.style.cssText = 'height:auto; padding:0';
+      // for box-sizing other than "content-box" use:
+      // el.style.cssText = '-moz-box-sizing:content-box';
+      el.style.cssText = 'height:' + el.scrollHeight + 'px';
+    }, 0);
+  }
+  
+  const salvar = document.getElementById("submit4");
+ 
+
+  function myFunction3() {
+    document.getElementById("submit4").style.display = "none";
+    document.getElementById("submit5").style.display = "block";
+    document.getElementById("bios2").style.display = "none";
+    document.getElementById("nomeprof").style.display = "block"
+}
+
+  function myFunction4() {
+    document.getElementById("bios2").style.display = "block";
+    document.getElementById("nomeprof").style.display = "none";
+    document.getElementById("submit5").style.display = "none";
+    document.getElementById("bios2").style.borderColor = "#cecece";
+    document.getElementById("submit4").style.display = "block";
+  }
+  
+  function myFunction10(){
+      document.querySelector(".tudo").style.height = "376px";
+  }
+  
+  function myFunction11(){
+      document.getElementById("message").style.transform = "scale(1)";
+      document.getElementById("message").style.position = "relative";
+      document.querySelector(".tudo").style.height = "476px";
+  }
+  
     
-      const todos = document.querySelector(".tudo");
-      const logon = document.querySelector(".loglink");
-      const register = document.querySelector(".signlink");
-      var aval = '<?= $is_available?>';
-      register.addEventListener("click", () => {
-        todos.classList.add('active');
-      });
-      logon.addEventListener("click", () => {
-        todos.classList.remove('active');
-      });
-      var check = function() {
-        if (document.getElementById('password').value ==
-          document.getElementById('confirm_password').value) {
-          document.getElementById('confirm_password').style.color = 'green';
-          document.getElementById("submit").disabled = false;
-        } else {
-          document.getElementById('confirm_password').style.color = "red";
-          document.getElementById("submit").disabled = true;
-        }
-      }
-      if (aval == false) {
-        document.getElementById("body").style.display = "none";
-        document.getElementById("profile").style.display = "block";
-      }
-    </script>
-    
-    
+  function myFunction12(){
+      document.getElementById("message").style.transform = "scale(0)";
+      document.getElementById("message").style.position = "absolute";
+      document.querySelector(".tudo").style.height = "274px";
+  }
+  
+  
+  myFunction3();
+  
+  let picture = document.getElementById('profile-pic');
+  let file = document.getElementById('input-file');
+  
+  file.onchange = function(){
+      picture.src = URL.createObjectURL(file.files[0]);
+  }
+
+  function myFunction6() {
+    var x = document.getElementById("password2");
+    if (x.type === "password") {
+      x.type = "text";
+    } else {
+      x.type = "password";
+    }
+  }
+  
+  const togglePassword = document.querySelector('#togglePassword');
+  const password = document.querySelector('#password2');
+  togglePassword.addEventListener('click', function(e) {
+    // toggle the type attribute
+    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+    password.setAttribute('type', type);
+    // toggle the eye slash icon
+    this.classList.toggle('fa-eye-slash');
+  });
+  
+var myInput = document.getElementById("password");
+var letter = document.getElementById("letter");
+var capital = document.getElementById("capital");
+var number = document.getElementById("number");
+var length = document.getElementById("length");
+
+// When the user starts to type something inside the password field
+myInput.onkeyup = function() {
+  // Validate lowercase letters
+  var lowerCaseLetters = /[a-z]/g;
+  if(myInput.value.match(lowerCaseLetters)) {  
+    letter.classList.remove("invalid");
+    letter.classList.add("valid");
+  } else {
+    letter.classList.remove("valid");
+    letter.classList.add("invalid");
+  }
+  
+  // Validate capital letters
+  var upperCaseLetters = /[A-Z]/g;
+  if(myInput.value.match(upperCaseLetters)) {  
+    capital.classList.remove("invalid");
+    capital.classList.add("valid");
+  } else {
+    capital.classList.remove("valid");
+    capital.classList.add("invalid");
+  }
+
+  // Validate numbers
+  var numbers = /[0-9]/g;
+  if(myInput.value.match(numbers)) {  
+    number.classList.remove("invalid");
+    number.classList.add("valid");
+  } else {
+    number.classList.remove("valid");
+    number.classList.add("invalid");
+  }
+  
+  // Validate length
+  if(myInput.value.length >= 8) {
+    length.classList.remove("invalid");
+    length.classList.add("valid");
+  } else {
+    length.classList.remove("valid");
+    length.classList.add("invalid");
+  }
+}
+  
+</script>
 </body>
 
 </html>
