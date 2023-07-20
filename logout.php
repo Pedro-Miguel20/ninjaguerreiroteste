@@ -4,9 +4,10 @@ session_start();
 
 session_destroy();
 
-header("Location: index.php");
-
 session_start();
 
-session_regenerate_id();
+session_regenerate_id(true);
+
+header("Location: index.php");
+
 ?>
