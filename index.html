@@ -1,19 +1,17 @@
 <?php
 if ( ! isset($_SESSION["user_id"])) {
     session_set_cookie_params(['httponly' => true]);
-    session_id("sessprim");
     session_start();
 }
-?>
 
-<?php
 require __DIR__. "/database.php";
   if (isset($_SESSION["user_id"])) {
-        $sql03 = "SELECT * FROM ninjinha WHERE id = {$_SESSION["user_id"]}";
+        $sql03 = "SELECT * FROM ninjinha WHERE id = ('".$_SESSION['user_id']."') ";
         $result = $conexao-> query($sql03);
         $ninjinha = $result-> fetch_assoc();
         $_SESSION["user_id"] = $ninjinha["id"];
-  } 
+  }
+
 ?>
 
 <script>
@@ -34,6 +32,7 @@ require __DIR__ . "/database.php";
   <meta name="viewport" content="initial-scale=1">
   <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
 </head>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Wix+Madefor+Display&display=swap');
@@ -148,6 +147,7 @@ require __DIR__ . "/database.php";
 
   h1,
   p {
+    text-align: center;
     font-family: 'Wix Madefor Display', sans-serif;
     color: #cfcfcf;
     margin: 0;
@@ -208,7 +208,8 @@ require __DIR__ . "/database.php";
   }
 
   #submit,
-  #submit2 {
+  #submit2,
+  .btn{
     width: 25%;
     height: 35px;
     border-radius: 5px;
@@ -217,7 +218,8 @@ require __DIR__ . "/database.php";
   }
 
   #submit:hover,
-  #submit2:hover {
+  #submit2:hover,
+  .btn:hover{
     background-color: #34319c;
     color: white;
     transition: 0.5s;
@@ -340,10 +342,12 @@ require __DIR__ . "/database.php";
   .text {
     color: black;
     font-size: 15px;
+    display: inherit;
   }
 
   a {
     text-decoration: none;
+    display:none;
   }
   
   .out{
@@ -382,7 +386,7 @@ require __DIR__ . "/database.php";
   }
 
     
-  .pic {
+  .cropped {
     width: 160px;
     height: 160px;
     border-radius: 50%;
@@ -409,6 +413,11 @@ require __DIR__ . "/database.php";
   .fa-sign-out-alt:before{
     position: absolute;
     line-height: 0.4;
+  }
+  
+  .register{
+      color: blue;
+      display: block;
   }
   
   #bios,
@@ -478,6 +487,102 @@ require __DIR__ . "/database.php";
   #input-file{
       display: none;
   }
+  
+  .pic2{
+  height: 90%;
+  border-radius: 5%;
+  top: 50%;
+    left: 50%;
+    position: relative;
+    transform: translate(-50%, -50%);
+}
+
+.popup{
+  width: 100%;
+  height: 100%;
+  display: none;
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,.9);
+}
+
+#cropped2{
+  height: 80%;
+  position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#popu2{
+  width: 100%;
+  height: 100%;
+  display: none;
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  background: rgba(0,0,0,.9);
+}
+
+.X{
+  color: white;
+  font-size: 40px;
+  top: 0;
+  margin: 20px;
+  position: absolute;
+}
+
+
+.page {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.box2 {
+	padding: 0.5em;
+	width: 100%;
+	margin:0.5em;
+}
+
+.box-2 {
+	padding: 0.5em;
+}
+
+.box4{
+    position: absolute;
+    bottom: 20;
+    display: flex;
+    /* flex-direction: row; */
+    /* align-content: center; */
+    align-items: flex-end;
+}
+.options label,
+.options input{
+	width:4em;
+	padding:0.5em 1em;
+}
+.btn{
+    font-size: 20px;
+    line-height: 0;
+    padding: 20px;
+    width: 100%;
+    border-radius: 15px;
+}
+
+.hide {
+	display: none;
+}
+
+#image{
+    max-width: 100%;
+    height: 80%;
+}
 
   @media (max-width: 880px) {
     .main {
@@ -523,6 +628,14 @@ require __DIR__ . "/database.php";
 
   #nomeprof2 {
     display: none;
+  }
+  
+  .block{
+      border: none;
+      opacity: 1;
+      background: transparent;
+      outline: none;
+      position: absolute;
   }
 
 #message {
@@ -580,7 +693,6 @@ h4{
 </style>
 
 <body>
-
   <div class="mytabs">
     <input type="radio" id="tabfree" name="mytabs" checked="checked">
     <label for="tabfree" class="fas fa-info icon1 icone"></label>
@@ -607,28 +719,34 @@ h4{
             <h3>Log in</h3>
             
             <div class="box">
-              <form action="login.php" method="POST" autocomplete="off">
-                <input id="email2" type="email2" name="email2" placeholder="email">
+              <form action="login.php" method="POST" autocomplete="off" required>
+                <input id="email2" type="email2" name="email2" placeholder="email" required>
                 <div class="view">
                   <input type="password" id="password2" name="password2" placeholder="password">
                   <i class="fas fa-eye" id="togglePassword" style="margin-left: -50px; cursor: pointer; position: absolute; line-height: 3em; color: #202124b8;"></i>
                 </div>
+                
 
-                <input id="submit2" type="submit"onclick="myfunction13()">
-                <p class="text">don't you have an account?<a href="#" class="signlink" onclick="myFunction10()"> register</a></p>
+                <input id="submit2" type="submit">
+                <p class="text">don't you have an account?<a href="#logon" class="signlink register" onclick="myFunction10()" onkeydown="return (event.keyCode!=9);"> register</a><a href="#"class="block" onkeydown="return (event.keyCode!=9);"></a></p>
+                
               </form>
+              
             </div>
           </div>
+          
 
           <div class="forms sign">
-            <h3>Sign up</h3>
+            <h3 id="logon">Sign up</h3>
+            
             <form action="gabiru.php" method="POST">
                 
-              <input id="name" type="name" name="name" placeholder="name" required>
+                
+              <input id="name" type="name" name="name" placeholder="name" required autocomplete="off">
               
-              <input id="email" type="email" placeholder="email" name="email" required>
+              <input id="email" type="email" placeholder="email" name="email" required autocomplete="off">
               
-              <input type="password" id="password" for="password" class="password" name="password" placeholder="password" minlength="8" onkeyup='check();' pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" onfocus="myFunction11()" required>
+              <input type="password" id="password" for="password" class="password" name="password" placeholder="password" minlength="8" onkeyup='check();' pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}(?=.*[!@#$%^&*_=+-])$" onfocus="myFunction11()" required>
 
               <input type="password" id="confirm_password" name="confirm_password" placeholder="confirm password" onkeyup='check();'>
               
@@ -636,34 +754,68 @@ h4{
                     <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
                     <p id="capital" class="invalid">A <b>uppercase</b> letter</p>
                     <p id="number" class="invalid">A <b>number</b></p>
+                    <p id="special" class="invalid">A <b>special</b> character</p>
                     <p id="length" class="invalid">Minimum <b>8 characters</b></p>
               </div>
 
               <input id="submit" type="submit">
               
             </form>
-            <p class="text">do already have?<a href="#" class="loglink" onclick="myFunction12()"> log in</a></p>
-              
+            <p class="text">do already have?<a href="#" class="loglink register" onclick="myFunction12()" onkeydown="return (event.keyCode!=9);"> log in</a></p>
           </div>
         </div>
+        <button href="#"class="block" onkeydown="return (event.keyCode!=9);"></button> 
       </div>
+      
       
       <div id="profile" style="
     display: none;">
 
       <div class="conta">
+          <div id="popu2">
+                <span class="X">×</span>
+                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="cropped2" id="cropped2" alt="">
+          </div>
+          <div class="popup">
+                  <span class="X">×</span>
+                  <main class="page">
+  <!-- input file -->
+                    <div class="box2" style="display:none;">
+                        <input type="file" id="file-input">
+                    </div>
+  <!-- leftbox -->
+                    <div class="box-2">
+                        <div class="result"></div>
+                    </div>
+  <!--rightbox-->
+                    <div class="box-2 img-result hide">
+    <!-- result of crop -->
+                        
+                    </div>
+  <!-- input file -->
+                    <div class="box4">
+                        <button class="btn save hide" onclick="myFunction21()">Save</button>
+                        <div class="options hide">
+                        </div>
+    <!-- save btn -->
+    <!-- download btn -->
+                    </div>
+                </main>
+            </div>
+          <div class="perfil">
         <div class="perfil">
           <div class="pictures">
             <div class="desc">
-              <div class="pictur">
-                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_640.png" class="pic" id="profile-pic">
-                <label for="input-file" class="fas fa-edit icon5"></label>
+              <div class="pictur" >
+                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="cropped" id="cropped" alt="" onclick="myFunction22()">
+                <label for="file-input" class="fas fa-edit icon5" onclick="myFunction20()"></label>
               </div>
-              <input type="file" accept="image/jpeg, image/png" id="input-file">
+              <div class="boxcrop">
+              </div>
               <div id="bios2">
                 <form action="edit-name.php" method="POST">
                     <input type="text" id="teste1" name="textt" required></input>
-                    <input id="submit4" type="submit" onclick="myFunction3()"></input>
+                    <input id="submit4" name="submit4" type="submit" onclick="myFunction3()"></input>
                 </form>
               </div>
               
@@ -706,6 +858,7 @@ h4{
     </div>
   </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 <script>
       
   const todos = document.querySelector(".tudo");
@@ -719,7 +872,7 @@ h4{
   logon.addEventListener("click", () => {
     todos.classList.remove('active');
   });
-
+    document.getElementById("teste1").style.display= "none";
   document.getElementById("submit").disabled = true;
   var check = function() {
     if (document.getElementById('password').value ==
@@ -770,11 +923,13 @@ h4{
     document.getElementById("bios").style.display = "block";
     document.getElementById("bios").style.borderColor = "#cecece";
     document.getElementById("submit35").style.display= "none";
+    document.getElementById("biog").style.display = "none";
   }
 
   function myFunction1() {
     document.getElementById("bios").style.display = "none";
   }
+  
   var textarea = document.querySelector('#teste');
   textarea.addEventListener('keydown', autosize);
 
@@ -796,6 +951,7 @@ h4{
     document.getElementById("submit5").style.display = "block";
     document.getElementById("bios2").style.display = "none";
     document.getElementById("nomeprof").style.display = "block"
+    document.getElementById("teste1").style.display= "none";
 }
 
   function myFunction4() {
@@ -804,10 +960,13 @@ h4{
     document.getElementById("submit5").style.display = "none";
     document.getElementById("bios2").style.borderColor = "#cecece";
     document.getElementById("submit4").style.display = "block";
+    document.getElementById("nickname2").style.display = "none";
+    document.getElementById("teste1").style.display= "block";
   }
   
   function myFunction10(){
       document.querySelector(".tudo").style.height = "376px";
+      document.getElementById("name").focus();
   }
   
   function myFunction11(){
@@ -821,17 +980,60 @@ h4{
       document.getElementById("message").style.transform = "scale(0)";
       document.getElementById("message").style.position = "absolute";
       document.querySelector(".tudo").style.height = "274px";
+      document.getElementById("email2").focus();
   }
-  
-  
+
+  function myFunction20(){
+      document.querySelector(".popup").style.display="block";
+  }
+   document.querySelector('.popup span').onclick = () =>{
+			document.querySelector('.popup').style.display = 'none';
+   }
+   
+   function myFunction22(){
+       document.querySelector("#popu2").style.display="block";
+       
+        document.querySelector('#popu2 span').onclick = () =>{
+			document.querySelector('#popu2').style.display = 'none';
+        }
+   }
+
+window.onload = function() {
+        document.querySelector('.slides img').forEach(image => {image.onclick = () => {
+            document.querySelector('.poopup').style.display = 'block';
+            document.querySelector('.poopup img').src = image.getAttribute('src');
+          }
+        });
+        document.querySelector('.poopup span').onclick = () => {
+          document.querySelector('.poopup').style.display = 'none';
+        }
+}
+var KeypressFunctions = [];
+KeypressFunctions['Tab'.charCodeAt(0)] = function _keypressT() {
+  //do something specific for T
+  input.focus();
+  input.select();
+}
+
+let picture = document.getElementById('cropped');
+let file = document.getElementById("file-input");
+let picpopup = document.getElementById("cropped2");
+
+function myFunction18() {
+  document.getElementById("name").focus();
+}
+
+function myFunction21(){
+    picture.src = URL.createObjectURL(file.files[0]);
+    picpopup.src = URL.createObjectURL(file.files[0]);
+    document.querySelector('.popup').style.display = 'none';
+}
+
+function myFunction16() {
+    document.querySelector(".popup").style.display = "block";
+}
+
   myFunction3();
-  
-  let picture = document.getElementById('profile-pic');
-  let file = document.getElementById('input-file');
-  
-  file.onchange = function(){
-      picture.src = URL.createObjectURL(file.files[0]);
-  }
 
   function myFunction6() {
     var x = document.getElementById("password2");
@@ -855,6 +1057,7 @@ h4{
 var myInput = document.getElementById("password");
 var letter = document.getElementById("letter");
 var capital = document.getElementById("capital");
+var special = document.getElementById("special");
 var number = document.getElementById("number");
 var length = document.getElementById("length");
 
@@ -879,6 +1082,16 @@ myInput.onkeyup = function() {
     capital.classList.remove("valid");
     capital.classList.add("invalid");
   }
+  
+    // Validate capital letters
+  var specialLetters = /[!@#$%^&*_=+-]/g;
+  if(myInput.value.match(specialLetters)) {  
+    special.classList.remove("invalid");
+    special.classList.add("valid");
+  } else {
+    special.classList.remove("valid");
+    special.classList.add("invalid");
+  }
 
   // Validate numbers
   var numbers = /[0-9]/g;
@@ -899,8 +1112,69 @@ myInput.onkeyup = function() {
     length.classList.add("invalid");
   }
 }
-  
+
+// vars
+let result = document.querySelector('.result'),
+img_result = document.querySelector('.img-result'),
+img_w = document.querySelector('.img-w'),
+img_h = document.querySelector('.img-h'),
+options = document.querySelector('.options')
+save = document.querySelector('.save'),
+cropped = document.querySelector('.cropped'),
+dwn = document.querySelector('.download'),
+upload = document.querySelector('#file-input'),
+cropper = '';
+
+// on change show image with crop options
+upload.addEventListener('change', (e) => {
+  if (e.target.files.length) {
+		// start file reader
+    const reader = new FileReader();
+    reader.onload = (e)=> {
+      if(e.target.result){
+				// create new image
+				let img = document.createElement('img');
+				img.id = 'image';
+				img.src = e.target.result
+				// clean result before
+				result.innerHTML = '';
+				// append new image
+        result.appendChild(img);
+				// show save btn and options
+				save.classList.remove('hide');
+				options.classList.remove('hide');
+				// init cropper
+				cropper = new Cropper(image, {
+                    aspectRatio: 1 / 1,
+				    viewMode: 3,
+				})
+      }
+    };
+    reader.readAsDataURL(e.target.files[0]);
+  }
+});
+
+// save on click
+save.addEventListener('click',(e)=>{
+  e.preventDefault();
+  // get result to data uri
+  let imgSrc = cropper.getCroppedCanvas({
+		width: img_w.value // input value
+	}).toDataURL();
+  // remove hide class of img
+  cropped.classList.remove('hide');
+	img_result.classList.remove('hide');
+	// show image cropped
+  cropped.src = imgSrc;
+  dwn.classList.remove('hide');
+  dwn.download = 'imagename.png';
+  dwn.setAttribute('href',imgSrc);
+});
+
+
+
 </script>
+    
 </body>
 
 </html>
