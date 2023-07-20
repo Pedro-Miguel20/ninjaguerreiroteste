@@ -1,8 +1,15 @@
 <?php
 
+session_set_cookie_params(['httponly' => true]);
+session_start();
+
 require __DIR__ . "/database.php";
     
     // include_once __DIR__ . "/index.php"; causador da mal renderização
+    
+    $email2 = $_POST["email2"];
+    
+    $email3 = strtolower($email2);
     
     $sql01 = sprintf("SELECT * FROM ninjinha WHERE Email = '%s'", 
     $conexao->real_escape_string($_POST["email2"]));
@@ -15,13 +22,11 @@ if ($ninjinha) {
         
         if (password_verify($_POST["password2"], $ninjinha["Hashi"])) {
             
+            session_regenerate_id(true);
+            
             $_SESSION["user_id"] = $ninjinha["id"];
             
-            include_once __DIR__ . "/index.php";
-            
-            if ( ! isset($_SESSION["user_id"])) {
-            session_regenerate_id(true);
-            }
+            require __DIR__ . "/index.php";
             
             ob_start();
             $is_available = false;
