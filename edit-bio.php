@@ -1,9 +1,10 @@
 <?php
-
+session_set_cookie_params(['httponly' => true]);
 session_start();
 
 $molho = $_SESSION['user_id'];
 $bios = $_POST['bio'];
+$_SESSION['biologia'] = $_POST['bio']; //
 
 require __DIR__ . "/database.php";
 
@@ -11,6 +12,7 @@ require __DIR__ . "/database.php";
     SET bio = ?
     WHERE id = ?
     ");
+    
     
     $stmt = mysqli_stmt_init($conexao);
 
@@ -24,15 +26,12 @@ require __DIR__ . "/database.php";
     mysqli_stmt_execute($stmt);
     
     mysqli_close($conexao);
-    ob_start();
     
     session_regenerate_id(true);
     
-    $getsess = ob_get_contents();
+    var_dump($bios);
     
     header("Location: index.php");
-    
-    echo $getsess;
-    
-    ob_end_clean();
+    exit;
+
 ?>
