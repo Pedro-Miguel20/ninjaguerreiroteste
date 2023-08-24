@@ -1,3 +1,30 @@
+<?php
+if ( ! isset($_SESSION["user_id"])) {
+    session_set_cookie_params(['httponly' => true]);
+    session_start();
+}
+
+require __DIR__. "/database.php";
+  if (isset($_SESSION["user_id"])) {
+        $sql03 = "SELECT * FROM ninjinha WHERE id = ('".$_SESSION['user_id']."') ";
+        $result = $conexao-> query($sql03);
+        $ninjinha = $result-> fetch_assoc();
+        $_SESSION["user_id"] = $ninjinha["id"];
+        var_dump($_SESSION);
+  }
+
+?>
+
+<script>
+<?php
+require __DIR__ . "/database.php";
+  $sql01 = sprintf("SELECT * FROM ninjinha WHERE Email = '%s'", $conexao-> real_escape_string($_POST["email2"]));
+  $result = $conexao-> query($sql01);
+  $is_available = ($result-> num_rows === 0);
+?>
+
+<?php ?>
+</script>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +38,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
 </head>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Wix+Madefor+Display&display=swap');
+   @import url('https://fonts.googleapis.com/css2?family=Wix+Madefor+Display&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100&display=swap');
   @import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;1,100&display=swap');
 
@@ -51,11 +78,12 @@
   }
 
   .mytabs input[type='radio']:checked+label+.tab {
-    display: block;
+        display: block;
   }
 
   .mytabs input[type="radio"]:checked+label {}
-
+  
+   
   .menu {
     display: flex;
     justify-content: space-between;
@@ -185,7 +213,7 @@
 
   #submit,
   #submit2,
-  .btn{
+  .btn, #submit6{
     width: 25%;
     height: 35px;
     border-radius: 5px;
@@ -195,7 +223,8 @@
 
   #submit:hover,
   #submit2:hover,
-  .btn:hover{
+  .btn:hover,
+  #submit6:hover{
     background-color: #34319c;
     color: white;
     transition: 0.5s;
@@ -222,17 +251,17 @@
     white-space: nowrap;
     border-bottom: 1px solid #cecece;
     margin: 20px 0px 0px;
+    width: max-content;
   }
 
   .tudo {
     position: relative;
     width: 300px;
-    height: 274px;
+    height: 295px;
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: height .2s ease;
     border-radius: 10px;
   }
   
@@ -251,6 +280,15 @@
     flex-direction: column;
     align-items: center;
     margin: 0px;
+  }
+  
+  .forgot{
+    display: flex;
+    flex-direction: row-reverse;
+    position: relative;
+    right: 23px;
+    margin-top: 8px;
+    font-size: 14px;
   }
 
   .tudo .forms {
@@ -287,6 +325,10 @@
     transition: none;
     transform: translateX(0px)
   }
+  
+  .forgot:focus.log{
+      display:none;
+  }
 
   input {
     margin: 5px 20px;
@@ -305,7 +347,7 @@
 
   h3,
   p {
-    margin: 15px;
+    margin: 10px;
   }
 
   #body {
@@ -315,15 +357,18 @@
     align-items: center;
   }
 
-  .text {
+  .text1 {
     color: black;
     font-size: 15px;
-    display: inherit;
+    text-align: center;
+    margin: 10px;
   }
 
   a {
     text-decoration: none;
-    display:none;
+    display: none;
+    font-family: 'Wix Madefor Display', sans-serif;
+    cursor: pointer;
   }
   
   .out{
@@ -333,7 +378,6 @@
     margin: 8px;
     line-height: 0;
 }
-  }
 
   #profile {
     height: 100%;
@@ -346,11 +390,15 @@
     align-items: center;
     justify-content: center;
   }
+  
+  .mainly{
+      width: 70%;
+  }
 
   .perfil {
     background: white;
-    width: 80%;
-    height: 400px;
+    width: 100%;
+    height: 70%;
     border-radius: 25px;
     display: flex;
   }
@@ -364,9 +412,9 @@
     
   .cropped {
     width: 160px;
-    height: 160px;
     border-radius: 50%;
     box-shadow: 0px 0px 0px 3px #cecece;
+    padding: 0;
   }
 
   .inferior {
@@ -379,6 +427,7 @@
     height: 100%;
     margin: 15px;
     display: flex;
+    align-items: center;
     flex-direction: column;
   }
 
@@ -393,10 +442,9 @@
   
   .register{
       color: blue;
-      display: block;
+      display: inline-block;
   }
   
-  #bios,
   #bios2 {
     margin: 15px 15px 0px;
   }
@@ -408,6 +456,7 @@
     outline: none;
     margin: 0px;
     border: none;
+    overflow: hidden;
     box-shadow: none;
     padding: 0px;
     font-size: 16px;
@@ -431,6 +480,10 @@
     color: #222771;
     -webkit-transition: all 0.3s ease-in-out 0s;
     transition: all 0.3s ease-in-out 0s;
+  }
+  
+  #teste1{
+      margin:15px 0px 5px;
   }
 
   #submit4 {
@@ -464,6 +517,29 @@
       display: none;
   }
   
+  .profpic{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  
+  #salvar{
+      background: transparent;
+      border:none;
+      border-radius: 50%;
+      color: white;
+      font-size: 20px;
+      font-family: 'Wix Madefor Display', sans-serif;
+  }
+  
+  #salvar:hover{
+      background:#0000008f;
+      width: 160px;
+      height: 160px;  
+      transition: all 0.5s ease-in-out;
+  }
+  
   .pic2{
   height: 90%;
   border-radius: 5%;
@@ -484,9 +560,16 @@
   background: rgba(0,0,0,.9);
 }
 
+.pass{
+    position: absolute;
+    transform: scale(0);
+    transform: height .2s ease;
+}
+
 #cropped2{
-  height: 80%;
-  position: absolute;
+    max-width: 80%;
+    height: auto;
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -514,10 +597,16 @@
 
 .page {
     display: flex;
-    flex-wrap: wrap;
     height: 100%;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
+}
+
+.text{
+    color: black;
+    font-size: 15px;
+    display: inherit;
 }
 
 .box2 {
@@ -544,6 +633,7 @@
 	padding:0.5em 1em;
 }
 .btn{
+    bottom:; 20px;
     font-size: 20px;
     line-height: 0;
     padding: 20px;
@@ -556,10 +646,9 @@
 }
 
 #image{
-    max-width: 100%;
-    height: 80%;
+    width: 100%;
+    height: 70%;
 }
-
   @media (max-width: 880px) {
     .main {
       flex-direction: column;
@@ -599,7 +688,7 @@
   .timeline{
     display: flex;
     flex-direction: column;
-    margin: 10px;
+    margin: 15px;
   }
 
   #nomeprof2 {
@@ -662,6 +751,9 @@ h4{
         margin-right: 20px;
         margin-left: 20px;
     }
+    .cropped{
+        width: clamp(90px, 50%, 160px);
+    }
 }
   minlenght {
     background: black;
@@ -669,480 +761,564 @@ h4{
 </style>
 
 <body>
-  <div class="mytabs">
-    <input type="radio" id="tabfree" name="mytabs" checked="checked">
-    <label for="tabfree" class="fas fa-info icon1 icone"></label>
-    <div class="tab">
-      <div class="main">
-        <div class="text">
-          <h1>Search knowledge..<blink>│</blink>
-          </h1><br>
-          <span style="color:#cfcfcf;"><i>E.T. Bilu</i></span>
-        </div>
-        <img class="cat" src="https://cdn1.iconfinder.com/data/icons/education-941/512/Smart.png">
-      </div>
-    </div>
-    <div class="tab">
-    </div>
-    <input type="radio" id="tabgold" name="mytabs">
-    <label for="tabgold" class="fas fa-user-circle icon3 icone"><span id="nickname"></span><a href="logout.php" class="out fas fa-sign-out-alt fa-rotate-180"></a></label>
-    <div class="tab">
-      <div id="body">
-        <div class="tudo">
-
-          <div class="forms log">
-
-            <h3>Log in</h3>
-            
-            <div class="box">
-              <form action="login.php" method="POST" autocomplete="off" required>
-                <input id="email2" type="email2" name="email2" placeholder="email" required>
-                <div class="view">
-                  <input type="password" id="password2" name="password2" placeholder="password">
-                  <i class="fas fa-eye" id="togglePassword" style="margin-left: -50px; cursor: pointer; position: absolute; line-height: 3em; color: #202124b8;"></i>
+    <div class="mytabs">
+        <input type="radio" id="tabfree" name="mytabs" checked="checked">
+        <label for="tabfree" class="fas fa-info icon1 icone"></label>
+        <div class="tab" id="tab1">
+            <div class="main">
+                <div class="text1">
+                    <h1>
+                        Search knowledge..<blink>│</blink>
+                    </h1>
+                    <span style="color:#cfcfcf;">
+                        <i>E.T. Bilu</i>
+                    </span>
                 </div>
-                
-
-                <input id="submit2" type="submit">
-                <p class="text">don't you have an account?<a href="#logon" class="signlink register" onclick="myFunction10()" onkeydown="return (event.keyCode!=9);"> register</a><a href="#"class="block" onkeydown="return (event.keyCode!=9);"></a></p>
-                
-              </form>
-              
+                <img class="cat" src="https://cdn1.iconfinder.com/data/icons/education-941/512/Smart.png">
+</form></div></div><div class="tab"></div>
+<input type="radio" id="tabgold" name="mytabs">
+<label for="tabgold" class="fas fa-user-circle icon3 icone">
+    <span id="nickname"></span>
+    <a href="logout.php" class="out fas fa-sign-out-alt fa-rotate-180"></a>
+</label>
+<div class="tab" id="tab2">
+    <div id="body">
+        <div class="tudo">
+            <div class="forms log">
+                <h3 id="logon">Log in</h3>
+                <div class="box">
+                    <form action="login.php" method="POST" autocomplete="off">
+                        <input id="email2" type='email' name="email2" placeholder="email" class="fname" onkeyup="othername()">
+                        <div class="view">
+                            <a class="forgot" style="color:blue;" onclick="myFunction23()">Forgot password?</a>
+                            <input type="password" id="password2" class="test" name="password2" placeholder="password" onkeyup="passlength()">
+                            <i class="fas fa-eye" id="togglePassword" style="margin-left: -50px; cursor: pointer; position: absolute; line-height: 3.3em; color: #202124b8;"></i>
+                        </div>
+                        <input id="submit2" type="submit">
+                    </form>
+                    <p class="text">
+                        don't have an account?<a href="#logon" class="signlink register" onclick="myFunction10()" onkeydown="return (event.keyCode!=9);">&nbsp;register</a>
+                    </p>
+                </div>
             </div>
-          </div>
-          
-
-          <div class="forms sign">
-            <h3 id="logon">Sign up</h3>
-            
-            <form action="gabiru.php" method="POST">
-                
-                
-              <input id="name" type="name" name="name" placeholder="name" required autocomplete="off">
-              
-              <input id="email" type="email" placeholder="email" name="email" required autocomplete="off">
-              
-              <input type="password" id="password" for="password" class="password" name="password" placeholder="password" minlength="8" onkeyup='check();' pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}(?=.*[!@#$%^&*_=+-])$" onfocus="myFunction11()" required>
-
-              <input type="password" id="confirm_password" name="confirm_password" placeholder="confirm password" onkeyup='check();'>
-              
-              <div id="message">
-                    <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
-                    <p id="capital" class="invalid">A <b>uppercase</b> letter</p>
-                    <p id="number" class="invalid">A <b>number</b></p>
-                    <p id="special" class="invalid">A <b>special</b> character</p>
-                    <p id="length" class="invalid">Minimum <b>8 characters</b></p>
-              </div>
-
-              <input id="submit" type="submit">
-              
-            </form>
-            <p class="text">do already have?<a href="#" class="loglink register" onclick="myFunction12()" onkeydown="return (event.keyCode!=9);"> log in</a></p>
-          </div>
+            <div class="forms sign">
+                <h3 id="logon">Sign up</h3>
+                <form action="gabiru.php" name="logan" method="POST">
+                    <input id="name" type="name" name="name" placeholder="name" autofocus required autocomplete="off">
+                    <input id="email" type="email" placeholder="email" name="email" required autocomplete="off">
+                    <input type="password" id="password" for="password" class="password" name="password" placeholder="password" minlength="8" onkeyup='check();'"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" onfocus="myFunction11()" required>
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="confirm password" onkeyup='check();'>
+                    <div id="message">
+                        <p id="letter" class="invalid">
+                            A <b>lowercase</b>
+                            letter
+                        </p>
+                        <p id="capital" class="invalid">
+                            A <b>uppercase</b>
+                            letter
+                        </p>
+                        <p id="number" class="invalid">
+                            A <b>number</b>
+                        </p>
+                        <p id="special" class="invalid">
+                            A <b>special</b>
+                            character
+                        </p>
+                        <p id="length" class="invalid">
+                            Minimum <b>8 characters</b>
+                        </p>
+                    </div>
+                    <input id="submit" type="submit" onclick="alert()">
+                </form>
+                <p class="text">
+                    do already have?<a href="#" class="loglink register" onclick="myFunction12()" onkeydown="return (event.keyCode!=9);">&nbsp;log in</a>
+                </p>
+            </div>
+            <div class="forms pass">
+                <h3 id="logon">Reset Password</h3>
+                <form action="" method="POST" autocomplete="off" id="recp">
+                    <input id="email3" type="email" placeholder="email" name="email3" required autocomplete="off">
+                    <input id="submit6" type="submit">
+                </form>
+                <p class="text">
+                    back log in <a href="#" style="display: block;" onkeydown="return (event.keyCode!=9);" onclick="backlog()">&nbsp;here</a>
+                </p>
+            </div>
         </div>
-        <button href="#"class="block" onkeydown="return (event.keyCode!=9);"></button> 
-      </div>
-      
-      
-      <div id="profile" style="
+        <button href="#" class="block" onkeydown="return (event.keyCode!=9);"></button>
+    </div>
+    <div id="profile" style="
     display: none;">
-
-      <div class="conta">
-          <div id="popu2">
+        <div class="conta">
+            <div class="popup">
                 <span class="X">×</span>
-                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="cropped2" id="cropped2" alt="">
-          </div>
-          <div class="popup">
-                  <span class="X">×</span>
-                  <main class="page">
-  <!-- input file -->
+                <main class="page">
+                    <!-- input file -->
                     <div class="box2" style="display:none;">
                         <input type="file" id="file-input">
                     </div>
-  <!-- leftbox -->
+                    <!-- leftbox -->
                     <div class="box-2">
                         <div class="result"></div>
                     </div>
-  <!--rightbox-->
+                    <!--rightbox-->
                     <div class="box-2 img-result hide">
-    <!-- result of crop -->
-                        
+                    <!-- result of crop -->
                     </div>
-  <!-- input file -->
+                    <!-- input file -->
                     <div class="box4">
-                        <button class="btn save hide" onclick="myFunction21()">Save</button>
+                        <button class="btn save hide">Concluir</button>
                         <div class="options hide">
+                            <label>Width</label>
+                            <input type="number" class="img-w" value="300" min="100" max="1200"/>
                         </div>
-    <!-- save btn -->
-    <!-- download btn -->
+                        <!-- save btn -->
+                        <!-- download btn -->
                     </div>
                 </main>
             </div>
-          <div class="perfil">
-        <div class="perfil">
-          <div class="pictures">
-            <div class="desc">
-              <div class="pictur" >
-                <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="cropped" id="cropped" alt="" onclick="myFunction22()">
-                <label for="file-input" class="fas fa-edit icon5" onclick="myFunction20()"></label>
-              </div>
-              <div class="boxcrop">
-              </div>
-              <div id="bios2">
-                <form action="edit-name.php" method="POST">
-                    <input type="text" id="teste1" name="textt" required></input>
-                    <input id="submit4" name="submit4" type="submit" onclick="myFunction3()"></input>
-                </form>
-              </div>
-              
-              <span id="nickname2"></span>
-              
-              <button id="submit5" type="submit" onclick="myFunction4()">editar</button>
-                
-
-
-                <p id="nomeprof"></p>
-
-              </div>
-
-            </div>
-
-            <div class="inferior">
-              <div class="timeline">
-                <div id="bios">
-                    <form action="edit-bio.php" method="POST">
-                        <span style="font-family:'Wix Madefor Display', sans-serif;">bio</span>
-                        <input id="submit3" type="submit" onclick="myFunction1()">
-                        <textarea rows="1" type="text" id="teste" name="bio" placeholder="Write about you" onclick="myFunction()"></textarea>
-                    </form>
+            <div class="mainly">
+                <div class="perfil">
+                    <div class="pictures">
+                        <div class="desc">
+                            <div class="pictur">
+                                <div class="profpic" onclick="myFunction22()">
+                                    <!--Aqui vai o php-->
+                                    <img class="cropped" id="cropped" alt="">
+                                    <form action="process_image.php" method="POST" style="position:absolute;">
+                                        <input id="myinput" name="opaitaon" type="url" value="" style="display:none;">
+                                        <button type="submit" id="salvar" style="display:none;">Salvar</button>
+                                    </form>
+                                </div>
+                                <div id="popu2">
+                                    <img id="cropped2" class="cropped2" alt="" style="width: clamp(50px, 70%, 500px);">
+                                    <span class="X">×</span>
+                                </div>
+                                <label for="file-input" class="fas fa-edit icon5" onclick="myFunction20()"></label>
+                            </div>
+                            <div class="boxcrop"></div>
+                            <div id="bios2">
+                                <form action="edit-name.php" method="POST">
+                                    <input type="text" id="teste1" name="textt" required></input>
+                                    <input id="submit4" name="submit4" type="submit" onclick="myFunction3()"></input>
+                                </form>
+                            </div>
+                            <span id="nickname2"></span>
+                            <button id="submit5" type="submit" onclick="myFunction4()">editar</button>
+                            <p id="nomeprof"></p>
+                        </div>
+                    </div>
+                    <div class="inferior">
+                        <div class="timeline">
+                            <span id="biosedit" style="font-family:'Wix Madefor Display', sans-serif;">
+                                Bios<button id="submit35" onclick="myFunction8()">editar</button>
+                            </span>
+                            <div id="bios">
+                                <form action="edit-bio.php" method="POST">
+                                    <input id="submit3" type="submit" onclick="myFunction1()">
+                                    <textarea rows="1" type="text" id="teste" name="bio" placeholder="Write about you" maxlength="255" onclick="myFunction()"></textarea>
+                                </form>
+                            </div>
+                            <span id="biog"></span>
+                        </div>
+                    </div>
                 </div>
-                <button id="submit35" onclick="myFunction8()">editar</button>
-                <span id="biog"></span>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
-  </div>
-
+</div>
+<script src="
+https://cdn.jsdelivr.net/npm/nodemailer@6.9.4/lib/nodemailer.min.js
+"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 <script>
-      
-  const todos = document.querySelector(".tudo");
-  const logon = document.querySelector(".loglink");
-  const register = document.querySelector(".signlink");
-  var aval = '1';
 
-  register.addEventListener("click", () => {
-    todos.classList.add('active');
-  });
-  logon.addEventListener("click", () => {
-    todos.classList.remove('active');
-  });
-    document.getElementById("teste1").style.display= "none";
-  document.getElementById("submit").disabled = true;
-  var check = function() {
-    if (document.getElementById('password').value ==
-      document.getElementById('confirm_password').value) {
-      document.getElementById('confirm_password').style.color = 'green';
-      document.getElementById("submit").disabled = false;
-    } else {
-      document.getElementById('confirm_password').style.color = "red";
-      document.getElementById("submit").disabled = true;
+    function onloadCallback() {
+        grecaptcha.execute("recaptcha")
+        var response = grecaptcha.getResponse();
+
+        if (response == 0) {
+            document.querySelector('#submit6').disabled = true;
+        } else {
+            document.querySelector('#submit6').disabled = false;
+        }
     }
-  }
-  
-  const print = document.querySelector("#print2");
-  const biogra = 'Olá você está na sua conta';
-  const nome2 = '';
-  
-  if (aval == false) {
+    ;
+    const todos = document.querySelector(".tudo");
+    const logon = document.querySelector(".loglink");
+    const register = document.querySelector(".signlink");
+    var aval = '<?= $is_available ?>';
+    console.log(aval);
+
+    register.addEventListener("click", ()=>{
+        todos.classList.add('active');
+    }
+    );
+    logon.addEventListener("click", ()=>{
+        todos.classList.remove('active');
+    }
+    );
+    document.getElementById("teste1").style.display = "none";
+    document.getElementById("submit").disabled = true;
+    var check = function() {
+        if (document.getElementById('password').value == document.getElementById('confirm_password').value) {
+            document.getElementById('confirm_password').style.color = 'green';
+            document.getElementById("submit").disabled = false;
+        } else {
+            document.getElementById('confirm_password').style.color = "red";
+            document.getElementById("submit").disabled = true;
+        }
+    }
+
+    const print = document.querySelector("#print2");
+    const biogra = 'oi';
+    const nome2 = '<?= 'oi434' ?>';
+
+    if (aval == false) {
         document.getElementById('body').style.display = 'none';
         document.getElementById('profile').style.display = 'block';
         document.getElementById('nickname').innerHTML = nome2;
         document.getElementById('nickname2').innerHTML = nome2;
         document.getElementById('biog').innerHTML = biogra;
-        document.querySelector(".out").style.display="block";
-  }
-  
-  document.getElementById("submit3").style.display = "none";
-  document.getElementById("submit4").style.display = "none";
-
-  function myFunction() {
-    document.getElementById("submit3").style.display = "block";
-    document.getElementById("bios").style.transition = "1s";
-    document.getElementById("bios").style.borderColor = "blue";
-  }
-
-  function myFunction2() {
-    document.getElementById("submit4").disabled = false;
-    document.getElementById("bios2").style.transition = "1s";
-    document.getElementById("bios2").style.borderColor = "blue";
-  }
-
-  function myFunction3() {
-    document.getElementById("teste1").required;
-  }
-  
-  document.getElementById("bios").style.display = "none";
-  
-  function myFunction8(){
-    document.getElementById("bios").style.display = "block";
-    document.getElementById("bios").style.borderColor = "#cecece";
-    document.getElementById("submit35").style.display= "none";
-    document.getElementById("biog").style.display = "none";
-  }
-
-  function myFunction1() {
-    document.getElementById("bios").style.display = "none";
-  }
-  
-  var textarea = document.querySelector('#teste');
-  textarea.addEventListener('keydown', autosize);
-
-  function autosize() {
-    var el = this;
-    setTimeout(function() {
-      el.style.cssText = 'height:auto; padding:0';
-      // for box-sizing other than "content-box" use:
-      // el.style.cssText = '-moz-box-sizing:content-box';
-      el.style.cssText = 'height:' + el.scrollHeight + 'px';
-    }, 0);
-  }
-  
-  const salvar = document.getElementById("submit4");
- 
-
-  function myFunction3() {
-    document.getElementById("submit4").style.display = "none";
-    document.getElementById("submit5").style.display = "block";
-    document.getElementById("bios2").style.display = "none";
-    document.getElementById("nomeprof").style.display = "block"
-    document.getElementById("teste1").style.display= "none";
-}
-
-  function myFunction4() {
-    document.getElementById("bios2").style.display = "block";
-    document.getElementById("nomeprof").style.display = "none";
-    document.getElementById("submit5").style.display = "none";
-    document.getElementById("bios2").style.borderColor = "#cecece";
-    document.getElementById("submit4").style.display = "block";
-    document.getElementById("nickname2").style.display = "none";
-    document.getElementById("teste1").style.display= "block";
-  }
-  
-  function myFunction10(){
-      document.querySelector(".tudo").style.height = "376px";
-      document.getElementById("name").focus();
-  }
-  
-  function myFunction11(){
-      document.getElementById("message").style.transform = "scale(1)";
-      document.getElementById("message").style.position = "relative";
-      document.querySelector(".tudo").style.height = "476px";
-  }
-  
-    
-  function myFunction12(){
-      document.getElementById("message").style.transform = "scale(0)";
-      document.getElementById("message").style.position = "absolute";
-      document.querySelector(".tudo").style.height = "274px";
-      document.getElementById("email2").focus();
-  }
-
-  function myFunction20(){
-      document.querySelector(".popup").style.display="block";
-  }
-   document.querySelector('.popup span').onclick = () =>{
-			document.querySelector('.popup').style.display = 'none';
-   }
-   
-   function myFunction22(){
-       document.querySelector("#popu2").style.display="block";
-       
-        document.querySelector('#popu2 span').onclick = () =>{
-			document.querySelector('#popu2').style.display = 'none';
-        }
-   }
-
-window.onload = function() {
-        document.querySelector('.slides img').forEach(image => {image.onclick = () => {
-            document.querySelector('.poopup').style.display = 'block';
-            document.querySelector('.poopup img').src = image.getAttribute('src');
-          }
-        });
-        document.querySelector('.poopup span').onclick = () => {
-          document.querySelector('.poopup').style.display = 'none';
-        }
-}
-var KeypressFunctions = [];
-KeypressFunctions['Tab'.charCodeAt(0)] = function _keypressT() {
-  //do something specific for T
-  input.focus();
-  input.select();
-}
-
-let picture = document.getElementById('cropped');
-let file = document.getElementById("file-input");
-let picpopup = document.getElementById("cropped2");
-
-function myFunction18() {
-  document.getElementById("name").focus();
-}
-
-function myFunction21(){
-    picture.src = URL.createObjectURL(file.files[0]);
-    picpopup.src = URL.createObjectURL(file.files[0]);
-    document.querySelector('.popup').style.display = 'none';
-}
-
-function myFunction16() {
-    document.querySelector(".popup").style.display = "block";
-}
-
-  myFunction3();
-
-  function myFunction6() {
-    var x = document.getElementById("password2");
-    if (x.type === "password") {
-      x.type = "text";
-    } else {
-      x.type = "password";
+        document.querySelector(".out").style.display = "block";
+        document.getElementById("tabgold").checked = true;
     }
-  }
-  
-  const togglePassword = document.querySelector('#togglePassword');
-  const password = document.querySelector('#password2');
-  togglePassword.addEventListener('click', function(e) {
-    // toggle the type attribute
-    const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-    password.setAttribute('type', type);
-    // toggle the eye slash icon
-    this.classList.toggle('fa-eye-slash');
-  });
-  
-var myInput = document.getElementById("password");
-var letter = document.getElementById("letter");
-var capital = document.getElementById("capital");
-var special = document.getElementById("special");
-var number = document.getElementById("number");
-var length = document.getElementById("length");
 
-// When the user starts to type something inside the password field
-myInput.onkeyup = function() {
-  // Validate lowercase letters
-  var lowerCaseLetters = /[a-z]/g;
-  if(myInput.value.match(lowerCaseLetters)) {  
-    letter.classList.remove("invalid");
-    letter.classList.add("valid");
-  } else {
-    letter.classList.remove("valid");
-    letter.classList.add("invalid");
-  }
-  
-  // Validate capital letters
-  var upperCaseLetters = /[A-Z]/g;
-  if(myInput.value.match(upperCaseLetters)) {  
-    capital.classList.remove("invalid");
-    capital.classList.add("valid");
-  } else {
-    capital.classList.remove("valid");
-    capital.classList.add("invalid");
-  }
-  
-    // Validate capital letters
-  var specialLetters = /[!@#$%^&*_=+-]/g;
-  if(myInput.value.match(specialLetters)) {  
-    special.classList.remove("invalid");
-    special.classList.add("valid");
-  } else {
-    special.classList.remove("valid");
-    special.classList.add("invalid");
-  }
+    document.getElementById("submit3").style.display = "none";
+    document.getElementById("submit4").style.display = "none";
 
-  // Validate numbers
-  var numbers = /[0-9]/g;
-  if(myInput.value.match(numbers)) {  
-    number.classList.remove("invalid");
-    number.classList.add("valid");
-  } else {
-    number.classList.remove("valid");
-    number.classList.add("invalid");
-  }
-  
-  // Validate length
-  if(myInput.value.length >= 8) {
-    length.classList.remove("invalid");
-    length.classList.add("valid");
-  } else {
-    length.classList.remove("valid");
-    length.classList.add("invalid");
-  }
-}
+    function myFunction() {
+        document.getElementById("bios").style.transition = "1s";
+        document.getElementById("bios").style.borderColor = "blue";
+    }
 
-// vars
-let result = document.querySelector('.result'),
-img_result = document.querySelector('.img-result'),
-img_w = document.querySelector('.img-w'),
-img_h = document.querySelector('.img-h'),
-options = document.querySelector('.options')
-save = document.querySelector('.save'),
-cropped = document.querySelector('.cropped'),
-dwn = document.querySelector('.download'),
-upload = document.querySelector('#file-input'),
-cropper = '';
+    function myFunction2() {
+        document.getElementById("submit4").disabled = false;
+        document.getElementById("bios2").style.transition = "1s";
+        document.getElementById("bios2").style.borderColor = "blue";
+    }
 
-// on change show image with crop options
-upload.addEventListener('change', (e) => {
-  if (e.target.files.length) {
-		// start file reader
-    const reader = new FileReader();
-    reader.onload = (e)=> {
-      if(e.target.result){
-				// create new image
-				let img = document.createElement('img');
-				img.id = 'image';
-				img.src = e.target.result
-				// clean result before
-				result.innerHTML = '';
-				// append new image
-        result.appendChild(img);
-				// show save btn and options
-				save.classList.remove('hide');
-				options.classList.remove('hide');
-				// init cropper
-				cropper = new Cropper(image, {
-                    aspectRatio: 1 / 1,
-				    viewMode: 3,
-				})
-      }
-    };
-    reader.readAsDataURL(e.target.files[0]);
-  }
-});
+    function myFunction3() {
+        document.getElementById("teste1").required;
+    }
 
-// save on click
-save.addEventListener('click',(e)=>{
-  e.preventDefault();
-  // get result to data uri
-  let imgSrc = cropper.getCroppedCanvas({
-		width: img_w.value // input value
-	}).toDataURL();
-  // remove hide class of img
-  cropped.classList.remove('hide');
-	img_result.classList.remove('hide');
-	// show image cropped
-  cropped.src = imgSrc;
-  dwn.classList.remove('hide');
-  dwn.download = 'imagename.png';
-  dwn.setAttribute('href',imgSrc);
-});
+    document.getElementById("bios").style.display = "none";
 
+    function myFunction8() {
+        document.getElementById("bios").style.display = "block";
+        document.getElementById("bios").style.borderColor = "#cecece";
+        document.getElementById("submit35").style.display = "none";
+        document.getElementById("biog").style.display = "none";
+        document.getElementById("biosedit").style.display = "none";
+        document.getElementById("submit3").style.display = "block";
+    }
 
+    function myFunction1() {
+        document.getElementById("bios").style.display = "none";
+    }
 
+    var textarea = document.querySelector('#teste');
+    textarea.addEventListener('keydown', autosize);
+
+    function autosize() {
+        var el = this;
+        setTimeout(function() {
+            el.style.cssText = 'height:auto; padding:0';
+            // for box-sizing other than "content-box" use:
+            // el.style.cssText = '-moz-box-sizing:content-box';
+            el.style.cssText = 'height:' + el.scrollHeight + 'px';
+        }, 0);
+    }
+
+    const salvar = document.getElementById("submit4");
+
+    function myFunction3() {
+        document.getElementById("submit4").style.display = "none";
+        document.getElementById("submit5").style.display = "block";
+        document.getElementById("bios2").style.display = "none";
+        document.getElementById("nomeprof").style.display = "block"
+        document.getElementById("teste1").style.display = "none";
+    }
+
+    const refreshButton = document.querySelector('#submit3');
+
+    const refreshPage = ()=>{
+        location.reload();
+    }
+
+    refreshButton.addEventListener('click', refreshPage)
+
+    function myFunction4() {
+        document.getElementById("bios2").style.display = "block";
+        document.getElementById("nomeprof").style.display = "none";
+        document.getElementById("submit5").style.display = "none";
+        document.getElementById("bios2").style.borderColor = "#cecece";
+        document.getElementById("submit4").style.display = "block";
+        document.getElementById("nickname2").style.display = "none";
+        document.getElementById("teste1").style.display = "block";
+    }
+
+    function myFunction10() {
+
+        document.querySelector(".tudo").style.height = "376px";
+        document.getElementById('name').focus();
+    }
+
+    function myFunction11() {
+        document.getElementById("message").style.transform = "scale(1)";
+        document.getElementById("message").style.position = "relative";
+        document.querySelector(".tudo").style.height = "476px";
+    }
+
+    function myFunction12() {
+        document.getElementById("message").style.transform = "scale(0)";
+        document.getElementById("message").style.position = "absolute";
+        document.querySelector(".tudo").style.height = "295px";
+        document.getElementById("email2").focus();
+    }
+
+    function myFunction20() {
+        document.querySelector(".popup").style.display = "block";
+    }
+    document.querySelector('.popup span').onclick = ()=>{
+        document.querySelector('.popup').style.display = 'none';
+    }
+
+    function myFunction21() {
+        document.querySelector('.popup').style.display = 'none';
+    }
+
+    function myFunction22() {
+        if (img == 1) {
+            document.querySelector("#popu2").style.display = "block";
+
+            document.querySelector('#popu2 span').onclick = ()=>{
+                document.querySelector('#popu2').style.display = 'none';
+            }
+        }
+    }
+
+    function myFunction23() {
+        document.querySelector('.pass').style.transform = "scale(1)";
+        document.querySelector('.log').style.transform = "scale(0)";
+    }
+
+    function myFunction24() {
+        document.getElementById("imagem").style.transform = "scale(1)";
+        document.getElementById("imagem").style.position = "relative";
+        document.getElementById("imagem2").style.display = "none";
+    }
+
+    function backlog() {
+        document.querySelector('.log').style.transform = "scale(1)";
+        document.querySelector('.pass').style.transform = "scale(0)";
+    }
+
+    window.onunload = function() {
+        document.querySelector(".tabgold").click();
+    }
+
+    let file = document.getElementById("file-input");
+    let picpopup = document.getElementById("cropped2");
+
+    function myFunction16() {
+        document.querySelector(".popup").style.display = "block";
+    }
+
+    myFunction3();
+
+    function myFunction6() {
+        var x = document.getElementById("password2");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+
+    const togglePassword = document.querySelector('#togglePassword');
+    const password = document.querySelector('#password2');
+    togglePassword.addEventListener('click', function(e) {
+        // toggle the type attribute
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        // toggle the eye slash icon
+        this.classList.toggle('fa-eye-slash');
+    });
+
+    var checker3;
+
+    function passlength() {
+        var lent = document.getElementById('password2').value;
+        if (lent.length >= 7) {
+            checker3 = true;
+        } else {
+            checker3 = false;
+
+        }
+        return checker3;
+    }
+
+    document.getElementById('submit2').disabled = true;
+    let checker2;
+
+    function othername() {
+
+        var validRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (email2.value.match(validRegex)) {
+            checker2 = true;
+            document.getElementById("email2").style.boxShadow = "";
+        } else {
+            document.getElementById("email2").style.boxShadow = "0 0 3px 2px red";
+            checker2 = false;
+        }
+    }
+
+    document.querySelector(".fname").addEventListener("keyup", buttonon);
+    document.querySelector(".test").addEventListener("keyup", buttonon);
+
+    function buttonon() {
+        if (checker2 == true && checker3 == true) {
+            document.getElementById('submit2').disabled = false;
+        } else {
+            document.getElementById('submit2').disabled = true;
+        }
+    }
+
+    var myInput = document.getElementById("password");
+    var letter = document.getElementById("letter");
+    var capital = document.getElementById("capital");
+    var special = document.getElementById("special");
+    var number = document.getElementById("number");
+    var length = document.getElementById("length");
+
+    // When the user starts to type something inside the password field
+    myInput.onkeyup = function() {
+        // Validate lowercase letters
+        var lowerCaseLetters = /[a-z]/g;
+        if (myInput.value.match(lowerCaseLetters)) {
+            letter.classList.remove("invalid");
+            letter.classList.add("valid");
+        } else {
+            letter.classList.remove("valid");
+            letter.classList.add("invalid");
+        }
+
+        // Validate capital letters
+        var upperCaseLetters = /[A-Z]/g;
+        if (myInput.value.match(upperCaseLetters)) {
+            capital.classList.remove("invalid");
+            capital.classList.add("valid");
+        } else {
+            capital.classList.remove("valid");
+            capital.classList.add("invalid");
+        }
+
+        // Validate capital letters
+        var specialLetters = /[!@#$%^&*_=+-]/g;
+        if (myInput.value.match(specialLetters)) {
+            special.classList.remove("invalid");
+            special.classList.add("valid");
+        } else {
+            special.classList.remove("valid");
+            special.classList.add("invalid");
+        }
+
+        // Validate numbers
+        var numbers = /[0-9]/g;
+        if (myInput.value.match(numbers)) {
+            number.classList.remove("invalid");
+            number.classList.add("valid");
+        } else {
+            number.classList.remove("valid");
+            number.classList.add("invalid");
+        }
+
+        // Validate length
+        if (myInput.value.length >= 8) {
+            length.classList.remove("invalid");
+            length.classList.add("valid");
+        } else {
+            length.classList.remove("valid");
+            length.classList.add("invalid");
+        }
+    }
+
+    // vars
+    let result = document.querySelector('.result')
+      , img_result = document.querySelector('.img-result')
+      , img_w = document.querySelector('.img-w')
+      , img_h = document.querySelector('.img-h')
+      , options = document.querySelector('.options')
+      , save = document.querySelector('.save')
+      , cropped = document.querySelector('.cropped')
+      , dwn = document.querySelector('.download')
+      , upload = document.querySelector('#file-input')
+      , cropper = '';
+    // on change show image with crop options
+    upload.addEventListener('change', (e)=>{
+        if (e.target.files.length) {
+            // start file reader
+            const reader = new FileReader();
+            reader.onload = (e)=>{
+                if (e.target.result) {
+                    // create new image
+                    let img = document.createElement('img');
+                    img.id = 'image';
+                    img.src = e.target.result
+                    // clean result before
+                    result.innerHTML = '';
+                    // append new image
+                    result.appendChild(img);
+                    // show save btn and options
+                    save.classList.remove('hide');
+                    options.classList.remove('hide');
+                    // init cropper
+                    cropper = new Cropper(image,{
+                        aspectRatio: 1 / 1,
+                        viewMode: 3,
+
+                    })
+                }
+            }
+            ;
+            reader.readAsDataURL(e.target.files[0]);
+        }
+    }
+    );
+
+    // save on click
+    save.addEventListener('click', (e)=>{
+        // get result to data uri
+        let imgSrc = cropper.getCroppedCanvas({
+            width: img_w.value // input value
+        }).toDataURL();
+        // remove hide class of img
+        cropped.classList.remove('hide');
+        img_result.classList.remove('hide');
+        // show image cropped
+        cropped.src = imgSrc;
+        document.getElementById("myinput").value = cropped.src;
+        document.getElementById('salvar').style.display = "block";
+        document.querySelector('.popup').style.display = "none";
+        return img = 0;
+    }
+    );
+
+    function geturl() {
+        link1 = document.querySelector('.cropped').src;
+        dados = JSON.stringify(link1);
+        img = 1;
+        return dados;
+    }
+
+    let link1;
+    let dados;
+
+    const src = geturl(dados);
 </script>
-    
-<div style="text-align: right;position: fixed;z-index:9999999;bottom: 0;width: auto;right: 1%;cursor: pointer;line-height: 0;display:block !important;"><a title="Hosted on free web hosting 000webhost.com. Host your own website for FREE." target="_blank" href="https://www.000webhost.com/?utm_source=000webhostapp&utm_campaign=000_logo&utm_medium=website&utm_content=footer_img"><img src="https://cdn.000webhost.com/000webhost/logo/footer-powered-by-000webhost-white2.png" alt="www.000webhost.com"></a></div><script>function getCookie(t){for(var e=t+"=",n=decodeURIComponent(document.cookie).split(";"),o=0;o<n.length;o++){for(var i=n[o];" "==i.charAt(0);)i=i.substring(1);if(0==i.indexOf(e))return i.substring(e.length,i.length)}return""}getCookie("hostinger")&&(document.cookie="hostinger=;expires=Thu, 01 Jan 1970 00:00:01 GMT;",location.reload());var wordpressAdminBody=document.getElementsByClassName("wp-admin")[0],notification=document.getElementsByClassName("notice notice-success is-dismissible"),hostingerLogo=document.getElementsByClassName("hlogo"),mainContent=document.getElementsByClassName("notice_content")[0];if(null!=wordpressAdminBody&&notification.length>0&&null!=mainContent && new Date().toISOString().slice(0, 10) > '2022-10-01' && new Date().toISOString().slice(0, 10) < '2022-12-25'){var googleFont=document.createElement("link");googleFontHref=document.createAttribute("href"),googleFontRel=document.createAttribute("rel"),googleFontHref.value="https://fonts.googleapis.com/css?family=Roboto:300,400,600,700",googleFontRel.value="stylesheet",googleFont.setAttributeNode(googleFontHref),googleFont.setAttributeNode(googleFontRel);var css="@media only screen and (max-width: 576px) {#main_content {max-width: 320px !important;} #main_content h1 {font-size: 30px !important;} #main_content h2 {font-size: 40px !important; margin: 20px 0 !important;} #main_content p {font-size: 14px !important;} #main_content .content-wrapper {text-align: center !important;}} @media only screen and (max-width: 781px) {#main_content {margin: auto; justify-content: center; max-width: 445px;}} @media only screen and (max-width: 1325px) {.web-hosting-90-off-image-wrapper {position: absolute; max-width: 95% !important;} .notice_content {justify-content: center;} .web-hosting-90-off-image {opacity: 0.3;}} @media only screen and (min-width: 769px) {.notice_content {justify-content: space-between;} #main_content {margin-left: 5%; max-width: 445px;} .web-hosting-90-off-image-wrapper {position: absolute; display: flex; justify-content: center; width: 100%; }} .web-hosting-90-off-image {max-width: 90%;} .content-wrapper {min-height: 454px; display: flex; flex-direction: column; justify-content: center; z-index: 5} .notice_content {display: flex; align-items: center;} * {-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;} .upgrade_button_red_sale{box-shadow: 0 2px 4px 0 rgba(255, 69, 70, 0.2); max-width: 350px; border: 0; border-radius: 3px; background-color: #ff4546 !important; padding: 15px 55px !important; font-family: 'Roboto', sans-serif; font-size: 16px; font-weight: 600; color: #ffffff;} .upgrade_button_red_sale:hover{color: #ffffff !important; background: #d10303 !important;}",style=document.createElement("style"),sheet=window.document.styleSheets[0];style.styleSheet?style.styleSheet.cssText=css:style.appendChild(document.createTextNode(css)),document.getElementsByTagName("head")[0].appendChild(style),document.getElementsByTagName("head")[0].appendChild(googleFont);var button=document.getElementsByClassName("upgrade_button_red")[0],link=button.parentElement;link.setAttribute("href","https://www.hostinger.com/hosting-starter-offer?utm_source=000webhost&utm_medium=panel&utm_campaign=000-wp"),link.innerHTML='<button class="upgrade_button_red_sale">Go for it</button>',(notification=notification[0]).setAttribute("style","padding-bottom: 0; padding-top: 5px; background-color: #040713; background-size: cover; background-repeat: no-repeat; color: #ffffff; border-left-color: #040713;"),notification.className="notice notice-error is-dismissible";var mainContentHolder=document.getElementById("main_content");mainContentHolder.setAttribute("style","padding: 0;"),hostingerLogo[0].remove();var h1Tag=notification.getElementsByTagName("H1")[0];h1Tag.className="000-h1",h1Tag.innerHTML="Black Friday Prices",h1Tag.setAttribute("style",'color: white; font-family: "Roboto", sans-serif; font-size: 22px; font-weight: 700; text-transform: uppercase;');var h2Tag=document.createElement("H2");h2Tag.innerHTML="Get 90% Off!",h2Tag.setAttribute("style",'color: white; margin: 10px 0 15px 0; font-family: "Roboto", sans-serif; font-size: 60px; font-weight: 700; line-height: 1;'),h1Tag.parentNode.insertBefore(h2Tag,h1Tag.nextSibling);var paragraph=notification.getElementsByTagName("p")[0];paragraph.innerHTML="Get Web Hosting for $0.99/month + SSL Certificate for FREE!",paragraph.setAttribute("style",'font-family: "Roboto", sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 15px;');var list=notification.getElementsByTagName("UL")[0];list.remove();var org_html=mainContent.innerHTML,new_html='<div class="content-wrapper">'+mainContent.innerHTML+'</div><div class="web-hosting-90-off-image-wrapper"><img class="web-hosting-90-off-image" src="https://cdn.000webhost.com/000webhost/promotions/bf-2020-wp-inject-img.png"></div>';mainContent.innerHTML=new_html;var saleImage=mainContent.getElementsByClassName("web-hosting-90-off-image")[0]}</script></body>
+</body>
 
 </html>
