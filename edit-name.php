@@ -1,9 +1,11 @@
 <?php
-
+session_set_cookie_params(['httponly' => true]);
 session_start();
 
 $salsicha = $_SESSION['user_id'];
 $textt = $_POST['textt'];
+$nome = $_SESSION["name_id"]; //
+
 
 require __DIR__ . "/database.php";
 
@@ -24,15 +26,7 @@ require __DIR__ . "/database.php";
     mysqli_stmt_execute($stmt);
     
     mysqli_close($conexao);
-    ob_start();
-    
-    session_regenerate_id(true);
-    
-    $getses = ob_get_contents();
     
     header("Location: index.php");
-    
-    echo $getses;
-    
-    ob_end_clean();
+    exit;
 ?>
