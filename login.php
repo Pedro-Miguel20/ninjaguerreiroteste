@@ -1,10 +1,9 @@
 <?php
-
 session_set_cookie_params(['httponly' => true]);
 session_start();
 
 require __DIR__ . "/database.php";
-    
+
     // include_once __DIR__ . "/index.php"; causador da mal renderização
 
     $email2 = $_POST["email2"];
@@ -29,17 +28,19 @@ if ($ninjinha) {
         require __DIR__ . "/index.php";
         
         ob_start();
-        $is_available = false;
+        
+        $is_available = true;
         $gabgame = (htmlspecialchars($ninjinha["Nome"]));
         $_SESSION["name_id"] = $gabgame;
-        $gabgame = $gabjogos;
+        $gabjogos = $gabgame;
+        
         $trabay = ob_get_contents();
         
         header("Location: index.php");
         echo $trabay;
         ob_end_clean();
         exit;
-        } 
+        }
         
     } else {
         
@@ -47,9 +48,7 @@ if ($ninjinha) {
         exit;
     }
     
-header("Location: index.php");
-exit;
-
+        
 ?>
     
   
