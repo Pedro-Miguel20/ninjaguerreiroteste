@@ -1,31 +1,3 @@
-<?php
-if ( ! isset($_SESSION["user_id"])) {
-    session_set_cookie_params(['httponly' => true]);
-    session_start();
-}
-
-require __DIR__. "/database.php";
-  if (isset($_SESSION["user_id"])) {
-        $sql03 = "SELECT * FROM ninjinha WHERE id = ('".$_SESSION['user_id']."') ";
-        $result = $conexao-> query($sql03);
-        $ninjinha = $result-> fetch_assoc();
-        $_SESSION["user_id"] = $ninjinha["id"];
-        var_dump($_SESSION);
-  }
-
-?>
-
-<script>
-<?php
-require __DIR__ . "/database.php";
-  $sql01 = sprintf("SELECT * FROM ninjinha WHERE Email = '%s'", $conexao-> real_escape_string($_POST["email2"]));
-  $result = $conexao-> query($sql01);
-  $is_available = ($result-> num_rows === 0);
-?>
-
-<?php ?>
-</script>
-
 <!DOCTYPE html>
 <html lang="en">
 
