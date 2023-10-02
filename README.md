@@ -27,15 +27,43 @@ OBS: Talvez seja necessário fazer algumas alterações em alguns nomes de ID's,
 Nesta versão foram resolvidos problemas de renderizações, SESSIONS e etc.
 [PENDENTE]
 
+
 ### Versão 5.0 (PHP) ⌛
 
 Nesta versão na sessão do "Profile", pode-se mudar seu nome e adicionar um biografia, tanto o nome e a bio serão armazenadas no Banco de Dados.
 [PENDENTE]
 
-### Versão 6.0 (PHP) ⌛
+### Versão 6.0 (PHP) ⌛ 
 
 Nesta versão pode-se adicionar uma imagem na sessão do "Profile" sendo armazenado diretamente no Banco de Dados.
 [PENDENTE]
 
+---
+
+# Versão Beta
+
+### Versão 7.0 (PHP) ⌛
+
+???
+[PENDENTE]
+
+### Versão 8.0 (PHP) ⌛
+
+???
+[PENDENTE]
+
+### Versão 9.0 (PHP) ⌛ 
+
+Nesta versão pode-se adicionar uma imagem na sessão do "Profile" sendo armazenado diretamente no Banco de Dados.
+[PENDENTE]
+
+---
+
+# Versão Final?
+
+### Versão 9.0 (PHP) ⌛ 
+
+???
+[PENDENTE]
 
 OBS: baixe os dois arquivos e deixe os dois no mesmo diretório.
