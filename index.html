@@ -5,22 +5,18 @@
   <meta charset="UTF-8">
 
   <meta name="viewport" content="initial-scale=1">
-	
   <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
   <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/nodemailer@6.9.4/lib/nodemailer.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
-	
-  <script type="text/javascript" src="/resources/js/app.js"></script>
+
   <link rel="stylesheet" href="/resources/css/app.css">
-	
+
 </head>
+
 <body>
+  <?php require __DIR__ . "session_token"; ?>
   <div class="mytabs">
-    <input type="radio" id="tabfree" name="mytabs" checked="checked" onclick="myFunctioninicio()">
+    <input type="radio" id="tabfree" name="mytabs" checked="checked" style="display:none;">
     <label for="tabfree" class="fas fa-info icon1 icone"></label>
     <div class="tab" id="tab1">
       <div class="main">
@@ -36,8 +32,8 @@
       </div>
     </div>
     <div class="tab"></div>
-    <input type="radio" id="tabgold" name="mytabs">
-    <label for="tabgold" class="fas fa-user-circle icon3 icone" onclick="myF()">
+    <input type="radio" id="tabgold" name="mytabs" style="display:none;">
+    <label for="tabgold" class="fas fa-user-circle icon3 icone">
       <span id="nickname"></span>
       <a href="logout.php" class="out fas fa-sign-out-alt fa-rotate-180"></a>
     </label>
@@ -54,7 +50,6 @@
                   <input type="password" id="password2" class="test" name="password2" placeholder="password" onkeyup="passlength()">
                   <i class="fas fa-eye" id="togglePassword" style="margin-left: -50px; cursor: pointer; position: absolute; line-height: 3.3em; color: #202124b8;"></i>
                 </div>
-
                 <input id="submit2" type="submit">
               </form>
               <p class="text">don't have an account?<a href="#logon" class="signlink register" onclick="myFunction10()" onkeydown="return (event.keyCode!=9);">&nbsp;register</a></p>
@@ -62,7 +57,7 @@
           </div>
           <div class="forms sign">
             <h3 id="logon">Sign up</h3>
-            <form action="gabiru.php" name="logan" method="POST">
+            <form action="sign_process.php" name="logan" method="POST">
               <input id="name" type="name" name="name" placeholder="name" autofocus required autocomplete="off">
               <input id="email" type="email" placeholder="email" name="email" required autocomplete="off">
               <input type="password" id="password" for="password" class="password" name="password" placeholder="password" minlength="8" onkeyup='check();'"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$" onfocus="myFunction11()" required>
@@ -74,11 +69,10 @@
                 <p id="special" class="invalid">A <b>special</b>character</p>
                 <p id="length" class="invalid">Minimum <b>8 characters</b></p>
               </div>
-              <input id="submit" type="submit" onclick="alert()">
+              <input id="submit" type="submit">
             </form>
             <p class="text">do already have?<a href="#" class="loglink register" onclick="myFunction12()" onkeydown="return (event.keyCode!=9);">&nbsp;log in</a></p>
           </div>
-
           <div class="forms pass">
             <h3 id="logon">Reset Password</h3>
             <form action="" method="POST" autocomplete="off" id="recp">
@@ -88,101 +82,89 @@
             <p class="text">back log in <a href="#" style="display: block;" onkeydown="return (event.keyCode!=9);" onclick="backlog()">&nbsp;here</a></p>
           </div>
         </div>
-
         <button href="#" class="block" onkeydown="return (event.keyCode!=9);"></button>
-        <div id="profile" style="display: none;">
-          <div class="conta">
-            <div class="popup">
-              <span class="X">×</span>
-              <main class="page">
-                <!-- input file -->
-                <div class="box2" style="display:none;">
-                  <input type="file" id="file-input">
-                </div>
-                <!-- leftbox -->
-                <div class="box-2">
-                  <div class="result"></div>
-                </div>
-                <!--rightbox-->
-                <div class="box-2 img-result hide">
-                  <!-- result of crop -->
-                </div>
-                <!-- input file -->
-                <div class="box4">
-                  <button class="btn save hide">Concluir</button>
-                  <div class="options hide">
-                    <label>Width</label>
+      </div>
+      <div id="profile" style="display: none;">
+        <div class="conta">
+          <div class="popup">
+            <span class="X">×</span>
+            <main class="page">
+              <!-- input file -->
+              <div class="box2" style="display:none;">
+                <input type="file" id="file-input">
+              </div>
+              <!-- leftbox -->
+              <div class="box-2">
+                <div class="result"></div>
+              </div>
+              <!--rightbox-->
+              <div class="box-2 img-result hide">
+                <!-- result of crop -->
+              </div>
+              <!-- input file -->
+              <div class="box4">
+                <button class="btn save hide">Concluir</button>
+                <div class="options hide">
+                  <label>Width</label>
 
-                    <input type="number" class="img-w" value="300" min="10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" max="1200" />
-                  </div>
-                </div>
-                <!-- save btn -->
-                <!-- download btn -->
-            </div>
-            </main>
-          </div>
-          <div class="mainly">
-            <div class="perfil">
-              <div class="pictures">
-                <div class="desc">
-                  <div class="pictur">
-                    <div class="profpic" onclick="myFunction22()">
-                      <!--Aqui vai o php-->
-                      <img class="cropped" id="cropped" alt="">
-                      <form action="process_image.php" method="POST" style="position:absolute;">
-                        <input id="myinput" name="opaitaon" type="url" value="" style="display:none;">
-                        <button type="submit" id="salvar" style="display:none;">Salvar</button>
-                      </form>
-                    </div>
-                    <div id="popu2">
-                      <img id="cropped2" class="cropped2" alt="" style="width: clamp(50px, 70%, 500px);">
-                      <span class="X">×</span>
-                    </div>
-                    <label for="file-input" class="fas fa-edit icon5" onclick="myFunction20()"></label>
-                  </div>
-                  <div class="boxcrop"></div>
-                  <div id="bios2">
-                    <form action="edit-name.php" method="POST">
-                      <input type="text" id="teste1" name="textt" required></input>
-                      <input id="submit4" name="submit4" type="submit" onclick="myFunction3()"></input>
-                    </form>
-                  </div>
-                  <span id="nickname2"></span>
-                  <button id="submit5" type="submit" onclick="myFunction4()">editar</button>
-                  <p id="nomeprof"></p>
+                  <input type="number" class="img-w" value="300" min="10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000" max="1200" />
                 </div>
               </div>
-              <div class="inferior">
-                <div class="timeline">
-                  <span id="biosedit" style="font-family:'Wix Madefor Display', sans-serif;">Bios<button id="submit35" onclick="myFunction8()">editar</button>
-                  </span>
-                  <div id="bios">
-                    <form action="edit-bio.php" method="POST">
-                      <input id="submit3" type="submit" onclick="myFunction1()">
-                      <textarea rows="1" type="text" id="teste" name="bio" placeholder="Write about you" maxlength="255" onclick="myFunction()"></textarea>
+              <!-- save btn -->
+              <!-- download btn -->
+          </div>
+          </main>
+        </div>
+        <div class="mainly">
+          <div class="perfil">
+            <div class="pictures">
+              <div class="desc">
+                <div class="pictur">
+                  <div class="profpic" onclick="myFunction22()">
+                    <!--Aqui vai o php-->
+                    <img class="cropped" id="cropped" alt="">
+                    <form action="process_image.php" method="POST" style="position:absolute;">
+                      <input id="myinput" name="opaitaon" type="url" value="" style="display:none;">
+                      <button type="submit" id="salvar" style="display:none;">Salvar</button>
                     </form>
                   </div>
-                  <span id="biog"></span>
+                  <div id="popu2">
+                    <img id="cropped2" class="cropped2" alt="" style="width: clamp(50px, 70%, 500px);">
+                    <span class="X">×</span>
+                  </div>
+                  <label for="file-input" class="fas fa-edit icon5" onclick="myFunction20()"></label>
                 </div>
+                <div class="boxcrop"></div>
+                <div id="bios2">
+                  <form action="edit-name.php" method="POST">
+                    <input type="text" id="teste1" name="textt" required></input>
+                    <input id="submit4" name="submit4" type="submit" onclick="myFunction3()"></input>
+                  </form>
+                </div>
+                <span id="nickname2"></span>
+                <button id="submit5" type="submit" onclick="myFunction4()">editar</button>
+                <p id="nomeprof"></p>
+              </div>
+            </div>
+            <div class="inferior">
+              <div class="timeline">
+                <span id="biosedit" style="font-family:'Wix Madefor Display', sans-serif;">Bios<button id="submit35" onclick="myFunction8()">editar</button>
+                </span>
+                <div id="bios">
+                  <form action="edit-bio.php" method="POST">
+                    <input id="submit3" type="submit" onclick="myFunction1()">
+                    <textarea rows="1" type="text" id="teste" name="bio" placeholder="Write about you" maxlength="255" onclick="myFunction()"></textarea>
+                  </form>
+                </div>
+                <span id="biog"></span>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div class="question">
-    <div class="timeline">
-      <div class="circle1">
-        <span id="history1">It was the first project, a <br>login and sign system</span>
-
-      </div>
-      <div class="circle2">
-        <span id="history2">It was the first project, a <br>login and sign system</span>
-      </div>
-      <div class="teste">
-      </div>
-      <div id="progress">
-      </div>
     </div>
+    </div>
+     <script rel="script" src="/resources/js/app.js"></script>
 </body>
 
 </html>
