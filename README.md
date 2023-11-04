@@ -33,7 +33,7 @@ Nesta versão foram resolvidos problemas de renderizações, SESSIONS e etc.
 Nesta versão na sessão do "Profile", pode-se mudar seu nome e adicionar um biografia, tanto o nome e a bio serão armazenadas no Banco de Dados.
 [PENDENTE]
 
-### Versão 6.0 (PHP) ⌛ 
+### Versão 6.0 (PHP) ✔️ 
 
 Nesta versão pode-se adicionar uma imagem na sessão do "Profile" sendo armazenado diretamente no Banco de Dados.
 [PENDENTE]
