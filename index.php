@@ -12,6 +12,7 @@ session_start();
   <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
    <script src="https://unpkg.com/scrollreveal@4"></script>
   <link rel="stylesheet" href="/resources/css/app.css">
@@ -33,19 +34,66 @@ session_start();
     
     
     if (isset($_SESSION["user_id"])) {
-            require __DIR__ . "/resources/php/env.php";
-            $sql_qy_id = "SELECT * FROM ninjinha WHERE id = ('".$_SESSION['user_id']."') ";
-            $resulte = $conn-> query($sql_qy_id);
-            $ninjinha = $resulte-> fetch_assoc();
-            $_SESSION["user_id"] = $ninjinha["id"];
-            $is_available = $_SESSION["is_available"];
+        require __DIR__ . "/resources/php/env.php";
+        $sql_qy_id = "SELECT * FROM ninjinha WHERE id = ('".$_SESSION['user_id']."') ";
+        $resulte = $conn-> query($sql_qy_id);
+        $ninjinha = $resulte-> fetch_assoc();
+        $_SESSION["user_id"] = $ninjinha["id"];
+        $is_available = $_SESSION["is_available"];
+        
+        $fid = $_SESSION["user_id"]; 
+        
+        $qry = "SELECT `img` from `ninjinha` WHERE `id`='$fid'";
+        $rsult = $conn->query($qry);
+        $fetch_img = $rsult->fetch_assoc();
+        $arr_img = implode($fetch_img);
+        
     }
     
     ?>
   <div class="mytabs">
+      <input type="radio" class="tabs__radio" name="mytabs" id="tab3">
+  <label for="tab3" class="tabs__label" style="position: absolute;
+    transform: translateX(-50%);
+    left: 50%;" id=search-tab></label>
+  <div class="tabs__content">
+    <form method="post" id="usersearch"><div id="search">
+        <input id="player-name" name="player-name" class="search" placeholder="Username" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" onkeypress="checkUser()"><button id="search-button" name="send-button" ><i class="bi bi-search"></i></button></div></form>
+              <div id="body-mine" style=" display:none;
+                position: absolute;
+                height: 100vh;
+                width: 100%; justify-content: center;
+                align-items: center;">
+                <div id="mine-user" style="background: white;
+                width: 80%;
+                height: 75%;
+                border-radius: 30px; position: absolute;">
+                <div id="usermineinfo"></div>
+                </div>
+            </div>
+    </div>
     <input type="radio" id="tabfree" name="mytabs" checked="checked" style="display:none;">
-    <label for="tabfree" class="fas fa-info icon1 icone"></label>
+    <label for="tabfree" class="fas fa-info icon1 icone" id="initial"></label>
     
+    <?php
+        require __DIR__ . "/resources/php/env.php";
+        if(isset($_POST['send-button'])){
+            
+            $search = $_POST['player-name'];
+            
+            if($search != NULL){
+                
+                $request = mysql_query("SELECT * FROM ninjinha WHERE Nome LIKE '%$search%' ");
+                
+                if($request != 0){
+                    
+                    while($return = mysqli_fetch_array($request)){
+                        $row = mysql_num_rows($request);
+                        }
+                    }
+                }
+            }
+      ?>
     <div class="tab" id="tab1">
       <div class="main">
         <div class="text1">
@@ -147,6 +195,9 @@ xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
     <input type="radio" id="tabgold" name="mytabs" style="display:none;">
     <label for="tabgold" class="fas fa-user-circle icon3 icone">
       <span id="nickname"></span>
+      <span id="logmsg" style="
+  font-size: 20px;
+  cursor: pointer; font-family: 'Wix Madefor Display', sans-serif;">Log in</span>
       <a href="/resources/php/logout.php" class="out fas fa-sign-out-alt fa-rotate-180"></a>
     </label>
     <div class="tab" id="tab2">
@@ -239,16 +290,25 @@ xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
             <div class="pictures">
               <div class="desc">
                 <div class="pictur">
-                  <div class="profpic" onclick="myFunction22()">
+                  <div class="profpic">
                     <!--Aqui vai o php-->
-                    <img class="cropped" id="cropped" alt="" src="" onerror="this.onerror=null;this.src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';">
-                    <form action="process_image.php" method="POST" style="position:absolute;">
-                      <input id="myinput" name="opaitaon" type="hidden" value="">
+                    
+                <?php
+                    
+                    if(isset($_SESSION['img'])) {
+                        $willow = $_SESSION['img'];
+                    }
+                    
+                ?>
+                    
+                    <img class="cropped" id="cropped" alt="" src='<?= $arr_img; ?>';  onerror="this.onerror=null;this.src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png';" onclick="myFunction22()">
+                    <form action="/resources/php/process_image.php" method="POST" style="position:absolute;">
+                      <input id="myinput" name="img" type="hidden" value="">
                       <button type="submit" id="salvar" style="display:none;">Salvar</button>
                     </form>
                   </div>
                   <div id="popu2">
-                    <img id="cropped2" class="cropped2" alt="" style="width: clamp(50px, 70%, 500px);" onerror="this.onerror=null; this.src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'">
+                    <img id="cropped2" class="cropped2" alt="" style="width: clamp(50px, 70%, 500px);" src='<?= $arr_img; ?>';>
                     <span class="X">×</span>
                   </div>
                   <label for="file-input" class="fas fa-edit icon5" onclick="myFunction20()"></label>
@@ -285,6 +345,31 @@ xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
     </div>
     </div>
     <script>
+    
+    const credential =  '<?= $cred_error; ?>';
+    if(credential == 1){
+        document.getElementById("tabgold").checked = true;
+        document.querySelector(".tudo").style.display="none";
+        setTimeout(() => {
+            
+            document.querySelector(".tudo").style.display="block";
+            document.querySelector('.close').onclick = ()=>{
+                document.getElementById("wrong").style.transform ="scale(0)";
+            }
+            
+        }, 2);
+        
+        setTimeout(() => {
+            document.querySelector(".tudo").style.display="flex";
+            document.getElementById("wrong").style.top ="60px";
+        }, 2);
+        
+            if(credential == 1){
+    setTimeout(() => {
+            document.getElementById("wrong").style.transform ="scale(0)";
+        }, 5000);}
+    }
+    
     function onloadCallback() {
         grecaptcha.execute("recaptcha")
         var response = grecaptcha.getResponse();
@@ -312,6 +397,8 @@ xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
     }
     );
     
+    
+    
     document.getElementById("teste1").style.display = "none";
     document.getElementById("submit").disabled = true;
     var check = function() {
@@ -336,6 +423,7 @@ xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
         document.getElementById('biog').innerHTML = biogra;
         document.querySelector(".out").style.display = "block";
         document.getElementById("tabgold").checked = true;
+        document.getElementById('logmsg').style.display="none";
     }
 
     document.getElementById("submit3").style.display = "none";
@@ -442,15 +530,9 @@ xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
         document.querySelector('.popup').style.display = 'none';
     }
     
-    const picsave = document.getElementById("salvar");
-    
-    var img = 0;
-    
-    picsave.addEventListener("click", () =>{
-        img = 1;
-    });
     function myFunction22() {
-        if (img == 1) {
+        if (cropped.src != 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png') {
+            
             document.querySelector("#popu2").style.display = "block";
 
             document.querySelector('#popu2 span').onclick = ()=>{
@@ -474,10 +556,25 @@ xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
         document.querySelector('.log').style.transform = "scale(1)";
         document.querySelector('.pass').style.transform = "scale(0)";
     }
-
+    
+    document.querySelector('#player-name').onkeyup = ()=>{
+        document.getElementById("tab3").checked = true;
+        document.getElementById("body-mine").style.display="flex";
+    }
+    
+    document.querySelector('#tabgold').onclick = ()=>{
+        document.getElementById("body-mine").style.display="none";
+    }
+    
+    document.querySelector('#tabfree').onclick = ()=>{
+        document.getElementById("body-mine").style.display="none";
+    }
+    
     window.onunload = function() {
         document.querySelector(".tabgold").click();
     }
+    
+    document.getElementById("body-mine").style.display="none";
 
     let file = document.getElementById("file-input");
     let picpopup = document.getElementById("cropped2");
@@ -678,33 +775,7 @@ xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
     
     const src = geturl(dados);
     
-        
-    const credential =  '<?= $cred_error; ?>';
-    if(credential == 1){
-        document.getElementById("tabgold").checked = true;
-        document.querySelector(".tudo").style.display="none";
-        setTimeout(() => {
-            
-            document.querySelector(".tudo").style.display="block";
-            document.querySelector('.close').onclick = ()=>{
-                document.getElementById("wrong").style.transform ="scale(0)";
-            }
-            
-        }, 2);
-        
-        setTimeout(() => {
-            document.querySelector(".tudo").style.display="flex";
-            document.getElementById("wrong").style.top ="60px";
-        }, 2);
-        
-            if(credential == 1){
-    setTimeout(() => {
-            document.getElementById("wrong").style.transform ="scale(0)";
-        }, 5000);}
-    }
-    
 
     </script>
   </body>
 </html>
-    
