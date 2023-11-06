@@ -3,7 +3,7 @@ session_set_cookie_params(['httponly' => true]);
 session_start();
 ?>
 
-<!--Atualização - 06/11!-->
+<!--Atualização portfolio - 06/11!-->
 
 <!DOCTYPE html>
 <html lang="en">
