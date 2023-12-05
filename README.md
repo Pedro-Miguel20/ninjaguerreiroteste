@@ -36,7 +36,6 @@ Nesta versão na sessão do "Profile", pode-se mudar seu nome e adicionar um bio
 ### Versão 6.0 (PHP) ✔️ 
 
 Nesta versão pode-se adicionar uma imagem na sessão do "Profile" sendo armazenado diretamente no Banco de Dados.
-[PENDENTE]
 
 ---
 
@@ -54,7 +53,7 @@ Nesta versão pode-se adicionar uma imagem na sessão do "Profile" sendo armazen
 
 ### Versão 9.0 (PHP) ⌛ 
 
-Nesta versão pode-se adicionar uma imagem na sessão do "Profile" sendo armazenado diretamente no Banco de Dados.
+???
 [PENDENTE]
 
 ---
