@@ -1,6 +1,6 @@
 ## 📝 Project Ninja Guerreiro
 
-#### 📜 Este repositório consiste em um código-fonte de um formulário feito em HTML/CSS usando como seu back-end PHP junto ao Banco de Dados MySQL.
+📜**Este repositório consiste em um código-fonte de um formulário feito em HTML/CSS usando como seu back-end PHP junto ao Banco de Dados MySQL.**
 
 # Versão de Testes
 
