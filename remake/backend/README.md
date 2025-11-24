@@ -1,4 +1,6 @@
 # RODAR BACKEND
+
+## LINUX
 ```bash
 git fetch
 git pull origin main
@@ -7,6 +9,17 @@ source .venv/bin/activate
 pip install django
 pip install djangorestframework
 python3 manage.py runserver
+```
+
+## WINDOWS
+```bash
+git fetch
+git pull origin main
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install django
+pip install djangorestframework
+python manage.py runserver
 ```
 
 # ENDPOINTS
