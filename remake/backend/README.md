@@ -4,7 +4,8 @@
 ### LINUX
 ```bash
 git fetch
-git pull origin main
+git checkout development/back-end
+git pull origin development/back-end
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
@@ -14,7 +15,8 @@ python3 manage.py runserver
 ### WINDOWS
 ```bash
 git fetch
-git pull origin main
+git checkout development/backend
+git pull origin development/backend
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
