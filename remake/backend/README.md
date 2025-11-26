@@ -7,8 +7,7 @@ git fetch
 git pull origin main
 python3 -m venv .venv
 source .venv/bin/activate
-pip install django
-pip install djangorestframework
+pip install -r requirements.txt
 python3 manage.py runserver
 ```
 
@@ -18,8 +17,7 @@ git fetch
 git pull origin main
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-pip install django
-pip install djangorestframework
+pip install -r requirements.txt
 python manage.py runserver
 ```
 
