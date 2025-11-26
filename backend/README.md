@@ -23,6 +23,14 @@ pip install -r requirements.txt
 python manage.py runserver
 ```
 
+## Rodar servidor frontend
+### WINDOWS
+```bash
+scoop install main/pnpm
+pnpm install
+pnpm dev
+```
+
 # ENDPOINTS
 Requisição / Request:
 ```bash
@@ -31,12 +39,4 @@ GET /login
 Resposta / Saída / Output:
 ```bash
 
-```
-
-## Rodar servidor frontend
-### WINDOWS
-```bash
-scoop install main/pnpm
-pnpm install
-pnpm dev
 ```
