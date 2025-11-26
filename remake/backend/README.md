@@ -15,8 +15,8 @@ python3 manage.py runserver
 ### WINDOWS
 ```bash
 git fetch
-git checkout development/backend
-git pull origin development/backend
+git checkout development/back-end
+git pull origin development/back-end
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
