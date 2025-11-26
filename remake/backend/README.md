@@ -1,6 +1,7 @@
-# RODAR BACKEND
+# Documentação para Desenvolvedores
 
-## LINUX
+## Rodar servidor backend
+### LINUX
 ```bash
 git fetch
 git pull origin main
@@ -11,7 +12,7 @@ pip install djangorestframework
 python3 manage.py runserver
 ```
 
-## WINDOWS
+### WINDOWS
 ```bash
 git fetch
 git pull origin main
@@ -23,7 +24,12 @@ python manage.py runserver
 ```
 
 # ENDPOINTS
+Requisição / Request:
 ```bash
-/
+GET /login
+```
+Resposta / Saída / Output:
+```bash
+
 ``` 
 
