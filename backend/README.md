@@ -35,8 +35,6 @@ Resposta / Saída / Output:
 
 ## Rodar servidor frontend
 ### WINDOWS
-
-Instalar pnpm
 ```bash
 scoop install main/pnpm
 pnpm install
