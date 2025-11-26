@@ -31,5 +31,14 @@ GET /login
 Resposta / Saída / Output:
 ```bash
 
-``` 
+```
 
+## Rodar servidor frontend
+### WINDOWS
+
+Instalar pnpm
+```bash
+scoop install main/pnpm
+pnpm install
+pnpm dev
+```
