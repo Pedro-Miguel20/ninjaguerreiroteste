@@ -25,30 +25,48 @@ python manage.py runserver
 
 # ENDPOINTS
 ### | Autenticação do usuário |
-Requisição / Request:
+
+⚠️ **ATENÇÃO:**
+   - **O usuário deve existir!**
+
+#### | 1. Gerar token JWT |
+
+**Requisição / Request:**
 ```bash
-GET /v1/token
+curl -X POST http://127.0.0.1:8000/v1/token/ \
+     -H "Content-Type: application/json" \
+     -d '{
+          "username": "teste",
+          "password": "teste"
+         }'
 ```
-Resposta / Saída / Output:
+**Resposta / Saída / Output:**
 ```json
 {
    "access":"eyJsInR...",
-   "refresh":"eyJsInR...",
+   "refresh":"eyJhba6...",
    "user_id":3,
    "username":"teste",
    "is_staff":false
 }
 ``` 
+#### | 2. Renegerar token JWT |
 
-Requisição / Request:
+**Requisição / Request:**
 ```bash
-GET /v1/token/refresh
+curl -X POST http://127.0.0.1:8000/v1/token/refresh/ \
+     -H "Content-Type: application/json" \
+     -d '{
+          "refresh": "eyJhba6"
+         }'
 ```
-Resposta / Saída / Output:
+**Resposta / Saída / Output:**
 ```json
 {
    "access":"eyJsInR..."
 }
-``` 
+```
+
+
 
 
