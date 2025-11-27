@@ -24,12 +24,31 @@ python manage.py runserver
 ```
 
 # ENDPOINTS
+### | Autenticação do usuário |
 Requisição / Request:
 ```bash
-GET /login
+GET /v1/token
 ```
 Resposta / Saída / Output:
-```bash
-
+```json
+{
+   "access":"eyJsInR...",
+   "refresh":"eyJsInR...",
+   "user_id":3,
+   "username":"teste",
+   "is_staff":false
+}
 ``` 
+
+Requisição / Request:
+```bash
+GET /v1/token/refresh
+```
+Resposta / Saída / Output:
+```json
+{
+   "access":"eyJsInR..."
+}
+``` 
+
 
