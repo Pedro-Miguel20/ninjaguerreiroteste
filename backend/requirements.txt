@@ -1,4 +1,7 @@
-django
-djangorestframework
-djangorestframework-simplejwt
-environs
+asgiref==3.11.0
+Django==5.2.8
+django-environ==0.12.0
+djangorestframework==3.16.1
+djangorestframework_simplejwt==5.5.1
+PyJWT==2.10.1
+sqlparse==0.5.3
