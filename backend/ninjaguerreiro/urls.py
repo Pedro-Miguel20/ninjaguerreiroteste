@@ -22,13 +22,20 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from api import views
 
 router = routers.DefaultRouter()
-#router.register(r'users', views.UserViewSet)
-#router.register(r'groups', views.GroupViewSet)
+router.register(r'users', views.UserViewSet)
+router.register(r'groups', views.GroupViewSet)
 
 urlpatterns = [
-    path('v1/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('v1/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    #path('', include(router.urls)),
-    #path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    #path('admin/', admin.site.urls),
+    # Pre-fixo v1/ para os endpoints
+    path('v1/', include(router.urls)),
+    
+    
+    # Geração e atualização de token JWT
+    path('v1/auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'), 
+    path('v1/auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    
+    
+    # path('', include(router.urls)),
+    # path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    # path('admin/', admin.site.urls),
 ]
