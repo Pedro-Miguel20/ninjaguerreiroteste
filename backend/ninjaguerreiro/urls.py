@@ -26,8 +26,8 @@ router = routers.DefaultRouter()
 #router.register(r'groups', views.GroupViewSet)
 
 urlpatterns = [
-    path('v1/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('v1/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('v1/auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'), 
+    path('v1/auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     #path('', include(router.urls)),
     #path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     #path('admin/', admin.site.urls),
