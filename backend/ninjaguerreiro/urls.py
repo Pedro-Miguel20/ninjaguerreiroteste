@@ -14,10 +14,10 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from rest_framework import routers
 from django.urls import include, path
+from rest_framework import routers
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from api.views import RegisterAPIView
 
 from api import views
 
@@ -28,6 +28,10 @@ router.register(r'groups', views.GroupViewSet)
 urlpatterns = [
     # Pre-fixo v1/ para os endpoints
     path('v1/', include(router.urls)),
+    
+    
+    # Registro de solicitação de acesso ao sistema
+    path('v1/auth/register', RegisterAPIView.as_view()),
     
     
     # Geração e atualização de token JWT
