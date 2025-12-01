@@ -2,10 +2,13 @@ from django.contrib.auth.models import User, Group
 from rest_framework import permissions, viewsets
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import status
 
 from api.serializers import UserSerializer, GroupSerializer
 
 class RegisterAPIView(APIView):
+    permission_classes = [permissions.AllowAny]
+
     def post(self, request, *args, **kwargs):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():

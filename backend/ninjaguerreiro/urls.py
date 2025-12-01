@@ -31,7 +31,7 @@ urlpatterns = [
     
     
     # Registro de solicitação de acesso ao sistema
-    path('v1/auth/register', RegisterAPIView.as_view()),
+    path('v1/auth/register/', RegisterAPIView.as_view()),
     
     
     # Geração e atualização de token JWT
