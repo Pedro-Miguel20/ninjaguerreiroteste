@@ -26,6 +26,14 @@ python manage.py migrate
 python manage.py runserver
 ```
 
+## Rodar servidor frontend
+### WINDOWS
+```bash
+scoop install main/pnpm
+pnpm install
+pnpm dev
+```
+
 # ENDPOINTS
 ### | Autenticação do usuário |
 
@@ -50,6 +58,7 @@ Invoke-WebRequest -Uri "http://127.0.0.1:8000/v1/token/" -Method POST -Headers @
 } -Body '{"username":"teste","password":"teste"}'
 ```
 
+```
 **Resposta / Saída / Output:**
 ```json
 {
