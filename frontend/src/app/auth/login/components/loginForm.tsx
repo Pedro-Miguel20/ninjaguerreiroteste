@@ -14,7 +14,7 @@ const inter = Inter({
 export default function LoginForm(){
     const [action, setAction] = React.useState<string | null>(null);
 
-    return ( <><Card className={`${inter.className} p-3 max-w-[400px]`}><CardHeader><h1><b>Login</b></h1></CardHeader><CardBody><Form
+    return ( <><Card className={`${inter.className} p-3 max-w-[400px] m-2`}><CardHeader><h1 className="text-xl"><b>Login</b></h1></CardHeader><CardBody><Form
       className="w-full max-w-xs flex flex-col gap-4"
       onSubmit={(e) => {
         e.preventDefault();
@@ -25,24 +25,22 @@ export default function LoginForm(){
     >
       <Input
         isRequired
-        errorMessage="Please enter a valid username"
-        label="Username"
-        labelPlacement="inside"
-        name="username"
-        placeholder="Enter your username"
-        type="text"
-        size="md"
-      />
-
-      <Input
-      className="w-72"
-        isRequired
         errorMessage="Please enter a valid email"
         label="Email"
         labelPlacement="inside"
         name="email"
         placeholder="Enter your email"
         type="email"
+        size="md"
+      />
+      <Input
+        isRequired
+        errorMessage="Please enter a valid password"
+        label="Password"
+        labelPlacement="inside"
+        name="password"
+        placeholder="Enter your password"
+        type="password"
         size="md"
       />
       <div className="flex gap-2 w-full">
