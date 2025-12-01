@@ -1,40 +1,21 @@
-"""
-URL configuration for ninjaguerreiro project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.urls import include, path
 from rest_framework import routers
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from api.views import RegisterAPIView
-
 from api import views
+
 
 router = routers.DefaultRouter()
 router.register(r'users', views.UserViewSet)
 router.register(r'groups', views.GroupViewSet)
 
 urlpatterns = [
-    # Pre-fixo v1/ para os endpoints
     path('v1/', include(router.urls)),
     
     
-    # Registro de solicitação de acesso ao sistema
     path('v1/auth/register/', RegisterAPIView.as_view()),
     
     
-    # Geração e atualização de token JWT
     path('v1/auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'), 
     path('v1/auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     
