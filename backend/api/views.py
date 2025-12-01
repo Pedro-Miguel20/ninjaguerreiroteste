@@ -7,13 +7,17 @@ from rest_framework import status
 from api.serializers import UserSerializer, GroupSerializer
 
 class RegisterAPIView(APIView):
-    permission_classes = [permissions.AllowAny]
+    permission_classes = [permissions.AllowAny]  # Permite que qualquer um faça o registro
 
     def post(self, request, *args, **kwargs):
+        # Passando os dados recebidos para o serializer
         serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        if serializer.is_valid():  # Verificando se os dados são válidos
+            serializer.save()  # Cria o usuário e associa os grupos
+            return Response(serializer.data, status=status.HTTP_201_CREATED)  # Retorna os dados do usuário com status 201 (criado)
+        
+        # Se os dados não forem válidos, retornamos os erros com status 400 (bad request)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
