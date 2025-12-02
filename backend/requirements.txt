@@ -5,3 +5,4 @@ djangorestframework==3.16.1
 djangorestframework_simplejwt==5.5.1
 PyJWT==2.10.1
 sqlparse==0.5.3
+django-cors-headers==4.9.0
