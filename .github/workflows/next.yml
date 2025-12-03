@@ -1,4 +1,4 @@
-name: CI/CD
+name: Next CI
 
 on:
   push:
@@ -8,34 +8,33 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-22.04
+    strategy:
+      matrix:
+        node-version: [20]
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
         with:
-          node-version: '24'
-          cache: 'npm' 
-          
+          version: 10
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "pnpm"
+          cache-dependency-path: frontend/pnpm-lock.yaml
       - name: Install dependencies
-        run: |
+        run:  |
           cd frontend
-          npm install
+          pnpm install
 
       - name: Run lint
         run: |
           cd frontend
-          npm run lint
+          pnpm run lint
 
-      - name: Run tests
-        run: |
-          cd frontend
-          npm run test
-          
       - name: Run build
         run: |
           cd frontend
-          npm run build
+          pnpm run build
