@@ -29,8 +29,7 @@ SECRET_KEY = env('SECRET_KEY', default='development-insecure-key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', default=True)
 
-ALLOWED_HOSTS = env('ALLOWED_HOSTS', default='127.0.0.1, localhost').split(',')
-
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['127.0.0.1', 'localhost'])
 
 # Application definition
 
@@ -53,9 +52,9 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware'
+    'django.middleware.clickjacking.XFrameOptionsMiddleware'
 ]
 
 CORS_ALLOWED_ORIGINS = env.list(
@@ -63,8 +62,6 @@ CORS_ALLOWED_ORIGINS = env.list(
     default=[
         "http://localhost:3000",
         "http://127.0.0.1:3000",
-        "http://127.0.0.1:8000",
-        "http://localhost:8000"
     ],
 )
 
