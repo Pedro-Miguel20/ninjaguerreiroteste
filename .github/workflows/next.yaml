@@ -18,27 +18,24 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '24'
-          cache: 'pnpm' 
-
-      - name: Install pnpm
-        run: npm install -g pnpm
-
+          cache: 'npm' 
+          
       - name: Install dependencies
         run: |
           cd frontend
-          pnpm install
+          npm install
 
       - name: Run lint
         run: |
           cd frontend
-          pnpm run lint
+          npm run lint
 
       - name: Run tests
         run: |
           cd frontend
-          pnpm run test
-
+          npm run test
+          
       - name: Run build
         run: |
           cd frontend
-          pnpm run build
+          npm run build
