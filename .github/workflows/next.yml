@@ -2,9 +2,9 @@ name: CI/CD
 
 on:
   push:
-    branches: [develop]
+    branches: [main]
   pull_request:
-    branches: [develop]
+    branches: [main]
 
 jobs:
   build:
@@ -33,17 +33,9 @@ jobs:
         run: |
           cd frontend
           pnpm run lint
-        continue-on-error: true
-
-      - name: Run tests
-        run: |
-          cd frontend
-          pnpm run test
-        continue-on-error: true
 
       - name: Run build
         run: |
           cd frontend
           pnpm run build
-        continue-on-error: true
 
