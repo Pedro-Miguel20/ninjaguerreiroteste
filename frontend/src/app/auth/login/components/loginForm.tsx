@@ -1,9 +1,9 @@
 "use client";
 
 import {Form, Input, Button} from "@heroui/react";
-import React from "react";
 import {Card, CardHeader, CardBody, CardFooter} from "@heroui/card";
-import { Inter } from 'next/font/google'
+import { Inter } from 'next/font/google';
+import { FormEvent } from "react";
 
 const inter = Inter({
   subsets: ['latin'],
@@ -12,53 +12,72 @@ const inter = Inter({
 
 
 export default function LoginForm(){
-    const [action, setAction] = React.useState<string | null>(null);
+  async function onSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    
+    const formData = new FormData(event.currentTarget);
 
-    return ( <><Card className={`${inter.className} p-3 max-w-[400px] m-2`}><CardHeader><h1 className="text-xl"><b>Login</b></h1></CardHeader><CardBody><Form
-      className="w-full max-w-xs flex flex-col gap-4"
-      onSubmit={(e) => {
-        e.preventDefault();
-        let data = Object.fromEntries(new FormData(e.currentTarget));
+      const payload = {
+        username: formData.get("username"),
+        password: formData.get("password"),
+      };
+      console.log(process.env.NEXT_PUBLIC_API_URL);
 
-        setAction(`submit ${JSON.stringify(data)}`);
-      }}
-    >
-      <Input
-        isRequired
-        errorMessage="Please enter a valid email"
-        label="Email"
-        labelPlacement="inside"
-        name="email"
-        placeholder="Enter your email"
-        type="email"
-        size="md"
-      />
-      <Input
-        isRequired
-        errorMessage="Please enter a valid password"
-        label="Password"
-        labelPlacement="inside"
-        name="password"
-        placeholder="Enter your password"
-        type="password"
-        size="md"
-      />
-      <div className="flex gap-2 w-full">
-        <Button color="primary" type="submit" className="w-full">
-          Submit
-        </Button>
-      </div>
-      {action && (
-        <div className="text-small text-default-500">
-          Action: <code>{action}</code>
-        </div>
-      )}
-    </Form></CardBody><CardFooter><CardFooter>
-  <p className="text-sm text-default-500">
-    Don’t have an account?
-    <a href="/auth/register" className="text-primary ml-1 hover:underline">
-      Create one here.
-    </a>
-  </p>
-</CardFooter></CardFooter></Card></>)
+    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/auth/token/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+
+    const data = await response.json();
+  }
+
+  return ( 
+    <>
+      <Card className={`${inter.className} p-3 max-w-[400px] m-2`}>
+        <CardHeader><h1 className="text-xl"><b>Login</b></h1></CardHeader>
+        <CardBody>
+          <Form
+            className="w-full max-w-xs flex flex-col gap-4"
+            onSubmit={onSubmit}>
+            <Input
+              isRequired
+              errorMessage="Please enter a valid username"
+              label="Username"
+              labelPlacement="inside"
+              name="username"
+              placeholder="Enter your username"
+              type="text"
+              size="md"
+            />
+            <Input
+              isRequired
+              errorMessage="Please enter a valid password"
+              label="Password"
+              labelPlacement="inside"
+              name="password"
+              placeholder="Enter your password"
+              type="password"
+              size="md"
+            />
+            <div className="flex gap-2 w-full">
+              <Button color="primary" type="submit" className="w-full">
+                Submit
+              </Button>
+            </div>
+          </Form>
+        </CardBody>
+        <CardFooter>
+          <p className="text-sm text-default-500">
+            Don’t have an account?
+            <a href="/auth/register" className="text-primary ml-1 hover:underline">
+              Create one here.
+            </a>
+          </p>
+        </CardFooter>
+      </Card>
+    </>
+  )
 }
