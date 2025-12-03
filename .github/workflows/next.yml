@@ -8,10 +8,10 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
-          node-version: [20]
+        node-version: [20]
     steps:
       - uses: actions/checkout@v4
       - name: Install pnpm
@@ -23,8 +23,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "pnpm"
-        
       - name: Install dependencies
-        run: |
+        run:  |
           cd frontend
           pnpm install
