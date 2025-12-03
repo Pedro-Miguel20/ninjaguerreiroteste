@@ -28,3 +28,19 @@ jobs:
         run:  |
           cd frontend
           pnpm install
+
+      - name: Run lint
+        run: |
+          cd frontend
+          pnpm run lint
+
+      - name: Run tests
+        run: |
+          cd frontend
+          pnpm run test
+
+      - name: Run build
+        run: |
+          cd frontend
+          pnpm run build
+
