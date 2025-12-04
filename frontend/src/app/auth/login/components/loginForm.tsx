@@ -4,6 +4,7 @@ import {Form, Input, Button} from "@heroui/react";
 import {Card, CardHeader, CardBody, CardFooter} from "@heroui/card";
 import { Inter } from 'next/font/google';
 import { FormEvent } from "react";
+import Link from 'next/link'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -61,6 +62,7 @@ export default function LoginForm(){
               placeholder="Enter your password"
               type="password"
               size="md"
+              className="cursor-pointer"
             />
             <div className="flex gap-2 w-full">
               <Button color="primary" type="submit" className="w-full">
@@ -71,10 +73,10 @@ export default function LoginForm(){
         </CardBody>
         <CardFooter>
           <p className="text-sm text-default-500">
-            Don’t have an account?
-            <a href="/auth/register" className="text-primary ml-1 hover:underline">
-              Create one here.
-            </a>
+            Don’t you have an account? 
+            <Link href="/auth/register" className="text-primary ml-1 hover:underline">
+              Create here.
+            </Link>
           </p>
         </CardFooter>
       </Card>
