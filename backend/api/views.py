@@ -32,7 +32,7 @@ class GroupViewSet(viewsets.ModelViewSet):
     serializer_class = GroupSerializer
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:  # Ações de leitura
-            self.permission_classes = [AllowAny]  # Leitura pública
+            self.permission_classes = [permissions.AllowAny]  # Leitura pública
         else:  # Para criar, atualizar ou excluir
-            self.permission_classes = [IsAdminUser]  # Apenas administradores ou usuários com permissão de staff
+            self.permission_classes = [permissions.IsAdminUser]  # Apenas administradores ou usuários com permissão de staff
         return super().get_permissions()
