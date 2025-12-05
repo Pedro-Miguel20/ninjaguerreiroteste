@@ -32,7 +32,7 @@ export default function LoginForm(){
       body: JSON.stringify(payload),
     });
 
-    const data = await response.json();
+    return response.json();
   }
 
   return ( 
