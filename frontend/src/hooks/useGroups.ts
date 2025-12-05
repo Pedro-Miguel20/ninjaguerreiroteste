@@ -1,20 +1,33 @@
+import { useEffect, useState } from "react";
+
+type Group = {
+    id: number;
+    name: string;
+};
+
 export function useGroups() {
+    const [groups, setGroups] = useState<Group[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<unknown>(null);
 
- const groups = [
-  {key: "cat", label: "Cat"},
-  {key: "dog", label: "Dog"},
-  {key: "elephant", label: "Elephant"},
-  {key: "lion", label: "Lion"},
-  {key: "tiger", label: "Tiger"},
-  {key: "giraffe", label: "Giraffe"},
-  {key: "dolphin", label: "Dolphin"},
-  {key: "penguin", label: "Penguin"},
-  {key: "zebra", label: "Zebra"},
-  {key: "shark", label: "Shark"},
-  {key: "whale", label: "Whale"},
-  {key: "otter", label: "Otter"},
-  {key: "crocodile", label: "Crocodile"},
-];
+    useEffect(() => {
+        async function loadGroups() {
+            try {
+                const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/groups/`);
+                
+                if (!res.ok) throw new Error("Failed to fetch groups");
 
-  return { groups, loading: false };
+                const data = await res.json();
+                setGroups(data);
+            } catch (err) {
+                setError(err);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        loadGroups();
+    }, []);
+
+    return { groups , loading, error };
 }

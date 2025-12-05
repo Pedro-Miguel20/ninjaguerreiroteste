@@ -1,5 +1,5 @@
 
-export async function register(payload: { username: string; password: string; groups: string[] }) {
+export async function register(payload: { username: string; password: string; groups: number[] }) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/auth/register/`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },

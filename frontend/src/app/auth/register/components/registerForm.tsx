@@ -18,13 +18,13 @@ const inter = Inter({
 type RegisterPayload = {
     username: string;
     password: string;
-    groups: string[];
+    groups: number[];
 };
 
 export default function RegisterForm(){
     const [isVisible, setIsVisible] = useState(false);
     const [isConfirmVisible, setIsConfirmVisible] = useState(false);
-    const { groups, loading } = useGroups();
+    const { groups, loading, error } = useGroups();
 
 
     const toggleVisibility = () => setIsVisible(!isVisible);
@@ -38,7 +38,7 @@ export default function RegisterForm(){
         const payload: RegisterPayload = {
             username: formData.get("username") as string,
             password: formData.get("password") as string,
-            groups: formData.getAll("groups") as string[],
+            groups: formData.getAll("groups").map(g => Number(g as string)),
         };
         
         try {
@@ -67,11 +67,6 @@ export default function RegisterForm(){
                             type="text"
                             size="md"
                         />
-                        <Select className="max-w-xs" label="Select an animal">
-                            {groups.map((group: {key: string, label: string}) => (
-                            <SelectItem key={group.key}>{group.label}</SelectItem>
-                            ))}
-                        </Select>
                         <Input
                             isRequired
                             endContent={
@@ -91,6 +86,11 @@ export default function RegisterForm(){
                             errorMessage="Please enter a valid password"
                             size="md"
                         />
+                        <Select className="max-w-xs" label="Select Groups" name="groups">
+                            {groups.map((group: {id: number, name: string}) => (
+                            <SelectItem key={group.id}>{group.name}</SelectItem>
+                            ))}
+                        </Select>
                         <div className="flex gap-2 w-full">
                             <Button color="primary" type="submit" className="w-full">
                                 Submit
