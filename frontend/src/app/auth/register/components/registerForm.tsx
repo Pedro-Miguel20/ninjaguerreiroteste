@@ -23,12 +23,10 @@ type RegisterPayload = {
 
 export default function RegisterForm(){
     const [isVisible, setIsVisible] = useState(false);
-    const [isConfirmVisible, setIsConfirmVisible] = useState(false);
-    const { groups, loading, error } = useGroups();
+    const { groups } = useGroups();
 
 
     const toggleVisibility = () => setIsVisible(!isVisible);
-    const toggleConfirmVisibility = () => setIsConfirmVisible(!isConfirmVisible);
     
     async function onSubmit(event: FormEvent<HTMLFormElement>) {
         event.preventDefault();
