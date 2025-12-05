@@ -5,7 +5,7 @@ type Group = {
     name: string;
 };
 
-export function useGroups() {
+export function useGroups() { // Custom hook to fetch groups data for component use
     const [groups, setGroups] = useState<Group[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<unknown>(null);
@@ -14,7 +14,7 @@ export function useGroups() {
         async function loadGroups() {
             try {
                 const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/groups/`);
-                
+              
                 if (!res.ok) throw new Error("Failed to fetch groups");
 
                 const data = await res.json();
@@ -29,5 +29,5 @@ export function useGroups() {
         loadGroups();
     }, []);
 
-    return { groups , loading, error };
+    return { groups , loading, error }; // Return groups data along with loading and error states
 }
