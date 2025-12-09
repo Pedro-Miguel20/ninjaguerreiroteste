@@ -9,6 +9,8 @@ import { Button, Form, Input, Select, SelectItem } from "@heroui/react";
 import { FormEvent, useState } from "react";
 import { register } from "../../../../services/auth.service";
 import { useGroups } from "@/src/hooks/useGroups";
+import { showToast, getToastColorByStatus } from "@/src/utils/toast";
+
 
 const inter = Inter({
   subsets: ['latin'],
@@ -23,7 +25,7 @@ type RegisterPayload = {
 
 export default function RegisterForm(){
     const [isVisible, setIsVisible] = useState(false);
-    const { groups } = useGroups();
+    const { groups} = useGroups();
 
 
     const toggleVisibility = () => setIsVisible(!isVisible);
@@ -41,9 +43,20 @@ export default function RegisterForm(){
         
         try {
             const data = await register(payload);
-            console.log("Register success:", data);
-        } catch (err) {
-            console.error(err);
+
+            showToast({
+            title: "Success",
+            description: `Welcome, ${payload.username}!`,
+            color: getToastColorByStatus(data.status),
+            });
+
+        } catch (error: any) {
+            console.log(error.status)
+            showToast({
+            title: "Registration failed",
+            description: error.message, // agora vem da API
+            color: getToastColorByStatus(error.status || 500),
+            });
         }
     }
 
@@ -90,7 +103,8 @@ export default function RegisterForm(){
                             ))}
                         </Select>
                         <div className="flex gap-2 w-full">
-                            <Button color="primary" type="submit" className="w-full">
+                            <Button color="primary" type="submit" className="w-full"
+                            >
                                 Submit
                             </Button>
                         </div>
