@@ -1,4 +1,10 @@
+// Defina o tipo customizado de erro
+interface ApiError extends Error {
+  status?: number;
+  raw?: unknown;
+}
 
+// Função register
 export async function register(payload: { username: string; password: string; groups: number[] }) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/auth/register/`, {
     method: "POST",
@@ -9,28 +15,25 @@ export async function register(payload: { username: string; password: string; gr
   const data = await response.json();
 
   if (!response.ok) {
-    // Extrai mensagem da API (incluindo formato: {field: ["msg"]})
     let message = "Registration failed";
 
-    if (data) {
-      // Se for um objeto: "username": ["erro"]
-      if (typeof data === "object") {
-        const firstKey = Object.keys(data)[0];
-        const firstValue = data[firstKey];
+    if (data && typeof data === "object") {
+      const firstKey = Object.keys(data)[0];
+      const firstValue = (data as Record<string, unknown>)[firstKey];
 
-        if (Array.isArray(firstValue)) {
-          message = firstValue[0]; // pega a primeira mensagem
-        }
+      if (Array.isArray(firstValue)) {
+        message = String(firstValue[0]);
       }
     }
 
-    const error: any = new Error(message);
+    const error: ApiError = new Error(message) as ApiError;
     error.status = response.status;
     error.raw = data;
     throw error;
   }
+
   return {
-    status: response.status, // normalmente 200 ou 201
+    status: response.status,
     data,
   };
 }
