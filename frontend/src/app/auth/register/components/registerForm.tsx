@@ -50,12 +50,18 @@ export default function RegisterForm(){
             color: getToastColorByStatus(data.status),
             });
 
-        } catch (error: any) {
-            console.log(error.status)
+        } catch (error: unknown) {
+            const apiError = error as {
+                message: string;
+                status?: number;
+            };
+
+            console.log(apiError.status);
+
             showToast({
-            title: "Registration failed",
-            description: error.message, // agora vem da API
-            color: getToastColorByStatus(error.status || 500),
+                title: "Registration failed",
+                description: apiError.message,
+                color: getToastColorByStatus(apiError.status || 500),
             });
         }
     }
