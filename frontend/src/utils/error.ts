@@ -25,3 +25,18 @@ export function getErrorMessage(error: unknown): string {
 
   return "An unexpected error occurred on register";
 }
+
+
+import { ptBR } from "@/src/dictionaries/default-language-collections/default-pt-BR";
+
+export function translateRegisterError(message: string, dict = ptBR) {
+  const map: Record<string, string> = {
+    "This field may not be blank.": dict.error.register.usernameRequired,
+    "A user with that username already exists.": dict.error.register.usernameTaken,
+    "This field is required.": dict.error.register.passwordRequired,
+    "Select at least one group.": dict.error.register.groupRequired,
+    // adicione outros mapeamentos que seu backend retornar
+  };
+
+  return map[message.trim()] || message; // se não encontrar, retorna a própria mensagem
+}

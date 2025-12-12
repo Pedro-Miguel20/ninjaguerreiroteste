@@ -11,8 +11,21 @@ const inter = Inter({
   display: 'swap',
 })
 
+interface LoginFormProps {
+  dict: {
+    loginPage: { login: string;
+        labelName: string;
+        placeholdername: string;
+        labelPassword: string;
+        placeholderpassword: string;
+        button: string, 
+        goto: string;
+        link: string;
+      };
+  };
+}
 
-export default function LoginForm(){
+export default function LoginForm({dict}: LoginFormProps){
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     
@@ -38,7 +51,7 @@ export default function LoginForm(){
   return ( 
     <>
       <Card className={`${inter.className} p-3 max-w-[400px] m-2`}>
-        <CardHeader><h1 className="text-xl"><b>Login</b></h1></CardHeader>
+        <CardHeader><h1 className="text-xl"><b>{dict.loginPage.login}</b></h1></CardHeader>
         <CardBody>
           <Form
             className="w-full max-w-xs flex flex-col gap-4"
@@ -46,36 +59,36 @@ export default function LoginForm(){
             <Input
               isRequired
               errorMessage="Please enter a valid username"
-              label="Username"
+              label={dict.loginPage.labelName}
               labelPlacement="inside"
               name="username"
-              placeholder="Enter your username"
+              placeholder={dict.loginPage.placeholdername}
               type="text"
               size="md"
             />
             <Input
               isRequired
               errorMessage="Please enter a valid password"
-              label="Password"
+              label={dict.loginPage.labelPassword}
               labelPlacement="inside"
               name="password"
-              placeholder="Enter your password"
+              placeholder={dict.loginPage.placeholderpassword}
               type="password"
               size="md"
               className="cursor-pointer"
             />
             <div className="flex gap-2 w-full">
               <Button color="primary" type="submit" className="w-full">
-                Submit
+                {dict.loginPage.button}
               </Button>
             </div>
           </Form>
         </CardBody>
         <CardFooter>
           <p className="text-sm text-default-500">
-            Don’t you have an account? 
+            {dict.loginPage.goto}
             <Link href="/auth/register" className="text-primary ml-1 hover:underline">
-              Create here.
+              {dict.loginPage.link}
             </Link>
           </p>
         </CardFooter>

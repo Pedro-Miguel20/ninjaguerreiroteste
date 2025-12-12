@@ -12,7 +12,7 @@ interface ProvidersProps {
 export function Providers({children} : ProvidersProps) {
   return (
     <HeroUIProvider>
-      <ToastProvider />
+      <ToastProvider placement='top-right' />
       {children}
     </HeroUIProvider>
   )

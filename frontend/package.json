@@ -21,8 +21,10 @@
     "@tabler/icons-react": "^3.35.0",
     "framer-motion": "^12.23.24",
     "next": "16.0.4",
+    "next-intl": "^4.5.8",
     "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react-dom": "19.2.0",
+    "server-only": "^0.0.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
