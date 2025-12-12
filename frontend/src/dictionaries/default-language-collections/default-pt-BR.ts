@@ -1,5 +1,3 @@
-import { title } from "process";
-
 export const ptBR = {
     site: {
         name: 'Ninjaguerreiro',

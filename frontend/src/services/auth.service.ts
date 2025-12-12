@@ -1,5 +1,11 @@
 import { ptBR } from "../dictionaries/default-language-collections/default-pt-BR";
 
+
+type ApiError = Error & {
+  status: number;
+  raw: unknown;
+};
+
 // Função para traduzir uma única mensagem (igual à que você já tem)
 export function translateRegisterError(message: string, lang: string) {
   if (lang === "en-US") return message;
@@ -42,9 +48,13 @@ export async function register(payload: { username: string; password: string; gr
   }
 
   const translatedMessage = translateRegisterError(message, lang);
-  const error: any = new Error(translatedMessage);
-  error.status = response.status;
-  error.raw = data;
+  const error: ApiError = Object.assign(
+  new Error(translatedMessage),
+    {
+      status: response.status,
+      raw: data
+    }
+  );
   throw error;
 }
 

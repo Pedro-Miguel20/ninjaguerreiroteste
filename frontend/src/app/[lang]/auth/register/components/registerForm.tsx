@@ -46,7 +46,6 @@ interface registerFormProps {
     },
     error: {
         title: string,
-        register: {}
     };
   },
   lang: string;
