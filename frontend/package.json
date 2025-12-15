@@ -22,6 +22,7 @@
     "framer-motion": "^12.23.24",
     "next": "16.0.4",
     "next-intl": "^4.5.8",
+    "password-validator": "^5.3.0",
     "react": "19.2.0",
     "react-dom": "19.2.0",
     "server-only": "^0.0.1"

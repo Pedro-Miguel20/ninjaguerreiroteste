@@ -1,6 +1,5 @@
 import { ptBR } from "../dictionaries/default-language-collections/default-pt-BR";
 
-
 type ApiError = Error & {
   status: number;
   raw: unknown;
@@ -9,18 +8,36 @@ type ApiError = Error & {
 // Função para traduzir uma única mensagem (igual à que você já tem)
 export function translateRegisterError(message: string, lang: string) {
   if (lang === "en-US") return message;
+
   const map: Record<string, string> = {
+    // username
     "This field may not be blank.": ptBR.error.register.usernameRequired,
+    "This field is required.": ptBR.error.register.usernameRequired,
     "A user with that username already exists.": ptBR.error.register.usernameTaken,
-    "This field is required.": ptBR.error.register.passwordRequired,
+
+    // password
+    "The password must be at least 8 characters long.":
+      ptBR.error.password.rules.min,
+    "The password must contain at least one number." : ptBR.error.password.rules.digits,
+    "Password must contain at least one symbol." : ptBR.error.password.rules.symbols,
+
+    //username
+    "The username must be at least 5 characters long." : ptBR.error.username.rules.min,
+
+    // group
     "Select at least one group.": ptBR.error.register.groupRequired,
-    "Invalid pk \"0\" - object does not exist.": ptBR.error.register.groupRequired,
-    // ...outros mapeamentos
+    'Invalid pk "0" - object does not exist.':
+      ptBR.error.register.groupRequired,
+
+    // genérico
+    "Internal Server Error":
+      ptBR.error.register.serverError,
+    "Request failed with status code 500":
+      ptBR.error.register.serverError,
   };
 
-  return map[message] || message; // se não encontrar, retorna a própria mensagem
+  return map[message] ?? message;
 }
-
 
 // Função de registro refatorada
 export async function register(payload: { username: string; password: string; groups: number[] }, lang: string) {
@@ -29,6 +46,8 @@ export async function register(payload: { username: string; password: string; gr
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
+
+
 
   const data = await response.json();
 

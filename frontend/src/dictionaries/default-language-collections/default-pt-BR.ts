@@ -40,6 +40,20 @@ export const ptBR = {
             passwordRequired: "A senha é obrigatória",
             groupRequired: "Selecione pelo menos um grupo",
             serverError: "Erro no servidor. Tente novamente mais tarde",
+        },
+        password: {
+            rules: {
+                min: "A senha deve ter no mínimo 8 caracteres.",
+                uppercase: "A senha deve conter ao menos uma letra maiúscula.",
+                lowercase: "A senha deve conter ao menos uma letra minúscula.",
+                digits: "A senha deve conter ao menos um dígito.",
+                symbols: "A senha deve conter ao menos um caractere special",
+            }
+        },
+        username: {
+            rules:{
+                min: "O nome de usuário deve ter pelo menos 5 caracteres."
+            }
         }
     },
 }

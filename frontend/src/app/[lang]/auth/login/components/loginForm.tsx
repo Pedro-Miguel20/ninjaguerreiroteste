@@ -50,7 +50,7 @@ export default function LoginForm({dict}: LoginFormProps){
 
   return ( 
     <>
-      <Card className={`${inter.className} p-3 max-w-[400px] m-2`}>
+      <Card className={`${inter.className} p-3 w-[350px] m-2`}>
         <CardHeader><h1 className="text-xl"><b>{dict.loginPage.login}</b></h1></CardHeader>
         <CardBody>
           <Form

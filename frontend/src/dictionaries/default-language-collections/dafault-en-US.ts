@@ -34,6 +34,20 @@ export const enUS = {
     },
     error: {
         title: 'Registration failed',
-        register: []
+        register: [],
+        password: {
+            rules: {
+                min: "must be at least 8 characters long.",
+                uppercase: "must contain at least one uppercase letter.",
+                lowercase: "must contain at least one lowercase letter.",
+                digits: "must contain at least one number.",
+                symbols: "must contain at least one special character (!@#$%^&*).",
+            }
+        },
+        username:{
+            rules: {
+                min: "The username must be at least 5 characters long."
+            }
+        }
     }
 }
