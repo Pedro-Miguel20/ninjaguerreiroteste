@@ -17,7 +17,6 @@ export const enUS = {
         register: 'Register',
         labelName: 'Username',
         placeholdername: 'Entry your username',
-        errorName: 'Please enter a valid username',
         labelPassword: 'Password',
         placeholderpassword: 'Entry your password',
         errorPassword: 'Please enter a valid password',
@@ -46,7 +45,8 @@ export const enUS = {
         },
         username:{
             rules: {
-                min: "The username must be at least 5 characters long."
+                min: "The username must be at least 5 characters long.",
+                errorName: 'Please enter a valid username',
             }
         }
     }

@@ -17,7 +17,6 @@ export const ptBR = {
         register: 'Cadastrar',
         labelName: 'Nome',
         placeholdername: 'Digite seu nome',
-        errorName: 'Digite um nome válido',
         labelPassword: 'Senha',
         placeholderpassword: 'Digite sua senha',
         errorPassword: 'Digite uma senha válida',
@@ -52,7 +51,8 @@ export const ptBR = {
         },
         username: {
             rules:{
-                min: "O nome de usuário deve ter pelo menos 5 caracteres."
+                min: "O nome de usuário deve ter pelo menos 5 caracteres.",
+                errorName: 'Digite um nome válido',
             }
         }
     },
