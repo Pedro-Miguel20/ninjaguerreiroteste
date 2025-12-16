@@ -169,6 +169,7 @@ export default function RegisterForm({ dict, lang }: RegisterFormProps) {
           />
             <div className='w-full'>
           <Input
+            errorMessage={dict.registerPage.errorPassword}
             isRequired
             name="password"
             size="md"
