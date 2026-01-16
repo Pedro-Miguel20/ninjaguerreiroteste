@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../../app/globals.css";
 import { Providers } from "./providers";
-import { i18n, Locale } from "@/src/config/i18n.config";
+import { i18n } from "@/src/config/i18n.config";
 import { ReactNode } from "react";
 import { getDictionaryServerOnly } from "@/src/dictionaries/default-dictionary-server-only";
 
