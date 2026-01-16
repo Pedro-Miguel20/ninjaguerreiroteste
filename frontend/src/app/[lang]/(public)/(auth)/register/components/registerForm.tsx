@@ -12,6 +12,7 @@ import { useGroups } from '@/src/hooks/useGroups';
 import { showToast, getToastColorByStatus } from '@/src/utils/toast';
 import { passwordSchema } from '@/src/utils/passwordSchema';
 import { useTranslations } from '@/src/config/dictionaryContext';
+import { Locale } from '@/src/config/i18n.config';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -35,7 +36,7 @@ type PasswordValidationError = {
 };
 
 interface RegisterFormProps{
-  lang: string
+  lang: Locale
 }
 
 export default function RegisterForm({lang}: RegisterFormProps) {
@@ -78,7 +79,7 @@ export default function RegisterForm({lang}: RegisterFormProps) {
         return;
       }
 
-      const data = await register(payload, lang, t);
+      const data = await register(payload, lang);
 
       showToast({
         title: t.registerPage.success.title,
