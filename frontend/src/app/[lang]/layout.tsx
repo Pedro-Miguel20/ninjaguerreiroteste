@@ -32,9 +32,9 @@ export default async function RootLayout({
   params,
 }: {
   children: ReactNode;
-  params: Promise<{ lang: Locale }>; // still a Promise in async Server Component
+  params: { lang: string };
 }) {
-  const { lang } = await params; // unwrap the Promise
+  const lang = params.lang as "pt-BR" | "en-US" | "es-ES";
   const dict = await getDictionaryServerOnly(lang);
 
 
