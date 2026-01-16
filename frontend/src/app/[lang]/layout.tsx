@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../../app/globals.css";
 import { Providers } from "./providers";
-import { i18n } from "@/src/config/i18n.config";
+import { i18n, Locale } from "@/src/config/i18n.config";
 import { ReactNode } from "react";
 import { getDictionaryServerOnly } from "@/src/dictionaries/default-dictionary-server-only";
 
@@ -32,18 +32,24 @@ export default async function RootLayout({
   params,
 }: {
   children: ReactNode;
-  params: { lang: string };
+  params: Promise<{ lang: string }>;
 }) {
-  const lang = params.lang as "pt-BR" | "en-US" | "es-ES";
-  const dict = await getDictionaryServerOnly(lang);
+  const { lang } = await params;
 
+  // validação runtime (segura)
+  const locale = i18n.locales.includes(lang as Locale)
+    ? (lang as Locale)
+    : i18n.defaultLocale;
+
+  const dict = await getDictionaryServerOnly(locale);
 
   return (
-    <html lang={lang}>
+    <html lang={locale}>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Providers dict={dict}>{children}</Providers>
       </body>
     </html>
   );
 }
+
 
