@@ -11,7 +11,11 @@ export const enUS = {
         placeholderpassword: 'Entry your password',
         button: 'submit',
         goto: 'Don’t you have an account?',
-        link: 'Create here!'
+        link: 'Create here!',
+        success: {
+            title: 'You loged in!',
+            description: 'Welcome, '
+        }
     },
     registerPage: {
         register: 'Register',
@@ -32,8 +36,22 @@ export const enUS = {
         }
     },
     error: {
-        title: 'Registration failed',
-        register: [],
+        register: {
+            titleError: 'Registration failed',
+            description: {
+                usernameRequired: "O nome é obrigatório",
+                usernameTaken: "Nome de usuário já existe",
+                passwordRequired: "A senha é obrigatória",
+                groupRequired: "Selecione pelo menos um grupo",
+                serverError: "Erro no servidor. Tente novamente mais tarde",
+            }
+        },
+        login:{
+            titleError: 'Log in failed',
+            description: {
+                noAccountfound: "No active account found with the given credentials",
+            }
+        },
         password: {
             rules: {
                 min: "must be at least 8 characters long.",
@@ -48,6 +66,11 @@ export const enUS = {
                 min: "The username must be at least 5 characters long.",
                 errorName: 'Please enter a valid username',
             }
+        }
+    },
+    components: {
+        graph: {
+            title: "Graph"
         }
     }
 }

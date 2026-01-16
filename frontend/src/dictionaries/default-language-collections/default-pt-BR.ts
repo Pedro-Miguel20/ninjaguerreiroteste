@@ -11,7 +11,11 @@ export const ptBR = {
         placeholderpassword: 'Digite sua senha',
         button: 'entrar',
         goto: 'Não possui uma conta?',
-        link: 'se inscreva aqui!'
+        link: 'se inscreva aqui!',
+        success: {
+            title: 'Você entrou!',
+            description: 'Bem-vindo(a), '
+        }
     },
     registerPage: {
         register: 'Cadastrar',
@@ -32,13 +36,22 @@ export const ptBR = {
         }
     },
     error: {
-        title: "Erro no cadastro",
+        
         register: {
-            usernameRequired: "O nome é obrigatório",
-            usernameTaken: "Nome de usuário já existe",
-            passwordRequired: "A senha é obrigatória",
-            groupRequired: "Selecione pelo menos um grupo",
-            serverError: "Erro no servidor. Tente novamente mais tarde",
+            titleError: "Erro no cadastro",
+            description: {
+                usernameRequired: "O nome é obrigatório",
+                usernameTaken: "Nome de usuário já existe",
+                passwordRequired: "A senha é obrigatória",
+                groupRequired: "Selecione pelo menos um grupo",
+                serverError: "Erro no servidor. Tente novamente mais tarde",
+            }
+        },
+        login:{
+            titleError: "Erro ao entrar",
+            description:{
+                noAccountfound: "Não há conta ativa com as credenciais passadas",
+            } 
         },
         password: {
             rules: {
@@ -56,4 +69,9 @@ export const ptBR = {
             }
         }
     },
+    components: {
+        graph: {
+            title: "Gráfico"
+        }
+    }
 }

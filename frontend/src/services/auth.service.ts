@@ -1,46 +1,53 @@
-import { ptBR } from "../dictionaries/default-language-collections/default-pt-BR";
 
-type ApiError = Error & {
-  status: number;
-  raw: unknown;
-};
+import { handleApiError } from "../utils/handleApiError";
+import { Locale } from "../config/i18n.config";
+import { getDictionaryUseClient } from "../dictionaries/default-dictionary-use-client";
 
 // Função para traduzir uma única mensagem (igual à que você já tem)
-export function translateRegisterError(message: string, lang: string) {
+export async function translateError(message: string, lang: Locale) {
+
+  const location = lang;
+  const dict = getDictionaryUseClient(location);
+
   if (lang === "en-US") return message;
 
   const map: Record<string, string> = {
     // username
-    "This field may not be blank.": ptBR.error.register.usernameRequired,
-    "This field is required.": ptBR.error.register.usernameRequired,
-    "A user with that username already exists.": ptBR.error.register.usernameTaken,
+    "This field may not be blank.": dict.error.register.description.usernameRequired,
+    "This field is required.":  dict.error.register.description.usernameRequired,
+    "A user with that username already exists.": dict.error.register.description.usernameTaken,
 
     // password
     "The password must be at least 8 characters long.":
-      ptBR.error.password.rules.min,
-    "The password must contain at least one number." : ptBR.error.password.rules.digits,
-    "Password must contain at least one symbol." : ptBR.error.password.rules.symbols,
+      dict.error.password.rules.min,
+    "The password must contain at least one number." : dict.error.password.rules.digits,
+    "Password must contain at least one symbol." : dict.error.password.rules.symbols,
 
     //username
-    "The username must be at least 5 characters long." : ptBR.error.username.rules.min,
+    "The username must be at least 5 characters long." : dict.error.username.rules.min,
 
     // group
-    "Select at least one group.": ptBR.error.register.groupRequired,
-    'Invalid pk "0" - object does not exist.':
-      ptBR.error.register.groupRequired,
+    "Select at least one group.": dict.error.register.description.groupRequired,
+    'Invalid pk "0" - object does not exisdicdict.':
+      dict.error.register.description.groupRequired,
 
     // genérico
     "Internal Server Error":
-      ptBR.error.register.serverError,
+      dict.error.register.description.serverError,
     "Request failed with status code 500":
-      ptBR.error.register.serverError,
+      dict.error.register.description.serverError,
+
+
+    // conta
+    "No active account found with the given credentials":
+      dict.error.login.description.noAccountfound
   };
 
   return map[message] ?? message;
 }
 
 // Função de registro refatorada
-export async function register(payload: { username: string; password: string; groups: number[] }, lang: string) {
+export async function register(payload: { username: string; password: string; groups: number[] }, lang: Locale) {
   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/auth/register/`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -52,35 +59,34 @@ export async function register(payload: { username: string; password: string; gr
   const data = await response.json();
 
   if (!response.ok) {
-  let message = "Registration failed";
-
-  if (data && typeof data === "object" && !Array.isArray(data)) {
-    // forçar o tipo de data para Record<string, string[]>
-    const errorData = data as Record<string, string[]>;
-
-    // juntar todas as mensagens de todos os campos
-    const allValues = Object.values(errorData).flat();
-
-    if (allValues.length > 0) {
-      message = allValues[allValues.length - 1]; // último erro da API
-    }
+    await handleApiError(response, data, lang, "Register failed");
   }
-
-  const translatedMessage = translateRegisterError(message, lang);
-  const error: ApiError = Object.assign(
-  new Error(translatedMessage),
-    {
-      status: response.status,
-      raw: data
-    }
-  );
-  throw error;
-}
-
-
 
   return {
     status: response.status,
     data,
   };
+}
+
+
+export async function login(payload: {username: string, password: string}, lang: Locale){
+  const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v1/auth/token/`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    });
+  
+  const data = await response.json();
+
+  if (!response.ok) {
+    await handleApiError(response, data, lang, "Login failed");
+    
+  }
+
+  return {
+    status: response.status,
+    data
+  }
 }
