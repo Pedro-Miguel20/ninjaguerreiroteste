@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "../../app/globals.css";
 import { Providers } from "./providers";
-import { i18n } from "@/src/config/i18n.config";
+import { i18n, Locale } from "@/src/config/i18n.config";
 import { ReactNode } from "react";
+import { getDictionaryServerOnly } from "@/src/dictionaries/default-dictionary-server-only";
+
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,14 +32,16 @@ export default async function RootLayout({
   params,
 }: {
   children: ReactNode;
-  params: Promise<{ lang: string }>; // still a Promise in async Server Component
+  params: Promise<{ lang: Locale }>; // still a Promise in async Server Component
 }) {
   const { lang } = await params; // unwrap the Promise
+  const dict = await getDictionaryServerOnly(lang);
+
 
   return (
     <html lang={lang}>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Providers>{children}</Providers>
+        <Providers dict={dict}>{children}</Providers>
       </body>
     </html>
   );

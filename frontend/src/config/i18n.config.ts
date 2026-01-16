@@ -1,6 +1,6 @@
 export const defaultLocale = 'pt-BR' as const;
 
-export const langs = [defaultLocale, 'en-US'] as const;
+export const langs = [defaultLocale, 'en-US', 'es-ES'] as const;
 
 export type Locale = typeof langs[number];
 

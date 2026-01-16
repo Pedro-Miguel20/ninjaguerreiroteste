@@ -7,11 +7,11 @@ import { Inter } from 'next/font/google';
 import Link from 'next/link';
 import { FormEvent, useState } from 'react';
 
-import { register } from '../../../../../services/auth.service';
+import { register } from '../../../../../../services/auth.service';
 import { useGroups } from '@/src/hooks/useGroups';
 import { showToast, getToastColorByStatus } from '@/src/utils/toast';
 import { passwordSchema } from '@/src/utils/passwordSchema';
-import { ptBR } from '@/src/dictionaries/default-language-collections/default-pt-BR';
+import { useTranslations } from '@/src/config/dictionaryContext';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -34,62 +34,23 @@ type PasswordValidationError = {
   message: string;
 };
 
-interface RegisterFormProps {
-  dict: {
-    registerPage: {
-      register: string;
-      labelName: string;
-      placeholdername: string;
-      labelPassword: string;
-      placeholderpassword: string;
-      errorPassword: string;
-      labelGroup: string;
-      placeholdergroup: string;
-      errorGroup: string;
-      button: string;
-      goto: string;
-      link: string;
-      success: {
-        title: string;
-        description: string;
-      };
-    };
-    error: {
-      title: string;
-      password:{
-        rules: {
-                min: string,
-                uppercase: string,
-                lowercase: string,
-                digits: string,
-                symbols: string,
-            }
-      },
-      username: {
-        rules: {
-            min: string,
-            errorName: string;
-        }
-      }
-    };
-  };
-  lang: string;
+interface RegisterFormProps{
+  lang: string
 }
 
-// ======================
-// Component
-// ======================
+export default function RegisterForm({lang}: RegisterFormProps) {
 
-export default function RegisterForm({ dict, lang }: RegisterFormProps) {
+  const t = useTranslations();
+
   const [isVisible, setIsVisible] = useState(false);
   const [passwordErrors, setPasswordErrors] = useState<PasswordValidationError[]>([]);
 
   const { groups } = useGroups();
 
-  type PasswordRule = keyof typeof ptBR.error.password.rules;
+  type PasswordRule = keyof typeof t.error.password.rules;
 
   function isPasswordRuleKey(key: string): key is PasswordRule {
-    return key in ptBR.error.password.rules;
+    return key in t.error.password.rules;
   }
 
   
@@ -117,11 +78,11 @@ export default function RegisterForm({ dict, lang }: RegisterFormProps) {
         return;
       }
 
-      const data = await register(payload, lang);
+      const data = await register(payload, lang, t);
 
       showToast({
-        title: dict.registerPage.success.title,
-        description: `${dict.registerPage.success.description}${payload.username}!`,
+        title: t.registerPage.success.title,
+        description: `${t.registerPage.success.description}${payload.username}!`,
         color: getToastColorByStatus(data.status),
       });
     } catch (error: unknown) {
@@ -131,7 +92,7 @@ export default function RegisterForm({ dict, lang }: RegisterFormProps) {
       };
 
       showToast({
-        title: dict.error.title,
+        title: t.error.register.titleError,
         description: apiError.message,
         color: getToastColorByStatus(apiError.status || 500),
       });
@@ -150,7 +111,7 @@ export default function RegisterForm({ dict, lang }: RegisterFormProps) {
     <Card className={`${inter.className} p-3 w-[350px] m-2`}>
       <CardHeader>
         <h1 className="text-xl">
-          <b>{dict.registerPage.register}</b>
+          <b>{t.registerPage.register}</b>
         </h1>
       </CardHeader>
 
@@ -161,22 +122,22 @@ export default function RegisterForm({ dict, lang }: RegisterFormProps) {
             name="username"
             type="text"
             size="md"
-            label={dict.registerPage.labelName}
+            label={t.registerPage.labelName}
             labelPlacement="inside"
             minLength={5}
-            placeholder={dict.registerPage.placeholdername}
-            errorMessage={dict.error.username.rules.min}
+            placeholder={t.registerPage.placeholdername}
+            errorMessage={t.error.username.rules.min}
           />
             <div className='w-full'>
           <Input
-            errorMessage={dict.registerPage.errorPassword}
+            errorMessage={t.registerPage.errorPassword}
             isRequired
             name="password"
             size="md"
             type={isVisible ? 'text' : 'password'}
-            label={dict.registerPage.labelPassword}
+            label={t.registerPage.labelPassword}
             labelPlacement="inside"
-            placeholder={dict.registerPage.placeholderpassword}
+            placeholder={t.registerPage.placeholderpassword}
             onChange={(e) => setPasswordErrors(validatePassword(e.target.value))}
             endContent={
               <button type="button" className="cursor-pointer" onClick={toggleVisibility}>
@@ -190,7 +151,7 @@ export default function RegisterForm({ dict, lang }: RegisterFormProps) {
               {passwordErrors.map((err, index) => (
                 <li key={index} className="list-none">
                   {isPasswordRuleKey(err.validation)
-                    ? dict.error.password.rules[err.validation]
+                    ? t.error.password.rules[err.validation]
                     : err.message}
                 </li>
               ))}
@@ -200,8 +161,8 @@ export default function RegisterForm({ dict, lang }: RegisterFormProps) {
           <Select
             name="groups"
             className="max-w-xs"
-            label={dict.registerPage.labelGroup}
-            errorMessage={dict.registerPage.errorGroup}
+            label={t.registerPage.labelGroup}
+            errorMessage={t.registerPage.errorGroup}
           >
             {groups.map((group: { id: number; name: string }) => (
               <SelectItem key={group.id}>{group.name}</SelectItem>
@@ -209,16 +170,16 @@ export default function RegisterForm({ dict, lang }: RegisterFormProps) {
           </Select>
 
           <Button color="primary" type="submit" className="w-full">
-            {dict.registerPage.button}
+            {t.registerPage.button}
           </Button>
         </Form>
       </CardBody>
 
       <CardFooter>
         <p className="text-sm text-default-500">
-          {dict.registerPage.goto}
-          <Link href="/auth/login" className="text-primary ml-1 hover:underline">
-            {dict.registerPage.link}
+          {t.registerPage.goto}
+          <Link href="/login" className="text-primary ml-1 hover:underline">
+            {t.registerPage.link}
           </Link>
         </p>
       </CardFooter>
